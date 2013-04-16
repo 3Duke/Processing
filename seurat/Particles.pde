@@ -1,3 +1,10 @@
+
+int CIRCLE = 0;
+int TRI = 1;
+int QUA = 2;
+int LETTER = 3;
+int WORD = 4;
+
   class Particle {
 
   // frame:
@@ -14,6 +21,9 @@
   
   // speed
   float xspeed, yspeed, rspeed, cspeed;
+  
+  // particle ptype
+  int ptype;
 
 
   Particle(float tfx, float tfy, float tfxx, float tfyy) {
@@ -38,6 +48,8 @@
     cspeed = 0.25;
     
     dradius = 0.1;
+    
+    ptype = WORD;
   }
 
   void  display() {
@@ -45,7 +57,45 @@
     rectMode(CENTER);
     fill(r,g,b,a);
     noStroke();
-    ellipse(x, y, radius, radius);
+
+    
+    if (ptype == CIRCLE) {
+      
+      ellipse(x, y, radius, radius);
+      
+    } else if (ptype == TRI) {
+      
+      triangle_(x,y,radius);
+      
+    } else if (ptype == QUA) {
+      
+      quad_(x,y,radius);
+      
+    } else if (ptype == LETTER) {
+      
+          float tSize = radius;
+          textSize(tSize);
+          text(key,x,y); 
+          
+    } else if (ptype == WORD) {
+      
+       float tSize = radius;
+          textSize(tSize);
+          text("ART",x,y);
+      
+    }
+    
+    
+   /*
+    float v1x = x - radius/2;
+    float v1y = y;
+    float v2x = x + radius/2;
+    float v2y = y;
+    float v3x = x;
+    float v3y = y - radius/2;
+    triangle(v1x, v1y, v2x, v2y, v3x, v3y);
+    */
+    //rect(x, y, radius/5, radius);
   }
   
   void reflectAcross() {
@@ -132,4 +182,40 @@
   
   }
 }  
+
+void triangle_(float x, float y, float r) {
+  
+  float x1, y1, x2, y2, x3, y3;
+  
+  x1 = x + random(0,r);
+  y1 = y + random(0,r);
+  
+  x2 = x + random(0,-r);
+  y2 = y + random(0,r);
+  
+  x3 = x + random(0,-r);
+  y3 = y + random(0,-r);
+  
+  triangle(x1, y1, x2, y2, x3, y3);
+}
+
+
+void quad_(float x, float y, float r) {
+  
+  float x1, y1, x2, y2, x3, y3, x4, y4;
+  
+  x1 = x + random(0,r);
+  y1 = y + random(0,r);
+  
+  x2 = x + random(0,-r);
+  y2 = y + random(0,r);
+  
+  x3 = x + random(0,-r);
+  y3 = y + random(0,-r);
+  
+  x4 = x + random(0,r);
+  y4 = y + random(0,r);
+  
+  quad(x1, y1, x2, y2, x3, y3, x4, y4);
+}
 

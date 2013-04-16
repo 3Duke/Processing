@@ -22,22 +22,24 @@ int nearestObject(float x, float y) {
   return nearest;
 }
   
+*/
 
 void mousePressed() {
 
-   int nearest = nearestObject(mouseX, mouseY);
-   
-   object[nearest].x = mouseX;
-   object[nearest].y = mouseY;
+   int segmentSelected = control.segmentSelected();
+   println("segment selected: " + segmentSelected );
+   if (segmentSelected  > -1) {
+     updateFrames(segmentSelected);
+   }
     
 }
-*/
+
 
 
 void keyPressed() {
   
-  
-  saveFrame("line-######.png");
+  print(key);
+  // saveFrame("line-######.png");
   
  
 }
