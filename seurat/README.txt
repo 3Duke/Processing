@@ -17,7 +17,13 @@ When the controls are active, you may
   - to change the color, click in each of the 
     two color wheels.  The first wheel defined
     the initial color, the second one the final 
-    one.  Colors change by umiform motion on a
+    one.  
+   
+    To confirm the color choice, press the return key.
+
+    Colors change by umiform motion on a
     geodesic in RGB space that connects the initial
     and final colors.
 
+
+  - to save the current frame, press = 
