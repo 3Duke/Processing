@@ -26,4 +26,4 @@ When the controls are active, you may
     and final colors.
 
 
-  - to save the current frame, press = 
+  - to save the current frame, press the down arrow key.

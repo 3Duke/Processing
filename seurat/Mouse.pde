@@ -84,11 +84,14 @@ void keyPressed() {
       setColorTori2(colorBox1.r, colorBox1.g, colorBox1.b, colorBox2.r, colorBox2.g, colorBox2.b);
    
   }
+ 
   
-  if (key == '=') {  // save frame
-  
-     println("Saved frame "+frameCount);
+  if (key == CODED) {
+    if (keyCode == DOWN) {
+       println("Saved frame "+frameCount);
      saveFrame("line-######.png");
+    }
+    
   }
   
 
