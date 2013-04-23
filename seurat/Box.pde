@@ -13,8 +13,11 @@ class Box {
  
  void display() {
    
+   rectMode(CORNERS);
+   noStroke();
+   
    fill(r,g,b,a);
-   println("box ("+ frameCount + ") :"+x+", "+y+", "+w+", "+h);
+   // println("box ("+ frameCount + ") :"+x+", "+y+", "+w+", "+h);
    rect(x,  y, x + w, y + h); 
     
  }

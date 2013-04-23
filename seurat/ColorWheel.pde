@@ -21,6 +21,8 @@ class ColorWheel {
     float s = 100;
     float b = 100;
     
+    noStroke();
+    rectMode(CENTER);
    
     colorMode(HSB,360,100,100);
     

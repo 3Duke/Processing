@@ -54,6 +54,7 @@ int WORD = 4;
 
   void  display() {
 
+    
     rectMode(CENTER);
     fill(r,g,b,a);
     noStroke();
@@ -85,17 +86,7 @@ int WORD = 4;
       
     }
     
-    
-   /*
-    float v1x = x - radius/2;
-    float v1y = y;
-    float v2x = x + radius/2;
-    float v2y = y;
-    float v3x = x;
-    float v3y = y - radius/2;
-    triangle(v1x, v1y, v2x, v2y, v3x, v3y);
-    */
-    //rect(x, y, radius/5, radius);
+  // rectMode(CORNER);  // XXX
   }
   
   void reflectAcross() {
@@ -218,4 +209,3 @@ void quad_(float x, float y, float r) {
   
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
 }
-

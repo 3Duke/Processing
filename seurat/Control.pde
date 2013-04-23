@@ -18,6 +18,9 @@ class Control {
   
   void display() {
     
+    rectMode(CORNERS);
+    noStroke();
+    textSize(18);
     // println("CONTROL: " + x +", "+y+", "+w+", "+h);    
     fill (0, 0, 255, 200);
     noStroke();
@@ -31,7 +34,7 @@ class Control {
       fill(i*255/nSegments, 0, 255, 255);
       rect(xx, y, xx + dw, y + h);
       fill(255,255,255,200);
-      text(message(i), xx + 12, y + 25); 
+      text(message(i), xx + 12, y + 27); 
       xx = xx + dw;
     }
     
@@ -41,6 +44,7 @@ class Control {
   
   void highLightSegment(int n) {
    
+    rectMode(CORNER);
     fill(255,0,0,200);
     float ww = w/nSegments;
     float xx = x + n*ww;
@@ -112,6 +116,3 @@ class Control {
   } // end message
   
 } // end class
-
-
-

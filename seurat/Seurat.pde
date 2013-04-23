@@ -70,7 +70,7 @@ void setupFrames(float WIDTH) {
     else {
       frames[i] = new JCFrame(x, y, W/goldenRatio, W, 6, scale, sf);
     }
-    frames[i].phase = 200*i;
+    frames[i].phase = 200*i;  // 200*i ==> 10*i for test
   } // end for
 
 }
@@ -138,7 +138,7 @@ void setColorTori2(float r1, float g1, float b1, float r2, float g2, float b2) {
 
 void setup () {
 
-  int HEIGHT =500;
+  int HEIGHT =700;
   int WIDTH = int((1/goldenRatio)*HEIGHT);
 
   font = loadFont("AndaleMono-48.vlw");
@@ -182,7 +182,7 @@ void displayMessage() {
 void displayFrames () {
 
   float M = MaxRadius;
-  for (int i = 0; i < frames.length; i++) {
+  for (int i = 0; i < frames.length; i++) {  // XXX
 
     frames[i].display(M);
     frames[i].change(200);
@@ -219,7 +219,15 @@ void diagnosticMessage() {
  
 }
 
+void nop() {} // dummy function, does nothing
+
 void draw () {
+  
+  if (frameCount == 1602) {
+    
+   //  nop(); //<>//
+    
+  }
 
   count++;
   displayFrames();
@@ -232,5 +240,3 @@ void draw () {
 
 
 ////////
-
-

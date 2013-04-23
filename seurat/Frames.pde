@@ -133,14 +133,16 @@ class JCFrame {
       stroke(0);
       rectMode(NORMAL);
       rect(x, y, x + w, y + h);
+   
       
    if (frameCount > phase) {
-      for(int i = 0; i < particles.length; i++) {
+      for(int i = 0; i < particles.length ; i++) {
         particles[i].change(M);  // M = maximum particle radius
         particles[i].display();
     
       }
     }
+    
    
   }
 }
