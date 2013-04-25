@@ -1,6 +1,5 @@
 
 To activate controls, press the space bar.
-
 To hide the controls, press the space bar again.
 
 When the controls are active, you may
@@ -26,4 +25,14 @@ When the controls are active, you may
     and final colors.
 
 
-  - to save the current frame, press the down arrow key.
+To save the current frame, press the down arrow key.
+
+You may enter a string which to identify saved files,
+e.g., if you enter "henry", the names of the files saved will
+have the form henry-000123.png, i.e., name-linenumber.png.
+To enter the string, press tab, look at the upper left-hand
+corner of the screen, where you will see a blinking white
+cursor.  Enter the string, then press tab again.  The 
+animation is suspendended during this process.
+
+   

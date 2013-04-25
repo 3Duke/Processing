@@ -84,13 +84,31 @@ void keyPressed() {
       setColorTori2(colorBox1.r, colorBox1.g, colorBox1.b, colorBox2.r, colorBox2.g, colorBox2.b);
    
   }
+  
+  if (key == TAB) {
+    
+     acceptText = !acceptText;
+     
+     if (acceptText) { // clear text for new input
+       typedText = "";
+       textSize(36);
+     } else {
+       textSize(18);
+     }
+     
+  }
  
   
   if (key == CODED) {
+    
     if (keyCode == DOWN) {
+      
        println("Saved frame "+frameCount);
-     saveFrame("line-######.png");
+       typedText = typedText.trim();
+       saveFrame(typedText+"-######.png");
     }
+    
+   
     
   }
   

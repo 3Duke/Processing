@@ -1,6 +1,9 @@
 
 // Raindrop obj1, obj2;
 
+// Global settings:
+int HEIGHT = 700; // 700 for macbook air, 1390 for iMac
+
 PFont font; 
 
 JCFrame [] frames;
@@ -10,6 +13,9 @@ Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
 boolean controlsActive;
+boolean acceptText;
+
+String typedText = "";
 
 
 int count;
@@ -138,7 +144,6 @@ void setColorTori2(float r1, float g1, float b1, float r2, float g2, float b2) {
 
 void setup () {
 
-  int HEIGHT =700;
   int WIDTH = int((1/goldenRatio)*HEIGHT);
 
   font = loadFont("AndaleMono-48.vlw");
@@ -158,6 +163,7 @@ void setup () {
   colorWheel2 = new ColorWheel(380, height - 40, 70);
  
   controlsActive = false;
+  acceptText = false;
 
   background(0);
 }
@@ -229,14 +235,42 @@ void draw () {
     
   }
 
-  count++;
-  displayFrames();
-  displayControls();
-  displayMessage();
+  if (!acceptText) {
+    count++;
+    displayFrames();
+    displayControls();
+    displayMessage();
+  }
+  
+  if (acceptText) {
+    text(typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
+  }
  
   // diagnosticMessage();
   
 }  // end draw
 
-
+ 
+void keyReleased() {
+  if (key != CODED) {
+    switch(key) {
+    case BACKSPACE:
+      typedText = typedText.substring(0,max(0,typedText.length()-1));
+      break;
+    case TAB:
+      typedText += "";
+      break;
+    case ENTER:
+    case RETURN:
+      // comment out the following two lines to disable line-breaks
+      // typedText += "\n";
+      //  break;
+    case ESC:
+    case DELETE:
+      break;
+    default:
+      typedText += key;
+    }
+  }
+}
 ////////
