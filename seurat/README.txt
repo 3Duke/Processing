@@ -27,12 +27,12 @@ When the controls are active, you may
 
 To save the current frame, press the down arrow key.
 
-You may enter a string which to identify saved files,
-e.g., if you enter "henry", the names of the files saved will
-have the form henry-000123.png, i.e., name-linenumber.png.
-To enter the string, press tab, look at the upper left-hand
-corner of the screen, where you will see a blinking white
-cursor.  Enter the string, then press tab again.  The 
-animation is suspendended during this process.
+Press the TAB key to enter text.
+  - press CONTROL to set the word displayed to the entered text.
+  - press COMMMAND to set the filename to the entered text
+
+Press the OPTION key to pause/run the program.
+
+
 
    
