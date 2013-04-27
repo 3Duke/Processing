@@ -76,6 +76,7 @@ int WORD = 4;
       
           float tSize = radius;
           textSize(tSize);
+        
           text(key,x,y); 
           
     } else if (ptype == WORD) {
@@ -186,7 +187,7 @@ void triangle_(float x, float y, float r) {
   x3 = x + random(0,-r);
   y3 = y + random(0,-r);
   
-  rectMode(CENTER);
+  rectMode(CORNER);
   triangle(x1, y1, x2, y2, x3, y3);
 }
 

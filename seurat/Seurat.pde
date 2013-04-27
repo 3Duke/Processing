@@ -4,6 +4,8 @@
 // Global settings:
 int HEIGHT = 700; // 700 for macbook air, 1390 for iMac
 float displayScale = HEIGHT/700;
+int NumberOfFrames =7;
+int displayMode = 1;  // 1 for classic, 2 for diagonal
 
 PFont font; 
 
@@ -40,7 +42,7 @@ float Pi = 3.14159265;
 
 
 
-void setupFrames(float WIDTH) {
+void setupFrames1(float WIDTH) {
 
   // Set up frames in golden ratio spiral
 
@@ -100,6 +102,7 @@ void setupFrames2(float WIDTH) {
 
   // wdith of square
   float W = goldenRatio*WIDTH; 
+  float pW = W; // previous W
   
    println(0+": "+x+", "+y+", "+W);
   // first frame
@@ -108,32 +111,35 @@ void setupFrames2(float WIDTH) {
 
   // the other frames
   for (int i = 1; i < frames.length; i++) {
-
+      
     // compute new upper left corner
     if (i % 4 == 1) {
+      
       x = x + W;
+      pW = W;
       W = goldenRatio*W;
     } 
     else if ( i % 4 == 2) {
-      x = x +  W;
-      x = x - goldenRatio*W;
-
-       y = y + W;
-       W = goldenRatio*W;  
- 
-   
+    
+      x = x +  goldenRatio*(pW - W);
+      y = y + W;
+      pW = W;
+      W = goldenRatio*W;  
     }
    else if ( i % 4 == 3) {
+    
        x = x - goldenRatio*W;
        y = y + W;
        y = y - goldenRatio*W;
        W = goldenRatio*W;  
     }
    else if ( i % 4 == 0) {
+      
        y = y - goldenRatio*W;
        W = goldenRatio*W;  
     }
-    println(i+": "+x+", "+y+", "+W);
+    
+   println(i+": "+x+", "+y+", "+W);
     // compute width of square
     // W = goldenRatio*W;
 
@@ -143,12 +149,40 @@ void setupFrames2(float WIDTH) {
 
     sf = 2*sf;
 
-    if (i < frames.length - 1) {
+    
       frames[i] = new JCFrame(x, y, W, W, 6, scale, sf);
-    } 
-    else {
-      frames[i] = new JCFrame(x, y, W/goldenRatio, W, 6, scale, sf);
+      println("  Frame "+i+":  "+x+", "+y+", w = "+W);
+   
+   if (i == frames.length - 1) {
+      if (i % 4 == 0 ) {
+      println(i+": congreunt to 0 mod 4");
+       frames[i].w =  frames[i].w/goldenRatio;
+      
+      
+      } else if(i % 4 == 1) {
+        println(i+": congreunt to 1 mod 4");
+        frames[i].h =  frames[i].h/goldenRatio;
+        
+      } else if(i % 4 == 2) {
+        println(i+": congreunt to 2 mod 4");
+        float xx = frames[i].x;
+        float ww = frames[i].w/goldenRatio;
+        float dx = ww/goldenRatio - ww;
+        frames[i].x = xx - dx*goldenRatio;
+        frames[i].w = ww;
+       
+      } else if(i % 4 == 3) {
+        println(i+": xxx congreunt to 3 mod 4");
+        
+       float yy = frames[i].y;
+       float ww = frames[i].w/goldenRatio;
+       float dy = ww/goldenRatio - ww;
+       frames[i].y = yy - dy*goldenRatio;
+       frames[i].h = ww;
+      }
     }
+
+    
     frames[i].phase = 200*i;  // 200*i ==> 10*i for test
   } // end for
 
@@ -223,9 +257,20 @@ void setup () {
   textFont(font);
 
   size(WIDTH, HEIGHT);
+
   frameRate(baseFrameRate); 
 
-  frames = new JCFrame[9];
+  frames = new JCFrame[NumberOfFrames];
+  
+  switch(displayMode) {
+  
+  case 1: setupFrames1(WIDTH); break;
+  
+  case 2: setupFrames2(WIDTH); break;
+  
+  }
+  
+  
 
   setupFrames2(WIDTH);
   setColorTori();
