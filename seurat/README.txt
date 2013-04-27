@@ -25,7 +25,7 @@ When the controls are active, you may
     and final colors.
 
 
-To save the current frame, press the down arrow key.
+To save the current frame, press the SHIFT key.
 
 Press the TAB key to enter text.
   - press CONTROL to set the word displayed to the entered text.
