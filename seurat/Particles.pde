@@ -40,6 +40,7 @@ int WORD = 4;
     x = random(fx,fxx);
     y = random(fy,fyy);
     radius = 10;
+    
     spacingFactor = 1.0;
     
     xspeed = 1;
@@ -156,7 +157,16 @@ int WORD = 4;
   
   void changeRadius(float m, float M) {
     
+    
+    
     radius = radius + rspeed*dradius;
+    if (abs(radius - M) > 1) {
+       radius = M - 4;
+    }
+    if( radius < 2) {
+      radius = 2;
+    }
+    
     
     if (radius > M) {
       radius = m;

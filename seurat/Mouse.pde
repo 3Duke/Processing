@@ -72,7 +72,9 @@ void mousePressed() {
    
 }
 
-
+void manageSliders() {
+  
+}
 
 void keyPressed() {
   

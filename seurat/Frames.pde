@@ -11,6 +11,12 @@ class JCFrame {
   float r, g, b, a;
   float dr, dg, db, da;// change in color
   
+  float level; // brightness
+  float levelPhase; // frames
+  float levelPeriod;  // frames
+  float levelMax;  // 1.0
+  float levelMin; //  0.0
+  
   Particle [] particles;
   
   int phase;  // numbrer of frames before staring
@@ -105,6 +111,7 @@ class JCFrame {
       a = 0;
     }
     
+    
   }
   
   void setColor(float rr, float gg, float bb, float aa) {
@@ -127,8 +134,13 @@ class JCFrame {
 
   void display(float M) {
 
-  
-      fill(r,g,b,a);
+  // adjust level
+    float LF = 1.0;
+    if (levelPeriod > 0) {
+      
+      LF = abs(sin((levelMax - levelMin)*sin(2*Pi*(frameCount - phase)/levelPeriod))) +levelMin;
+    }
+      fill(LF*r,LF*g,LF*b,a);
       // noStroke();
       stroke(0);
       rectMode(NORMAL);
