@@ -1,3 +1,6 @@
+
+int COMMAND = 157;
+
 float squaredDistance(float a, float b, float c, float d) {
   
   return (a-c)*(a-c) + (b-d)*(b-d);
@@ -72,6 +75,8 @@ void mousePressed() {
 
 
 void keyPressed() {
+  
+  
    
   if (key == ' ') { // toggle contrals
   
@@ -88,29 +93,67 @@ void keyPressed() {
   if (key == TAB) {
     
      acceptText = !acceptText;
-     
-     if (acceptText) { // clear text for new input
+    
+    if (acceptText) {
        typedText = "";
        textSize(36);
-     } else {
-       textSize(18);
-     }
+       
+       println("Accepting text");
+       
+    }
      
   }
  
   
+  
   if (key == CODED) {
     
-    if (keyCode == DOWN) {
+ 
+    
+    if (keyCode == SHIFT) {
       
-       println("Saved frame "+frameCount);
-       typedText = typedText.trim();
-       saveFrame(typedText+"-######.png");
+      
+       println("Saved frame "+frameCount+" as "+fileName);
+       saveFrame(fileName+"-######.png");
     }
     
-   
+    if (keyCode == ALT) {
+      
+       acceptText = !acceptText;
+       
+       if (acceptText) {
+         println("Display paused");
+       } else {
+         println("Continue ...");
+       }
+       textSize(18); 
+     
+    } 
     
-  }
+     
+    if (  keyCode == CONTROL ) {
+    
+     acceptText = false;
+     if (fileName != "") {
+       fileName = typedText;
+     }
+     textSize(18); 
+    
   
+     println("COMMAND, fileName set: "+fileName);
+    }
+      
+   if (   keyCode == COMMAND  ) {
+    
+     acceptText = false;
+     displayString = typedText;
+     textSize(18); 
+  
+     println("CONTROL, displayString set: "+displayString);   
+   }
+    
+    
+
+  }
 
 }

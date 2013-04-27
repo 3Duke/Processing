@@ -49,6 +49,7 @@ class Control {
     float ww = w/nSegments;
     float xx = x + n*ww;
    
+    rectMode(CORNERS);
     rect(xx, y, xx + ww, y + h
     );
     

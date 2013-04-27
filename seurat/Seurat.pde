@@ -3,6 +3,7 @@
 
 // Global settings:
 int HEIGHT = 700; // 700 for macbook air, 1390 for iMac
+float displayScale = HEIGHT/700;
 
 PFont font; 
 
@@ -12,10 +13,15 @@ JCFrame [] frames;
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
+
 boolean controlsActive;
 boolean acceptText;
+boolean acceptFileName;
+boolean acceptDisplayString;
 
 String typedText = "";
+String fileName = "frame";
+String displayString = "art";
 
 
 int count;
@@ -24,7 +30,7 @@ String message = "";
 String previousMessage = "";
 
 // ARTISTIC PARAMETERS
-float MaxRadius = 120; // 60; // maximum particle radius
+float MaxRadius = 240*displayScale; // 60; // maximum particle radius
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 15;
 
@@ -163,6 +169,8 @@ void setup () {
   colorWheel2 = new ColorWheel(380, height - 40, 70);
  
   controlsActive = false;
+  acceptDisplayString = false;
+  acceptFileName = false;
   acceptText = false;
 
   background(0);
@@ -252,6 +260,7 @@ void draw () {
 
  
 void keyReleased() {
+  
   if (key != CODED) {
     switch(key) {
     case BACKSPACE:
@@ -272,5 +281,6 @@ void keyReleased() {
       typedText += key;
     }
   }
+  
 }
 ////////
