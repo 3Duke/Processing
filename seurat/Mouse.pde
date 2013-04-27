@@ -130,26 +130,33 @@ void keyPressed() {
      
     } 
     
+    if ((keyCode == COMMAND) && (key == 'f')) {
+      println("cmd-f");
+    }
      
     if (  keyCode == CONTROL ) {
     
      acceptText = false;
-     if (fileName != "") {
+     
+     if (typedText != "") {
        fileName = typedText;
+        println("CONTROL, fileName set: "+fileName);
      }
      textSize(18); 
     
   
-     println("COMMAND, fileName set: "+fileName);
+    
     }
-      
-   if (   keyCode == COMMAND  ) {
+     
+   if ( keyCode == COMMAND  ) {
     
      acceptText = false;
-     displayString = typedText;
+     
      textSize(18); 
-  
-     println("CONTROL, displayString set: "+displayString);   
+     if (typedText != "") {
+       displayString = typedText;
+       println("COMMAND, displayString set: "+displayString);  
+     } 
    }
     
     
