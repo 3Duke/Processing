@@ -1,4 +1,4 @@
-
+  
 class JCFrame {
 
   // Geometry of frame

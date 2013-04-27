@@ -26,6 +26,7 @@ String displayString = "art";
 
 int count;
 float goldenRatio = 0.618;
+float cgoldenRatio = 1 - goldenRatio;
 String message = "";
 String previousMessage = "";
 
@@ -69,6 +70,72 @@ void setupFrames(float WIDTH) {
 
     // compute width of square
     W = goldenRatio*W;
+
+    // scale factor to use inside frame for drawing
+    scale = goldenRatio*scale;
+
+
+    sf = 2*sf;
+
+    if (i < frames.length - 1) {
+      frames[i] = new JCFrame(x, y, W, W, 6, scale, sf);
+    } 
+    else {
+      frames[i] = new JCFrame(x, y, W/goldenRatio, W, 6, scale, sf);
+    }
+    frames[i].phase = 200*i;  // 200*i ==> 10*i for test
+  } // end for
+
+}
+
+void setupFrames2(float WIDTH) {
+
+  // Set up frames in golden ratio spiral
+
+  float scale = 1;
+
+  // corner of square
+  float x = 0; 
+  float y = 0;
+
+  // wdith of square
+  float W = goldenRatio*WIDTH; 
+  
+   println(0+": "+x+", "+y+", "+W);
+  // first frame
+  float sf = 1.0;
+  frames[0] = new JCFrame(x, y, W, W, 6, scale, sf);
+
+  // the other frames
+  for (int i = 1; i < frames.length; i++) {
+
+    // compute new upper left corner
+    if (i % 4 == 1) {
+      x = x + W;
+      W = goldenRatio*W;
+    } 
+    else if ( i % 4 == 2) {
+      x = x +  W;
+      x = x - goldenRatio*W;
+
+       y = y + W;
+       W = goldenRatio*W;  
+ 
+   
+    }
+   else if ( i % 4 == 3) {
+       x = x - goldenRatio*W;
+       y = y + W;
+       y = y - goldenRatio*W;
+       W = goldenRatio*W;  
+    }
+   else if ( i % 4 == 0) {
+       y = y - goldenRatio*W;
+       W = goldenRatio*W;  
+    }
+    println(i+": "+x+", "+y+", "+W);
+    // compute width of square
+    // W = goldenRatio*W;
 
     // scale factor to use inside frame for drawing
     scale = goldenRatio*scale;
@@ -160,7 +227,7 @@ void setup () {
 
   frames = new JCFrame[9];
 
-  setupFrames(WIDTH);
+  setupFrames2(WIDTH);
   setColorTori();
   
   String particleLabels[] = { "C", "T", "Q", "L", "W"};
