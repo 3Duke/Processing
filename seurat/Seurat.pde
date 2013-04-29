@@ -380,11 +380,6 @@ void displayControls() {
   }
 }
 
-void diagnosticMessage() {
-
-  println(frameCount+": "+colorBox1.x +", "+colorBox1.y +", "+colorBox1.w +", "+colorBox1.h);
-}
-
 void nop() {
 } // dummy function, does nothing
 
@@ -411,7 +406,9 @@ void parseSerialData() {
 void draw () {
 
   if (incomingMessage.length() > 0) {
-    parseSerialData();
+    if (incomingMessage.charAt(0) == 'S') {
+      parseSerialData();
+    }
   }
   
   if (!acceptText) {
@@ -430,7 +427,6 @@ void draw () {
     text(typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
   }
 
-  // diagnosticMessage();
 }  // end draw
 
 
