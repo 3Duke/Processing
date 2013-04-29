@@ -1,8 +1,10 @@
+import processing.serial.*;
+Serial port;
+String incomingMessage = "";
 
-// Raindrop obj1, obj2;
 
 // Global settings:
-int HEIGHT = 1400; // 700 for macbook air, 1390 for iMac
+int HEIGHT = 500; // 700 for macbook air, 1390 for iMac
 float displayScale = HEIGHT/700;
 int NumberOfFrames = 11;
 int displayMode = 1;  // 1 for classic, 2 for diagonal
@@ -268,6 +270,9 @@ void setColorTori2(float r1, float g1, float b1, float r2, float g2, float b2) {
 
 
 void setup () {
+  
+  port = new Serial(this, "/dev/tty.usbmodem1411", 9600); 
+  port.bufferUntil('\n');
 
   int WIDTH = int((1/goldenRatio)*HEIGHT);
 
@@ -383,12 +388,36 @@ void diagnosticMessage() {
 void nop() {
 } // dummy function, does nothing
 
+
+void parseSerialData() {
+    
+  String value[] = incomingMessage.split(",");
+  
+    float radiusRead =  float(value[0]);
+    if (radiusRead > 0) {
+      MaxRadius = radiusRead;
+    } 
+    
+    float speedRead = float(value[1]);
+    if (speedRead > 0) {
+      baseFrameRate = speedRead;  
+    } 
+
+   println("serial port - radius = "+radiusRead+", "+"speed = "+speedRead);
+  
+}
+
+
 void draw () {
 
-
-
+  if (incomingMessage.length() > 0) {
+    parseSerialData();
+  }
+  
   if (!acceptText) {
     count++;
+    
+    //////////////////////  
    
     displayControls();
     displayFrames();
@@ -427,6 +456,13 @@ void keyReleased() {
       typedText += key;
     }
   }
+}
+
+
+void serialEvent(Serial port) {
+  incomingMessage = port.readStringUntil('\n');
+  println(incomingMessage);
+
 }
 ////////
 
