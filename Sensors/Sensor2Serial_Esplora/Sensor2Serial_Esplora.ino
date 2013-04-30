@@ -11,7 +11,11 @@
 // with an "S" followed by comma-number-comma-number.
 // This protocal gives the receiving program a way
 // to ignore invalid data.
+//
+// The delay in loop() for sensor reads is set to 10 milliseconds
+// so that the receiving program can give "real-time" response.
 
+// Reference for how to read Esplora sensors:
 // http://arduino.cc/en/Reference/EsploraLibrary
 
 #include <Esplora.h>
@@ -23,10 +27,8 @@ void setup()
 
 void loop()
 {
-  int potValue = Esplora.readSlider();     // range: 0-1023
+  int potValue = Esplora.readSlider();     // range: 0 to 1023
   int joystickX = Esplora.readJoystickX(); // range: -512 to 512
-  
- 
   
   /**
   int tempValue = Esplora.readTemperature(DEGREES_F);
@@ -36,5 +38,5 @@ void loop()
 
   Serial.println("S,"+String(potValue)+","+String(joystickX));
 
-  delay(10);
+  delay(10); / milliseconds
 }
