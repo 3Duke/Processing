@@ -50,7 +50,7 @@ int WORD = 4;
     
     dradius = 0.1;
     
-    ptype = WORD;
+    ptype = TRI;  // initial value
   }
 
   void  display() {

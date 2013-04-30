@@ -138,7 +138,7 @@ class JCFrame {
     float LF = 1.0;
     if (levelPeriod > 0) {
       
-      LF = abs(sin((levelMax - levelMin)*sin(2*Pi*(frameCount - phase)/levelPeriod))) +levelMin;
+      LF = abs(sin((levelMax - levelMin)*sin(TWO_PI*(frameCount - phase)/levelPeriod))) +levelMin;
     }
       fill(LF*r,LF*g,LF*b,a);
       // noStroke();

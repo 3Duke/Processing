@@ -1,7 +1,8 @@
+
 import processing.serial.*;
 Serial port;
 String incomingMessage = "";
-
+int NFIELDS = 3;
 
 // Global settings:
 int HEIGHT = 500; // 700 for macbook air, 1390 for iMac
@@ -12,11 +13,6 @@ int displayMode = 1;  // 1 for classic, 2 for diagonal
 PFont font; 
 
 JCFrame [] frames;
-
-// CONSTANTS
-float MAXRADIUS = 240;
-
-
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
@@ -31,20 +27,17 @@ String typedText = "";
 String fileName = "frame";
 String displayString = "art";
 
-
 int count;
-float goldenRatio = 0.618;
-float cgoldenRatio = 1 - goldenRatio;
+float inverseGoldenRatio = 0.618;
 String message = "";
 String previousMessage = "";
 
 // ARTISTIC PARAMETERS
+float MAXRADIUS = 24;
 float MaxRadius = MAXRADIUS; // 60; // maximum particle radius
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
-float baseFrameRate = 15;
-
-float Pi = 3.14159265;
-
+float baseFrameRate = 30;
+// CONSTANTS
 
 
 
@@ -59,7 +52,7 @@ void setupFrames1(float WIDTH) {
   float y = 0;
 
   // wdith of square
-  float W = goldenRatio*WIDTH; 
+  float W = inverseGoldenRatio*WIDTH; 
 
   // first frame
   float sf = 1.0;
@@ -77,10 +70,10 @@ void setupFrames1(float WIDTH) {
     }
 
     // compute width of square
-    W = goldenRatio*W;
+    W = inverseGoldenRatio*W;
 
     // scale factor to use inside frame for drawing
-    scale = goldenRatio*scale;
+    scale = inverseGoldenRatio*scale;
 
 
     sf = 2*sf;
@@ -89,7 +82,7 @@ void setupFrames1(float WIDTH) {
       frames[i] = new JCFrame(x, y, W, W, 6, scale, sf);
     } 
     else {
-      frames[i] = new JCFrame(x, y, W/goldenRatio, W, 6, scale, sf);
+      frames[i] = new JCFrame(x, y, W/inverseGoldenRatio, W, 6, scale, sf);
     }
     frames[i].phase = 200*i;  // 200*i ==> 10*i for test
   } // end for
@@ -106,7 +99,7 @@ void setupFrames2(float WIDTH) {
   float y = 0;
 
   // wdith of square
-  float W = goldenRatio*WIDTH; 
+  float W = inverseGoldenRatio*WIDTH; 
   float pW = W; // previous W
 
     
@@ -122,33 +115,33 @@ void setupFrames2(float WIDTH) {
 
       x = x + W;
       pW = W;
-      W = goldenRatio*W;
+      W = inverseGoldenRatio*W;
     } 
     else if ( i % 4 == 2) {
 
-      x = x +  goldenRatio*(pW - W);
+      x = x +  inverseGoldenRatio*(pW - W);
       y = y + W;
       pW = W;
-      W = goldenRatio*W;
+      W = inverseGoldenRatio*W;
     }
     else if ( i % 4 == 3) {
 
-      x = x - goldenRatio*W;
+      x = x - inverseGoldenRatio*W;
       y = y + W;
-      y = y - goldenRatio*W;
-      W = goldenRatio*W;
+      y = y - inverseGoldenRatio*W;
+      W = inverseGoldenRatio*W;
     }
     else if ( i % 4 == 0) {
 
-      y = y - goldenRatio*W;
-      W = goldenRatio*W;
+      y = y - inverseGoldenRatio*W;
+      W = inverseGoldenRatio*W;
     }
 
     // compute width of square
-    // W = goldenRatio*W;
+    // W = inverseGoldenRatio*W;
 
     // scale factor to use inside frame for drawing
-    scale = goldenRatio*scale;
+    scale = inverseGoldenRatio*scale;
 
 
     sf = 2*sf;
@@ -160,26 +153,26 @@ void setupFrames2(float WIDTH) {
     if (i == frames.length - 1) {
       if (i % 4 == 0 ) {
        
-        frames[i].w =  frames[i].w/goldenRatio;
+        frames[i].w =  frames[i].w/inverseGoldenRatio;
       } 
       else if (i % 4 == 1) {
        
-        frames[i].h =  frames[i].h/goldenRatio;
+        frames[i].h =  frames[i].h/inverseGoldenRatio;
       } 
       else if (i % 4 == 2) {
        
         float xx = frames[i].x;
-        float ww = frames[i].w/goldenRatio;
-        float dx = ww/goldenRatio - ww;
-        frames[i].x = xx - dx*goldenRatio;
+        float ww = frames[i].w/inverseGoldenRatio;
+        float dx = ww/inverseGoldenRatio - ww;
+        frames[i].x = xx - dx*inverseGoldenRatio;
         frames[i].w = ww;
       } 
       else if (i % 4 == 3) {
   
         float yy = frames[i].y;
-        float ww = frames[i].w/goldenRatio;
-        float dy = ww/goldenRatio - ww;
-        frames[i].y = yy - dy*goldenRatio;
+        float ww = frames[i].w/inverseGoldenRatio;
+        float dy = ww/inverseGoldenRatio - ww;
+        frames[i].y = yy - dy*inverseGoldenRatio;
         frames[i].h = ww;
       }
     }
@@ -274,7 +267,7 @@ void setup () {
   port = new Serial(this, "/dev/tty.usbmodem1411", 9600); 
   port.bufferUntil('\n');
 
-  int WIDTH = int((1/goldenRatio)*HEIGHT);
+  int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
 
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
@@ -342,13 +335,13 @@ void displayFrames () {
 
     frames[i].display(M);
     frames[i].change(200);
-    M = goldenRatio*M;
+    M = inverseGoldenRatio*M;
   }
 }
 
 void manageFrameRate() {
 
-  float currentFrameRate = baseFrameRate + 7*sin(2*Pi*frameCount/20000);
+  float currentFrameRate = baseFrameRate + 7*sin(TWO_PI*frameCount/20000);
   frameRate(currentFrameRate);
 }
 
@@ -384,21 +377,31 @@ void nop() {
 } // dummy function, does nothing
 
 
-void parseSerialData() {
+void parseSerialData(int nFields) {
     
   String value[] = incomingMessage.split(",");
   
-    float radiusRead =  float(value[0]);
-    if (radiusRead > 0) {
-      MaxRadius = radiusRead;
-    } 
+    // Example of data format for serial data (a string):
+    // "S,123.4,8,9"
+    // In this case nFields = 3
+    // The first field is "S".  Its presence confirms
+    // the validity of the string received.
     
-    float speedRead = float(value[1]);
-    if (speedRead > 0) {
-      baseFrameRate = speedRead;  
-    } 
-
-   println("serial port - radius = "+radiusRead+", "+"speed = "+speedRead);
+    if (value.length == nFields) {
+  
+      float radiusRead =  float(value[1]);
+      if (radiusRead > 0) {
+        MaxRadius = radiusRead;
+      } 
+      
+      float speedRead = float(value[2]);
+      if (speedRead > 0) {
+        baseFrameRate = speedRead;  
+      } 
+  
+     println("serial port - radius = "+radiusRead+", "+"speed = "+speedRead);
+     
+    }
   
 }
 
@@ -407,7 +410,7 @@ void draw () {
 
   if (incomingMessage.length() > 0) {
     if (incomingMessage.charAt(0) == 'S') {
-      parseSerialData();
+      parseSerialData(NFIELDS);
     }
   }
   
