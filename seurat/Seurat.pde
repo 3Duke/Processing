@@ -1,36 +1,40 @@
 
+// Serial port
 import processing.serial.*;
 Serial port;
+String USB_PORT = "/dev/tty.usbmodem1411";
 String incomingMessage = "";
 int NFIELDS = 3;
 
-// Global settings:
-int HEIGHT = 500; // 700 for macbook air, 1390 for iMac
-float displayScale = HEIGHT/700;
-int NumberOfFrames = 11;
-int displayMode = 1;  // 1 for classic, 2 for diagonal
-
-PFont font; 
-
+// Frames and Controls
 JCFrame [] frames;
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
 Slider radiusSlider, speedSlider;
 
+// Switches
 boolean controlsActive;
 boolean acceptText;
 boolean acceptFileName;
 boolean acceptDisplayString;
 
+// Text display
+PFont font;
 String typedText = "";
-String fileName = "frame";
 String displayString = "art";
-
-int count;
-float inverseGoldenRatio = 0.618;
 String message = "";
 String previousMessage = "";
+
+int count;
+String fileName = "frame";
+
+// Global settings:
+int HEIGHT = 500; // displayHeight; // 700 for macbook air, 1390 for iMac
+float displayScale = HEIGHT/700;
+int NumberOfFrames = 11;
+int displayMode = 1;  // 1 for classic, 2 for diagonal 
+
 
 // ARTISTIC PARAMETERS
 float MAXRADIUS = 240;
@@ -38,9 +42,9 @@ float INITIAL_RADIUS = 24;
 float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
+
 // CONSTANTS
-
-
+float inverseGoldenRatio = 0.618;
 
 void setupFrames1(float WIDTH) {
 
@@ -265,7 +269,7 @@ void setColorTori2(float r1, float g1, float b1, float r2, float g2, float b2) {
 
 void setup () {
   
-  port = new Serial(this, "/dev/tty.usbmodem1411", 9600); 
+  port = new Serial(this, USB_PORT, 9600); 
   port.bufferUntil('\n');
 
   int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
