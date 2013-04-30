@@ -27,7 +27,7 @@ void loop()
   
   
   
-  Serial.println(String(potValue)+","+lightValue+","+joystickX);
+  Serial.println("S,"+String(potValue)+","+String(joystickX));
 
   delay(10);
 }
