@@ -33,8 +33,9 @@ String message = "";
 String previousMessage = "";
 
 // ARTISTIC PARAMETERS
-float MAXRADIUS = 24;
-float MaxRadius = MAXRADIUS; // 60; // maximum particle radius
+float MAXRADIUS = 240;
+float INITIAL_RADIUS = 24;
+float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
 // CONSTANTS
@@ -390,11 +391,13 @@ void parseSerialData(int nFields) {
     if (value.length == nFields) {
   
       float radiusRead =  float(value[1]);
+      radiusRead = map(radiusRead, 0, 1023, 0, MAXRADIUS);
       if (radiusRead > 0) {
         MaxRadius = radiusRead;
       } 
       
       float speedRead = float(value[2]);
+      speedRead = map(speedRead, 512, -512, 0, 100);
       if (speedRead > 0) {
         baseFrameRate = speedRead;  
       } 
