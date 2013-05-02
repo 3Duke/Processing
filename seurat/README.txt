@@ -28,8 +28,8 @@ When the controls are active, you may
 To save the current frame, press the SHIFT key.
 
 Press the TAB key to enter text.
-  - press CONTROL to set the word displayed to the entered text.
-  - press COMMMAND to set the filename to the entered text
+  - press COMMAND to set the word displayed to the entered text.
+  - press CONTROL to set the filename to the entered text
 
 Press the OPTION key to pause/run the program.
 

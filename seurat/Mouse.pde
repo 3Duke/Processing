@@ -19,23 +19,23 @@ void manageControl() {
    }
 
 }
+
+void setColoBoxl1( color c ) {
+  
+  
+}
   
 void manageColorWheel1() {
   
     if (colorWheel1.mouseInside()) {
      
-    colorMode(HSB, 360, 1, 1);
-    color c1 = color(colorWheel1.angle(), colorWheel1.radius(), 1);
-    
-    
-    println( "rodius = "+ colorWheel1.radius() + ", angle =  rrr" + colorWheel1.angle());
-    colorMode(RGB, 255, 255, 255, 255);
-    colorBox1.r = red(c1);
-    colorBox1.g = green(c1);
-    colorBox1.b = blue(c1);
-    colorBox1.a = alpha(c1);
-    println( red(c1)+", "+green(c1)+", "+blue(c1)+", "+alpha(c1));
-    println("");
+      colorMode(HSB, 360, 1, 1);
+      
+      color c1 = color(colorWheel1.angle(), colorWheel1.radius(), 1);
+      
+      colorBox1.setColor(c1);
+     
+      colorMode(RGB, 255, 255, 255, 255);
     
    } // end if
 }
@@ -44,20 +44,15 @@ void manageColorWheel2() {
   
    
    if (colorWheel2.mouseInside()) {
+       
+      colorMode(HSB, 360, 1, 1);
+      
+      color c2 = color(colorWheel2.angle(), colorWheel2.radius(), 1);
+      
+      colorBox2.setColor(c2);
      
-    colorMode(HSB, 360, 1, 1);
-    color c2 = color(colorWheel2.angle(), colorWheel2.radius(), 1);
-    
-    
-    println( colorWheel2.radius() + ", " + colorWheel2.angle());
-    colorMode(RGB, 255, 255, 255, 255);
-    colorBox2.r = red(c2);
-    colorBox2.g = green(c2);
-    colorBox2.b = blue(c2);
-    colorBox2.a = alpha(c2);
-    println( red(c2)+", "+green(c2)+", "+blue(c2)+", "+alpha(c2));
-    println("");
-    
+      colorMode(RGB, 255, 255, 255, 255);
+      
    } // end if
 }
 
@@ -88,7 +83,7 @@ void keyPressed() {
   
   if (key == ENTER) {  // change color scheme 
       
-      setColorTori2(colorBox1.r, colorBox1.g, colorBox1.b, colorBox2.r, colorBox2.g, colorBox2.b);
+      setColorTori2(colorBox1, colorBox2);
    
   }
   
@@ -100,7 +95,7 @@ void keyPressed() {
        typedText = "";
        textSize(36);
        
-       println("Accepting text");
+      //  println("Accepting text");
        
     }
      
@@ -155,7 +150,7 @@ void keyPressed() {
      acceptText = false;
      
      textSize(18); 
-     if (typedText != "") {
+     if (typedText != "") { // XXXX
        displayString = typedText;
        println("COMMAND, displayString set: "+displayString);  
      } 

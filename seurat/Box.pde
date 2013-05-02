@@ -11,6 +11,16 @@ class Box {
  }
  
  
+ void setColor( color c ) {
+   
+    colorMode(RGB, 255, 255, 255, 255);
+    
+    r = red(c);
+    g = green(c);
+    b = blue(c);
+    a = alpha(c);
+ }
+ 
  void display() {
    
    rectMode(CORNERS);
