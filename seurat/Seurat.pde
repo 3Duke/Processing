@@ -14,6 +14,7 @@ int switchA,  switchB, switchC;
 
 // Frames and Controls
 JCFrame [] frames;
+int NUMBER_OF_PARTICLES = 4;  // number of particles in each frame
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
@@ -69,7 +70,7 @@ void setupFrames1(float WIDTH) {
 
   // first frame
   float sf = 1.0;
-  frames[0] = new JCFrame(x, y, W, W, 6, scale, sf);
+  frames[0] = new JCFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
 
   // the other frames
   for (int i = 1; i < frames.length; i++) {
@@ -92,10 +93,10 @@ void setupFrames1(float WIDTH) {
     sf = 2*sf;
 
     if (i < frames.length - 1) {
-      frames[i] = new JCFrame(x, y, W, W, 6, scale, sf);
+      frames[i] = new JCFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
     } 
     else {
-      frames[i] = new JCFrame(x, y, W/inverseGoldenRatio, W, 6, scale, sf);
+      frames[i] = new JCFrame(x, y, W/inverseGoldenRatio, W, NUMBER_OF_PARTICLES, scale, sf);
     }
     frames[i].phase = 200*i;  // 200*i ==> 10*i for test
   } // end for
@@ -118,7 +119,7 @@ void setupFrames2(float WIDTH) {
     
   // first frame
   float sf = 1.0;
-  frames[0] = new JCFrame(x, y, W, W, 6, scale, sf);
+  frames[0] = new JCFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
 
   // the other frames
   for (int i = 1; i < frames.length; i++) {
@@ -160,7 +161,7 @@ void setupFrames2(float WIDTH) {
     sf = 2*sf;
 
 
-    frames[i] = new JCFrame(x, y, W, W, 6, scale, sf);
+    frames[i] = new JCFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
  
 
     if (i == frames.length - 1) {
@@ -606,8 +607,8 @@ void parseSerialData(int n_serial_inputs) {
       particleSize = float(value[1]);
       speedRead = float(value[2]);
       
-      particleSize = map(particleSize, 0, 1023, 0, 200);
-      speedRead = map(speedRead, 0, 1023, 0, 200);
+      particleSize = map(particleSize, 0, 1023, 1, 300);
+      speedRead = map(speedRead, 0, 1023, 1, 300);
      }
    
      
