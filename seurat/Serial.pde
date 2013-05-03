@@ -53,7 +53,7 @@ void reactToData ()
 {         
     
   colorMode(HSB, 360, 1, 1);   
-  color c = color(colorAngle1, 1, 1);
+  // color c = color(colorAngle1, 1, 1);
   // message = "angle = "+colorAngle1+"speed = "+speedRead +"    A = "+ switchA+" B = "+switchB+" C = "+switchC;      
   colorMode(RGB, 255, 255, 255, 255);
    
@@ -94,5 +94,3 @@ void serialEvent(Serial port) {
   // println(incomingMessage);
 
 }
-////////
-
