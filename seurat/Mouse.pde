@@ -21,13 +21,13 @@ void mousePressed() {
 
 void keyPressed() {
    
-  if (key == ' ') { // toggle contrals
+  if ((key == ' ') && (!controlsActive2)) { // toggle contrals
   
     controlsActive = !controlsActive;
     
   }
   
-  if (key == 'c') { // toggle contrals2
+  if ((key == 'c') && (!controlsActive)) { // toggle contrals2
   
     controlsActive2 = !controlsActive2;
     
