@@ -1,6 +1,7 @@
 
-To activate controls, press the space bar.
-To hide the controls, press the space bar again.
+There are two banks of controla, 1, and 2.
+Press 1 to activate/deactivate the first bank.
+Press 2 to activate/deactivate the second bank
 
 When the controls are active, you may
 
@@ -18,8 +19,6 @@ When the controls are active, you may
     the initial color, the second one the final 
     one.  
    
-    To confirm the color choice, press the return key.
-
     Colors change by umiform motion on a
     geodesic in RGB space that connects the initial
     and final colors.
@@ -27,9 +26,9 @@ When the controls are active, you may
 
 To save the current frame, press the SHIFT key.
 
-Press the TAB key to enter text.
-  - press COMMAND to set the word displayed to the entered text.
-  - press CONTROL to set the filename to the entered text
+Press Box "f" to enter the file name under which Seurat will save files.
+Press the "f" key again to confirm your entry.  Proceed in the same 
+way with the "t" key: it is for etnering text to be displayed onte screen.
 
 Press the OPTION key to pause/run the program.
 

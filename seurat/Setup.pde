@@ -163,6 +163,7 @@ void setFrameQualities (){
 
 void setLevelRangeOfFrames(float min, float max) {
  
+  println("setLevelRangeOfFrames                                                                                                                                                                         ");
  for (int i = 0; i < frames.length; i++)  {
   
     frames[i].levelMin = min;
@@ -172,7 +173,7 @@ void setLevelRangeOfFrames(float min, float max) {
 }
 
 void setAlphaOfFrames(float a) {
-  
+ 
   for (int i = 0; i < frames.length; i++) {
     
     frames[i].a = a;
@@ -200,12 +201,9 @@ void setColorTori() {
   b2 = b1 + k*db;
 
  /////////UUUU
-  colorBox1.r = r1; 
-  colorBox1.g = g1; 
-  colorBox1.b = b1;
-  colorBox2.r = r2; 
-  colorBox2.g = g2; 
-  colorBox2.b = b2;
+ colorBox1.setRGBAColor(r1, g1, b1, 255);
+ colorBox2.setRGBAColor(r2, g2, b2, 255);
+ 
 
 
   for (int i = 0; i < frames.length; i++) {
@@ -228,8 +226,11 @@ void setColorTori2(Box box1, Box box2) {
 
   float r1, g1, b1, r2, g2, b2;
   
-  r1 = box1.r; g1 = box1.g; b1 = box1.b;
-  r2 = box2.r; g2 = box2.g; b2 = box2.b;
+  color bg1 = box1.bg;
+  color bg2 = box2.bg;
+  
+  r1 = red(bg1); g1 = green(bg1); b1 = blue(bg1);
+  r2 = red(bg2); g2 = green(bg2); b2 = blue(bg2);
   // 
   for (int i = 0; i < frames.length; i++) {
     // frames[i].randomSetColor();

@@ -31,8 +31,9 @@ void displayFrames () {
   }
 }
 
-void manageFrameRate() {
-
+void manageFrameRate(float newFrameRate) {
+  // changes frame rate
+  baseFrameRate = newFrameRate;
   float currentFrameRate = baseFrameRate + 7*sin(TWO_PI*frameCount/20000);
   frameRate(currentFrameRate);
 }
@@ -46,62 +47,43 @@ void displayControls1 () {
 
     colorBox1.display(); 
     colorBox2.display();
+    
+    fileControlBox.display();
+    textControlBox.display();
 
     radiusSlider.display();
     speedSlider.display();
 
-    float radiusRead = radiusSlider.read();
-    if (radiusRead > 0) 
-    {
-      MaxRadius = radiusRead;
-    }
-    
-    float speedRead = speedSlider.read();
-    if (speedRead > 0) {
-      baseFrameRate = speedRead;
-    }
+    radiusSlider.read();
+    speedSlider.read();
+   
 }
 
 void displayControls2() {
   
    alphaSlider.display();
    alphaSlider.read();
-   setAlphaOfFrames(alphaSlider.value);
    
    minLevelSlider.display();
-   float min = minLevelSlider.read();
    maxLevelSlider.display();
-   float max = maxLevelSlider.read();
-   
-   if (max < min) {
-     max = min;
-     maxLevelSlider.value = max;
-     maxLevelSlider.display();
-   }
-   
-   setLevelRangeOfFrames(min, max);
   
-   
-   
-   
-   
-
 }
 
 void hideControls () {
   
-  fill(0);
-  rectMode(CORNER);
-  // rect(0,0, WIDTH, controlMargin);
-  rect(0,HEIGHT - controlMargin, WIDTH, controlMargin);
-  rect(100,100,100,100);
-  
+  if (screenControlsOn) {
+    fill(0);
+    rectMode(CORNER);
+    // rect(0,0, WIDTH, controlMargin);
+    rect(0,HEIGHT - controlMargin + displayMargin -10, displayWidth, 200);
+  }
+
 }
 
 
 void displayControls() {
   
-  
+
   if (switchA == 1) { colorBox1.display();   colorBox2.display();  }
   
   if (controlsActive) { displayControls1(); } 

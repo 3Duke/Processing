@@ -4,7 +4,12 @@ void setup () {
   
   smooth();
   
-  HEIGHT = displayHeight - displayMargin;  // Set HEIGHT to some value manually if you wish
+  if (screenControlsOn) {
+  
+    HEIGHT = displayHeight - displayMargin;  // Set HEIGHT to some value manually if you wish
+  
+  }
+  
   int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
   
   
@@ -14,7 +19,15 @@ void setup () {
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
 
-  size(WIDTH - controlMargin, HEIGHT);
+  if (screenControlsOn) {
+    
+    size(WIDTH - controlMargin, HEIGHT);
+    
+  } else {
+    
+    size(WIDTH, HEIGHT);
+    
+  }
 
   frameRate(baseFrameRate); 
 
@@ -32,33 +45,42 @@ void setup () {
   }
 
 
-
-  setupFrames2(WIDTH-controlMargin);
+  if (screenControlsOn) {
+    setupFrames2(WIDTH-controlMargin);
+  } else {
+    setupFrames2(WIDTH);
+  }
   
-  colorBox1 = new Box(20, height - 80, 30, 30);
-  colorBox2 = new Box(20, height - 40, 30, 30);
+  colorBox1 = new Box(20, height - 45, 30, 30, "");
+  colorBox2 = new Box(20, height - 5, 30, 30, "");
   setColorTori();
-
+  
+  fileControlBox = new Box(960, height - 45, 30, 30, "F");
+  textControlBox = new Box(960, height - 5, 30, 30, "T");
+  fileControlBox.setRGBAColor(0,0,200,255);
+  textControlBox.setRGBAColor(0,0,200,255);
+  
+  
   String particleLabels[] = { 
     "C", "T", "Q", "L", "W"
   };
   
-  control = new Control(270, height - 20, 150, 40, 5, particleLabels); 
+  control = new Control(270, height - 20, 150, 40, particleLabels.length, particleLabels); 
   colorWheel1 = new ColorWheel(100, height - 40, 70, "Color 1");
   colorWheel2 = new ColorWheel(180, height - 40, 70, "Color 2");
  
-  speedSlider = new Slider(480, height - 20, 200, 40, 30, "fps", "Framerate");
-  radiusSlider = new Slider(720, height - 20, 200, 40, 400, "r", "Radius");
+  speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
+  radiusSlider = new Slider(720, height - 20, 200, 40, MAXRADIUS, "r", "Radius");
   
-  alphaSlider = new Slider(20, height - 40, 200, 40, 20, "r", "Alpha");
-  maxLevelSlider = new Slider(460, height - 40, 200, 40, 1.0, "r", "Maxumum Level");
-  minLevelSlider = new Slider(240, height - 40, 200, 40, 1.0, "r", "Minimum Level");
+  alphaSlider = new Slider(20, height - 25, 200, 40, maxAlpha, "a", "Alpha");
+  maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Level");
+  minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Level");
   
-  speedSlider.value = baseFrameRate;
-  radiusSlider.value = INITIAL_RADIUS;
-  alphaSlider.value = frameAlpha;
-  maxLevelSlider.value = maxLevel;
-  minLevelSlider.value = minLevel;
+  speedSlider.setValue(baseFrameRate);  
+  radiusSlider.setValue(INITIAL_RADIUS);
+  alphaSlider.setValue(frameAlpha);
+  maxLevelSlider.setValue(maxLevel);
+  minLevelSlider.setValue(minLevel);
   
 
   controlsActive = false;
@@ -66,6 +88,7 @@ void setup () {
   acceptDisplayString = false;
   acceptFileName = false;
   acceptText = false;
+  acceptFileName = false;
 
   background(0);
 }
@@ -85,7 +108,7 @@ void draw () {
   
   
   
-  if (!acceptText) {
+  if ((!acceptText) && (!acceptFileName)) {
     count++;
     
     //////////////////////  
@@ -94,18 +117,18 @@ void draw () {
     displayFrames();
     displayMessage();
     
-    manageFrameRate();
+    // manageFrameRate();
   }
 
-  if (acceptText) {
+  if ((acceptText) || (acceptFileName)) {
     text(typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
   }
   
   if (switchA == 1) {
-      println("A: ON");
+      // println("A: ON");
   } else {
     
-      println("A: OFF");
+      // println("A: OFF");
   }
 
 }  // end draw

@@ -82,14 +82,11 @@ class Control extends Widget {
   
   int segmentSelected() {
     
-    float x = super.read();
+    float x = super.readX();
     
     if (x == -1) { return -1; }
     
-    int n = int(x/w);
-    
-    println("NNNN = "+n);
-    println("XXXX = "+x);
+    int n = int(nSegments*x/w);
     
     return n;
     
@@ -105,9 +102,15 @@ class Control extends Widget {
      if (segmentSelected  > -1) 
      {
        highLightSegment(segmentSelected);
+       return segmentSelected;
+       
+     } else {
+       
+        return -1;
+        
      }
      
-     return segmentSelected;
+    
   
   }
   

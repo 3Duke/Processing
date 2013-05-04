@@ -39,12 +39,15 @@ class ColorWheel extends Widget {
        
        colorMode(HSB, 360, 1, 1);
       
-       color c = color(colorWheel1.angle(), colorWheel1.radius(), 1);
+       color c = color(readAngle(), readRadius(), 1);
       
        B.setColor(c);
      
        colorMode(RGB, 255, 255, 255, 255);
+       
+       println("Box, r = "+nfc(red(B.bg),1)+", g = "+nfc(green(B.bg),1)+", b = "+nfc(blue(B.bg),1));
      }
+     
   }   
 
    
@@ -66,48 +69,6 @@ class ColorWheel extends Widget {
     }
      return value;
   } // 
-  
-
-
-  float angle() {
-    
-    
-   float xm = mouseX; float ym = mouseY;
-    
-    float tan_ = -(ym - y)/(xm - x);  // infinities?
-    
-   float angle = 360*atan(tan_)/(2*3.14159265);
-   
-   if ((ym - y > 0) && (xm - x > 0)) { // Quadran1 IV
-     
-     angle = 360 + angle;
-   }
-   
-   if ((ym - y > 0) && (xm - x < 0)) { // Quadrant III
-     
-     angle = 180 + angle;
-   }
-   
-   if ((y - ym > 0) && (xm - x < 0)) { // Quadrant II
-     
-     angle =  180 + angle;
-   }
-   
-   return angle; 
-  }
-  
-
-  
-  float radius() {
-    
-   float xm = mouseX; float ym = mouseY;
-   
-   float dx = xm - x; float dy = ym - y;
-   
-   float r2 = dx*dx + dy*dy;
-    
-    return 2*sqrt(r2)/r;
-  }
   
 
  

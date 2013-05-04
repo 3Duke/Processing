@@ -77,10 +77,9 @@ void reactToData ()
     }
     
     if (speedRead > 0) {
+
+      manageFrameRate(speedRead);
       
-      baseFrameRate = speedRead;
-      manageFrameRate();
-      // frameRate(baseFrameRate);
     }
   }
   

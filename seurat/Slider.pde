@@ -3,7 +3,7 @@ class Slider extends Widget {
 
   String label;
   float maxValue;
-  float value;
+  float value, savedValue;
   color indicatorColor;
 
 
@@ -26,7 +26,13 @@ class Slider extends Widget {
     
     rectMode(CORNER);
      
-    float displayValue = w*value/maxValue;
+    float displayValue;
+    if (mouseInside()) {
+       displayValue = w*value/maxValue;
+    } else {
+        displayValue = w*savedValue/maxValue;
+    }
+      
     fill(indicatorColor);
     rect(x, y, displayValue, -h); 
     
@@ -43,12 +49,13 @@ class Slider extends Widget {
 
   float read() {
 
-    float val = super.read();
+    float val = super.readX();
     
     if (val == -1) { return -1; }
 
       val = val/w;
       fill(255,0,0, 128);
+      rectMode(CORNER);
       rect(x, y, w*val, -h);
       
       value = maxValue*val;
@@ -60,4 +67,16 @@ class Slider extends Widget {
   }
  
   
+  void setValue(float val) {
+    
+    value = val;
+    savedValue = val;
+    
+  }
+  
+  void saveValue() {
+    
+    savedValue = value;
+    
+  }
 }

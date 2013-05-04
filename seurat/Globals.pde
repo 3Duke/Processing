@@ -26,9 +26,11 @@ JCFrame [] frames;
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
+Box fileControlBox, textControlBox;
 Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
 
 // Switches
+boolean screenControlsOn = true;
 boolean controlsActive, controlsActive2;
 boolean acceptText;
 boolean acceptFileName;
@@ -55,9 +57,10 @@ int displayMargin = 60;
 int NumberOfFrames = 11;
 int displayMode = 1;  // 1 for classic, 2 for diagonal 
 int NUMBER_OF_PARTICLES = 4  ;  // number of particles in each frame
-float MAXRADIUS = 240;
-float INITIAL_RADIUS = 24;
+float MAXRADIUS = 180;
+float INITIAL_RADIUS = 36;
 float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
+float maxAlpha = 10.0;
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
 float maxLevel = 1.0;

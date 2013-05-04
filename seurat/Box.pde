@@ -1,36 +1,41 @@
-class Box {
+class Box extends Widget {
   
- float x, y, w, h;
  float r, g, b, a;
+ String text;
 
- Box(float x_, float y_, float w_, float h_) {
+ Box(float x_, float y_, float w_, float h_, String text_) {
   
-   x = x_; y = y_; w = w_; h = h_;
+   super(x_, y_, w_, h_, "");
    r = 255; g = 0; b = 0; a = 255;
+   text = text_;
    
- }
- 
- 
- void setColor( color c ) {
-   
-    colorMode(RGB, 255, 255, 255, 255);
-    
-    r = red(c);
-    g = green(c);
-    b = blue(c);
-    a = alpha(c);
  }
  
  void display() {
    
-   rectMode(CORNERS);
-   noStroke();
+   super.display();
    
-   fill(r,g,b,a);
-   // println("box ("+ frameCount + ") :"+x+", "+y+", "+w+", "+h);
-   rect(x,  y, x + w, y + h); 
-    
+   fill(255);
+   textSize(12);
+   text(text, x + 10, y - 12);
+   
+   
  }
+ 
+ void setColor( color c ) {
+    colorMode(RGB);
+    bg = c;
+ }
+ 
+
+ 
+ void setRGBAColor( float r, float g, float b, float a ) {
+   
+    colorMode(RGB, 255, 255, 255, 255);
+    
+    bg = color(r,g,b,a);
+ }
+ 
   
   
 }
