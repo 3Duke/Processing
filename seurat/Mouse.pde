@@ -6,19 +6,18 @@ float squaredDistance(float a, float b, float c, float d) {
   
 }
  
-
-void mousePressed() {
  
-  if (controlsActive) 
-  {
-    
-     println("Mouse pressed");
-     int particleType = control.react();
+void manageParticleType() {
+  
+  int particleType = control.react();
      if (particleType > -1) {
        setParticleTypeInframes( particleType );
      }
-     
-     colorWheel1.setColorOfBox(colorBox1);
+}
+
+void manageColors() {
+  
+  colorWheel1.setColorOfBox(colorBox1);
      colorWheel2.setColorOfBox(colorBox2);
      
      if ( (colorWheel1.mouseInside()) || (colorWheel2.mouseInside() )) {
@@ -27,19 +26,29 @@ void mousePressed() {
        setColorTori2(colorBox1, colorBox2);
        
      }
-     
-     if (speedSlider.mouseInside())  
+}
+
+void manageFrameRate() {
+  
+   if (speedSlider.mouseInside())  
     {
       manageFrameRate( speedSlider.read() );
       speedSlider.saveValue();
     }
     
-    if (radiusSlider.mouseInside())  
+}
+
+void manageRadius() {
+  
+  if (radiusSlider.mouseInside())  
     {
       MaxRadius =  radiusSlider.read();
       radiusSlider.saveValue();
     }
-    
+}
+
+void manageFileControl() {
+  
     if (fileControlBox.mouseInside()) {
       
       acceptFileName = !acceptFileName;
@@ -54,9 +63,11 @@ void mousePressed() {
         fileName = typedText.trim();
       }
     }
-    
-    
-    if (textControlBox.mouseInside()) {
+}
+
+void manageTextInput() {
+  
+  if (textControlBox.mouseInside()) {
       
       acceptText = !acceptText;
     
@@ -70,19 +81,21 @@ void mousePressed() {
         displayString = typedText.trim();
       }
     }
-   
-  }  // controlsActive
+}
+
+void manageAlpha() {
   
-  if (controlsActive2) {
-    
-    if (alphaSlider.mouseInside()) {
+  if (alphaSlider.mouseInside()) {
      
      alphaSlider.read();
      alphaSlider.saveValue();
      setAlphaOfFrames(alphaSlider.value); 
     }
-    
-    if (minLevelSlider.mouseInside() ) {
+}
+
+void manageMinLevel() {
+  
+  if (minLevelSlider.mouseInside() ) {
         
        float min = minLevelSlider.read();
        float max = maxLevelSlider.savedValue;
@@ -99,8 +112,11 @@ void mousePressed() {
        setLevelRangeOfFrames(min, max);  
       
     }
-    
-    if (maxLevelSlider.mouseInside() ) {
+}
+
+void manageMaxLevel() {
+  
+  if (maxLevelSlider.mouseInside() ) {
         
      float max = maxLevelSlider.read();
      float min = minLevelSlider.savedValue;
@@ -115,7 +131,26 @@ void mousePressed() {
       
        
        setLevelRangeOfFrames(min, max); 
-    }    
+    } 
+}
+
+void mousePressed() {
+ 
+  if (controlsActive) 
+  {  
+     manageParticleType();
+     manageColors();
+     manageFrameRate();
+     manageRadius();
+     manageFileControl();
+     manageTextInput();
+  } 
+  
+  if (controlsActive2) 
+  {
+    manageAlpha();
+    manageMinLevel();
+    manageMaxLevel();
   }
 }
 
@@ -132,29 +167,18 @@ void keyPressed() {
     controlsActive2 = !controlsActive2;
     
   }
-  
-  if (key == ENTER) {  // change color scheme 
-      
-      setColorTori2(colorBox1, colorBox2);
-   
-  }
-  
-  
-  
+
   
   if (key == CODED) {
     
- 
-    
-    if (keyCode == SHIFT) {
-      
-      
+    if (keyCode == SHIFT) 
+    {
        println("Saved frame "+frameCount+" as "+fileName);
        saveFrame(fileName+"-######.png");
     }
     
-    if (keyCode == ALT) {
-      
+    if (keyCode == ALT) 
+    {
        acceptText = !acceptText;
        
        if (acceptText) {
@@ -162,42 +186,7 @@ void keyPressed() {
        } else {
          println("Continue ...");
        }
-       textSize(18); 
-     
+       textSize(18);  
     } 
-    
-    if ((keyCode == COMMAND) && (key == 'f')) {
-      println("cmd-f");
-    }
-     
-    if (  keyCode == CONTROL ) {
-    
-     acceptText = false;
-     
-     if (typedText != "") {
-       fileName = typedText;
-        println("CONTROL, fileName set: "+fileName);
-     }
-     textSize(18); 
-    
-  
-    
-    }
-     
-   
-   if ( keyCode == COMMAND  ) {
-    
-     acceptText = false;
-     
-     textSize(18); 
-     if (typedText != "") { // XXXX
-       displayString = typedText;
-      
-     } 
-   }
-   
-    
-
   }
-
 }
