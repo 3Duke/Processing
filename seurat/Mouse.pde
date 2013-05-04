@@ -18,54 +18,16 @@ void manageControl() {
    }
 
 }
-  
-  /*
-void manageColorWheel1() {
-  
-    if (colorWheel1.mouseInside()) {
-     
-      colorMode(HSB, 360, 1, 1);
-      
-      color c1 = color(colorWheel1.angle(), colorWheel1.radius(), 1);
-      
-      colorBox1.setColor(c1);
-     
-      colorMode(RGB, 255, 255, 255, 255);
-    
-   } // end if
-}
-
-void manageColorWheel2() {
-  
-   
-   if (colorWheel2.mouseInside()) {
-       
-      colorMode(HSB, 360, 1, 1);
-      
-      color c2 = color(colorWheel2.angle(), colorWheel2.radius(), 1);
-      
-      colorBox2.setColor(c2);
-     
-      colorMode(RGB, 255, 255, 255, 255);
-      
-   } // end if
-}
-*/
+ 
 
 void mousePressed() {
  
-  if (controlsActive) {
-     manageControl();
+  if (controlsActive) 
+  {
+     control.react();
      colorWheel1.setColorOfBox(colorBox1);
      colorWheel2.setColorOfBox(colorBox2);
-     // manageColorWheel1();
-     // manageColorWheel2();
-  }
-   
-}
-
-void manageSliders() {
-  
+  }  
 }
 
 void keyPressed() {

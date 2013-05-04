@@ -86,23 +86,15 @@ class Control {
   
   void react() {
     
-    
-    if ((mouseX > x) && (mouseY > y)) {
-      
-      // int segmentHit = -1;
-      
-      if ((mouseX < x + w) && (mouseY < y + h)) {
-        
-        display();
-    
-      
-      }// end if
-     
-     // return segmentHit;
-    } // end if
+     int segmentSelected = control.segmentSelected();
+     println("segment selected: " + segmentSelected );
+       
+     if (segmentSelected  > -1) {
+       highLightSegment(segmentSelected);
+       updateFrames(segmentSelected);
+     }
   
-  
-  } // end react
+  }
   
  
   
