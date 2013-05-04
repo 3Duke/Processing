@@ -65,5 +65,5 @@ float minLevel = 0.8;
 
 // CONSTANTS
 float inverseGoldenRatio = 0.618;
-
 int COMMAND = 157;
+float deg = 2*PI/360;

@@ -75,6 +75,8 @@ void displayControls2() {
    
    if (max < min) {
      max = min;
+     maxLevelSlider.value = max;
+     maxLevelSlider.display();
    }
    
    setLevelRangeOfFrames(min, max);

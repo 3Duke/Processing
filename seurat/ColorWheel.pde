@@ -1,17 +1,14 @@
 
 
-
- float deg = 2*PI/360;
-
-class ColorWheel {
+class ColorWheel extends Widget {
   
-  float x, y, r;
+  float r;
   
   
-  ColorWheel(float x_, float y_, float r_) {
+  ColorWheel(float x_, float y_, float r_, String caption_) {
     
-    x = x_; y = y_; r = r_;
-   
+    super(x_, y_, r_, r_, caption_);
+    r = r_;
     
   }
   
