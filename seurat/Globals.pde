@@ -47,6 +47,8 @@ String fileName = "frame";
 // Display
 int HEIGHT = 700; // displayHeight; // 700 for macbook air, 1390 for iMac
 float displayScale = HEIGHT/700;
+int controlMargin = 140;
+int displayMargin = 60;
 
 
 // ARTISTIC PARAMETERS

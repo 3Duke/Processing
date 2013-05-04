@@ -4,16 +4,17 @@ void setup () {
   
   smooth();
   
-  HEIGHT = displayHeight - 80;  // Set HEIGHT to some value manually if you wish
+  HEIGHT = displayHeight - displayMargin;  // Set HEIGHT to some value manually if you wish
+  int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
+  
+  
   port = new Serial(this, USB_PORT, 9600); 
   port.bufferUntil('\n');
-
-  int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
 
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
 
-  size(WIDTH, HEIGHT);
+  size(WIDTH - controlMargin, HEIGHT);
 
   frameRate(baseFrameRate); 
 
@@ -32,7 +33,7 @@ void setup () {
 
 
 
-  setupFrames2(WIDTH);
+  setupFrames2(WIDTH-controlMargin);
   
   colorBox1 = new Box(20, height - 80, 30, 30);
   colorBox2 = new Box(20, height - 40, 30, 30);

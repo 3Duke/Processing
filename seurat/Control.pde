@@ -46,15 +46,13 @@ class Control extends Widget {
     fill(255,0,0,200);
     float ww = w/nSegments;
     float xx = x + n*ww;
-   
-    rectMode(CORNERS);
-    rect(xx, y, xx + ww, y + h
-    );
+
+    rect(xx, y, ww, -h);
     
   }
   
   
-  int segmentSelected() {
+  int segmentSelected0() {
     
     int segmentHit = -1;
     
@@ -81,6 +79,22 @@ class Control extends Widget {
     return segmentHit;
     
   } // end segmentSelected
+  
+  int segmentSelected() {
+    
+    float x = super.read();
+    
+    if (x == -1) { return -1; }
+    
+    int n = int(x/w);
+    
+    println("NNNN = "+n);
+    println("XXXX = "+x);
+    
+    return n;
+    
+  } 
+  
   
   int react() 
   {

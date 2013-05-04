@@ -88,15 +88,27 @@ void displayControls2() {
 
 }
 
+void hideControls () {
+  
+  fill(0);
+  rectMode(CORNER);
+  // rect(0,0, WIDTH, controlMargin);
+  rect(0,HEIGHT - controlMargin, WIDTH, controlMargin);
+  rect(100,100,100,100);
+  
+}
+
 
 void displayControls() {
   
   
   if (switchA == 1) { colorBox1.display();   colorBox2.display();  }
-
-  if (controlsActive) { displayControls1(); }  
   
-  if (controlsActive2) { displayControls2(); }  
+  if (controlsActive) { displayControls1(); } 
+  
+  if (controlsActive2) { displayControls2(); } 
+ 
+  if ((!controlsActive) && (!controlsActive2)) { hideControls(); }
   
   
 }

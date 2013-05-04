@@ -43,12 +43,11 @@ class Slider extends Widget {
 
   float read() {
 
-    float val = -1;
-    //   && (mouseY < y - h)
-    if ( (mouseX > x) && ( mouseX < x + w) && (mouseY > y - h) ) {
-      
+    float val = super.read();
+    
+    if (val == -1) { return -1; }
 
-      val = (mouseX - x)/w;
+      val = val/w;
       fill(255,0,0, 128);
       rect(x, y, w*val, -h);
       
@@ -56,24 +55,9 @@ class Slider extends Widget {
       fill(255);
       textSize(12);
       text(label +": "+nfc(value,1), x+10, y-16);
-     
-    }
    
     return value;
   }
-  
-  /*
-  void displayValue(float val) {
-    
-      fill(255,0,0, 128);
-      rect(x, y, w*value, -h);
-      
-      value = maxValue*value;
-      fill(255);
-      textSize(12);
-      text(label +": "+nfc(value,1), x+10, y-16);
-
-  }
-  */
+ 
   
 }
