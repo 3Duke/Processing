@@ -84,15 +84,18 @@ class Control {
     
   } // end segmentSelected
   
-  void react() {
+  int react() 
+  {
     
      int segmentSelected = control.segmentSelected();
      println("segment selected: " + segmentSelected );
        
-     if (segmentSelected  > -1) {
+     if (segmentSelected  > -1) 
+     {
        highLightSegment(segmentSelected);
-       updateFrames(segmentSelected);
      }
+     
+     return segmentSelected;
   
   }
   

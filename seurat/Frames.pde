@@ -148,20 +148,20 @@ class JCFrame {
       rect(x, y, x + w, y + h);
    
       
-   if (frameCount > phase) {
+   if (frameCount > phase) 
+   {
       for(int i = 0; i < particles.length ; i++) {
         particles[i].change(M);  // M = maximum particle radius
-        particles[i].display();
-    
+        particles[i].display();    
       }
     }
-    
-   
-  }
-}
+  }  // display
+  
+  
+} // Frame
 
 
-void updateFrames(int particleType) {
+void setParticleTypeInframes(int particleType) {
  
  for(int i = 0; i < frames.length; i++) {
   

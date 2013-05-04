@@ -5,34 +5,21 @@ float squaredDistance(float a, float b, float c, float d) {
   return (a-c)*(a-c) + (b-d)*(b-d);
   
 }
-
-
-void manageControl() {
-  
-     int segmentSelected = control.segmentSelected();
-   println("segment selected: " + segmentSelected );
-     
-   if (segmentSelected  > -1) {
-     control.highLightSegment(segmentSelected);
-     updateFrames(segmentSelected);
-   }
-
-}
  
 
 void mousePressed() {
  
   if (controlsActive) 
   {
-     control.react();
+     int particleType = control.react();
+     setParticleTypeInframes( particleType );
+     
      colorWheel1.setColorOfBox(colorBox1);
      colorWheel2.setColorOfBox(colorBox2);
   }  
 }
 
 void keyPressed() {
-  
-  
    
   if (key == ' ') { // toggle contrals
   

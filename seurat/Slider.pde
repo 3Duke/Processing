@@ -4,11 +4,11 @@ class Slider {
 
   float x, y; // lower left corner
   float w, h; // with and height
-  String label;
+  String label, caption;
   float maxValue;
 
 
-  Slider(float x_, float y_, float w_, float h_, float mv_, String L_) {
+  Slider(float x_, float y_, float w_, float h_, float mv_, String L_, String caption_) {
 
     x = x_; 
     y = y_; 
@@ -16,6 +16,7 @@ class Slider {
     h = h_;
     maxValue = mv_;
     label = L_;
+    caption = caption_;
   }
 
   void display() {
@@ -23,6 +24,9 @@ class Slider {
     fill(0,0,255, 10);
     rectMode(CORNER);
     rect(x, y, w, -h);
+    fill(255,255,255);
+    textSize(12);
+    text(caption, x, y+15);
   }
 
   float read() {

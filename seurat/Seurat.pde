@@ -2,6 +2,8 @@
 
 void setup () {
   
+  smooth();
+  
   HEIGHT = displayHeight - 80;  // Set HEIGHT to some value manually if you wish
   port = new Serial(this, USB_PORT, 9600); 
   port.bufferUntil('\n');
@@ -44,8 +46,8 @@ void setup () {
   colorWheel1 = new ColorWheel(100, height - 40, 70);
   colorWheel2 = new ColorWheel(180, height - 40, 70);
  
-  speedSlider = new Slider(480, height - 20, 200, 40, 30, "fps");
-  radiusSlider = new Slider(720, height - 20, 200, 40, 400, "r");
+  speedSlider = new Slider(480, height - 20, 200, 40, 30, "fps", "Framerate");
+  radiusSlider = new Slider(720, height - 20, 200, 40, 400, "r", "Radius");
 
   controlsActive = false;
   acceptDisplayString = false;
@@ -122,5 +124,3 @@ void keyReleased() {
     }
   }
 }
-
-
