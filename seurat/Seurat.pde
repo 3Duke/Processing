@@ -42,13 +42,23 @@ void setup () {
     "C", "T", "Q", "L", "W"
   };
   
-  control = new Control(270, height - 60, 150, 40, 5, particleLabels); 
+  control = new Control(270, height - 20, 150, 40, 5, particleLabels); 
   colorWheel1 = new ColorWheel(100, height - 40, 70);
   colorWheel2 = new ColorWheel(180, height - 40, 70);
  
   speedSlider = new Slider(480, height - 20, 200, 40, 30, "fps", "Framerate");
   radiusSlider = new Slider(720, height - 20, 200, 40, 400, "r", "Radius");
+  
   alphaSlider = new Slider(20, height - 40, 200, 40, 20, "r", "Alpha");
+  maxLevelSlider = new Slider(240, height - 40, 200, 40, 1.0, "r", "Minimum Level");
+  minLevelSlider = new Slider(460, height - 40, 200, 40, 1.0, "r", "Maximum Level");
+  
+  speedSlider.value = baseFrameRate;
+  radiusSlider.value = INITIAL_RADIUS;
+  alphaSlider.value = frameAlpha;
+  maxLevelSlider.value = maxLevel;
+  minLevelSlider.value = minLevel;
+  
 
   controlsActive = false;
   controlsActive2 = false;

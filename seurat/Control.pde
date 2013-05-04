@@ -1,6 +1,6 @@
-class Control {
+class Control extends Widget {
   
-  int x, y, w, h; // position
+  // int x, y, w, h; // position
   
   int nSegments;
   
@@ -8,33 +8,31 @@ class Control {
   
   Control(int x_, int y_, int w_, int h_, int nSegments_, String L_[]) {
     
-    x = x_; y = y_; w = w_; h = h_;
+    super(x_, y_, w_, h_, "Shape");
+    
     nSegments = nSegments_;
     Labels = L_;
-    
     
   }
   
   
   void display() {
     
-    rectMode(CORNERS);
+    super.display();
+    
+    rectMode(CORNER);
     noStroke();
     textSize(18);
-    // println("CONTROL: " + x +", "+y+", "+w+", "+h);    
-    fill (0, 0, 255, 200);
-    noStroke();
-    rect(x, y, x + w, y + h);
-    
+   
     
     float xx = x;
     float dw = w/nSegments;
     for (int i = 0; i < nSegments; i++) {
       
       fill(i*255/nSegments, 0, 255, 255);
-      rect(xx, y, xx + dw, y + h);
+      rect(xx, y, dw,   -h);
       fill(255,255,255,200);
-      text(message(i), xx + 12, y + 27); 
+      text(message(i), xx + 12, y - 13); 
       xx = xx + dw;
     }
     

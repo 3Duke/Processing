@@ -140,14 +140,35 @@ void setupFrames2(float WIDTH) {
         frames[i].h = ww;
       }
     }
+    
+  } // end for
+  
+  setFrameQualities();
+  
+  // setLevelRangeOfFrames(0.2, 1.0);
+}
 
-
+void setFrameQualities (){
+  
+  for(int i = 0; i < frames.length; i++) {
+    
+    
     frames[i].phase = 200*i;  // 200*i ==> 10*i for test
-    frames[i].levelMin = 0.2;
-    frames[i].levelMax = 1.0;
+    frames[i].levelMin = minLevel;
+    frames[i].levelMax = maxLevel;
     frames[i].levelPhase = frames[i].phase*sqrt(2);
     frames[i].levelPeriod  = 20000/(i+1);
-  } // end for
+  }
+}
+
+void setLevelRangeOfFrames(float min, float max) {
+ 
+ for (int i = 0; i < frames.length; i++)  {
+  
+    frames[i].levelMin = min;
+    frames[i].levelMax = max;
+ } 
+  
 }
 
 void setAlphaOfFrames(float a) {

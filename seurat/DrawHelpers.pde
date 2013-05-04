@@ -65,8 +65,22 @@ void displayControls1 () {
 void displayControls2() {
   
    alphaSlider.display();
-   float a = alphaSlider.read();
-   setAlphaOfFrames(a);
+   alphaSlider.read();
+   setAlphaOfFrames(alphaSlider.value);
+   
+   minLevelSlider.display();
+   float min = minLevelSlider.read();
+   maxLevelSlider.display();
+   float max = maxLevelSlider.read();
+   
+   if (max < min) {
+     max = min;
+   }
+   
+   setLevelRangeOfFrames(min, max);
+  
+   
+   
    
    
 

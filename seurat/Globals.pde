@@ -26,7 +26,7 @@ JCFrame [] frames;
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
-Slider radiusSlider, speedSlider, alphaSlider;
+Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
 
 // Switches
 boolean controlsActive, controlsActive2;
@@ -58,6 +58,8 @@ float INITIAL_RADIUS = 24;
 float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
 float frameAlpha = 7.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
+float maxLevel = 1.0;
+float minLevel = 0.8;
 
 // color c1, c2;  // XXX: UNUSED
 
