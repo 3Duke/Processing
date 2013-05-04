@@ -1,5 +1,4 @@
 
-int COMMAND = 157;
 
 float squaredDistance(float a, float b, float c, float d) {
   
@@ -19,12 +18,8 @@ void manageControl() {
    }
 
 }
-
-void setColoBoxl1( color c ) {
   
-  
-}
-  
+  /*
 void manageColorWheel1() {
   
     if (colorWheel1.mouseInside()) {
@@ -55,14 +50,16 @@ void manageColorWheel2() {
       
    } // end if
 }
-
+*/
 
 void mousePressed() {
  
   if (controlsActive) {
      manageControl();
-     manageColorWheel1();
-     manageColorWheel2();
+     colorWheel1.setColorOfBox(colorBox1);
+     colorWheel2.setColorOfBox(colorBox2);
+     // manageColorWheel1();
+     // manageColorWheel2();
   }
    
 }

@@ -64,3 +64,4 @@ float baseFrameRate = 30;
 // CONSTANTS
 float inverseGoldenRatio = 0.618;
 
+int COMMAND = 157;

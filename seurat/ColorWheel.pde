@@ -36,22 +36,19 @@ class ColorWheel {
     
   }
 
-   void react() {
-    
-    
-    if ((mouseX > x) && (mouseY > y)) {
+  void setColorOfBox( Box B ) {
+ 
+     if (mouseInside()) {
+       
+       colorMode(HSB, 360, 1, 1);
       
-      // int segmentHit = -1;
+       color c = color(colorWheel1.angle(), colorWheel1.radius(), 1);
       
-      if ((mouseX < x + r) && (mouseY < y + r)) {
-        
-        display();
-      
-      }// end if
-    } // end if
-   } // end react
-   
-   
+       B.setColor(c);
+     
+       colorMode(RGB, 255, 255, 255, 255);
+     }
+  }   
 
    
   boolean mouseInside() {
@@ -118,5 +115,3 @@ class ColorWheel {
 
  
 } // end class
-
-
