@@ -26,10 +26,10 @@ JCFrame [] frames;
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
-Slider radiusSlider, speedSlider;
+Slider radiusSlider, speedSlider, alphaSlider;
 
 // Switches
-boolean controlsActive;
+boolean controlsActive, controlsActive2;
 boolean acceptText;
 boolean acceptFileName;
 boolean acceptDisplayString;

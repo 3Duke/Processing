@@ -37,18 +37,9 @@ void manageFrameRate() {
   frameRate(currentFrameRate);
 }
 
-void displayControls() {
+void displayControls1 () {
   
-  
-  if (switchA == 1) {
-    
-    colorBox1.display(); 
-    colorBox2.display();
-  }
-
-  if (controlsActive) {
-
-    control.display();
+  control.display();
 
     colorWheel1.display();
     colorWheel2.display();
@@ -60,7 +51,8 @@ void displayControls() {
     speedSlider.display();
 
     float radiusRead = radiusSlider.read();
-    if (radiusRead > 0) {
+    if (radiusRead > 0) 
+    {
       MaxRadius = radiusRead;
     }
     
@@ -68,11 +60,30 @@ void displayControls() {
     if (speedRead > 0) {
       baseFrameRate = speedRead;
     }
+}
+
+void displayControls2() {
+  
+   alphaSlider.display();
+   float a = alphaSlider.read();
+   setAlphaOfFrames(a);
    
-  }
+   
+
+}
+
+
+void displayControls() {
+  
+  
+  if (switchA == 1) { colorBox1.display();   colorBox2.display();  }
+
+  if (controlsActive) { displayControls1(); }  
+  
+  if (controlsActive2) { displayControls2(); }  
+  
+  
 }
 
 void nop() {
 } // dummy function, does nothing
-
-

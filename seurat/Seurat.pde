@@ -48,8 +48,10 @@ void setup () {
  
   speedSlider = new Slider(480, height - 20, 200, 40, 30, "fps", "Framerate");
   radiusSlider = new Slider(720, height - 20, 200, 40, 400, "r", "Radius");
+  alphaSlider = new Slider(20, height - 40, 200, 40, 20, "r", "Alpha");
 
   controlsActive = false;
+  controlsActive2 = false;
   acceptDisplayString = false;
   acceptFileName = false;
   acceptText = false;
@@ -89,12 +91,9 @@ void draw () {
   }
   
   if (switchA == 1) {
-    
-      // controlsActive = true;
       println("A: ON");
   } else {
     
-    // controlsActive = false;
       println("A: OFF");
   }
 

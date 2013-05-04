@@ -27,6 +27,12 @@ void keyPressed() {
     
   }
   
+  if (key == 'c') { // toggle contrals2
+  
+    controlsActive2 = !controlsActive2;
+    
+  }
+  
   if (key == ENTER) {  // change color scheme 
       
       setColorTori2(colorBox1, colorBox2);

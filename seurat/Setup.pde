@@ -150,6 +150,15 @@ void setupFrames2(float WIDTH) {
   } // end for
 }
 
+void setAlphaOfFrames(float a) {
+  
+  for (int i = 0; i < frames.length; i++) {
+    
+    frames[i].a = a;
+
+  }
+}
+
 void setColorTori() {
 
   float r1, g1, b1, r2, b2, g2;
