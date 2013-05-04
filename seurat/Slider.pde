@@ -21,8 +21,8 @@ class Slider {
   void display() {
 
     fill(0,0,255, 10);
-    rectMode(CORNERS);
-    rect(x, y, x + w, y - h);
+    rectMode(CORNER);
+    rect(x, y, w, -h);
   }
 
   float read() {
@@ -32,13 +32,17 @@ class Slider {
     if ( (mouseX > x) && ( mouseX < x + w) && (mouseY > y - h) ) {
       
 
-      value = maxValue*(mouseX - x)/w;
+      value = (mouseX - x)/w;
+      fill(255,0,0, 128);
+      rect(x, y, w*value, -h);
+      
+      value = maxValue*value;
       fill(255);
       textSize(12);
       text(label +": "+nfc(value,1), x+10, y-16);
      
     }
+   
     return value;
   }
 }
-
