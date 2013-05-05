@@ -62,12 +62,12 @@ void reactToData ()
   {
     colorMode(HSB, 360, 1, 1);
     color cc = color(colorAngle1, 1, 1);
-    colorBox1.setColor(cc);
+    controller.colorBox1.setColor(cc);
     
     colorMode(HSB, 360, 1, 1);
     cc = color(colorAngle2, 1, 1);
     println("CA2 = "+nfc(colorAngle2,1));
-    colorBox2.setColor(cc);
+    controller.colorBox2.setColor(cc);
     
   } else 
   {

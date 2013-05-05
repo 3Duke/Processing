@@ -167,12 +167,6 @@ class SEFrame {
       float gg = g + colorPhase*dg % 255;
       float bb = b + colorPhase*db % 255;
       
-      
-      println("\ncolorPhase = "+colorPhase);
-      println("r = "+nfc(r,2)+", g = "+nfc(g, 2)+", b = "+nfc(b,2));
-      println("r = "+nfc(dr,2)+", dg = "+nfc(dg, 2)+", db = "+nfc(db,2));
-      println("rr = "+nfc(rr,2)+", gg = "+nfc(gg, 2)+", bb = "+nfc(bb,2));
-      
       fill(LF*rr,LF*gg,LF*bb,a);
       fill(rr,gg,bb,a); /// XXX TEMP
       // noStroke();

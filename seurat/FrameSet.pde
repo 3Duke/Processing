@@ -5,8 +5,6 @@ class FrameSet {
 
 FrameSet(float WIDTH, int numberOfFrames) {
   
-  println("FrameSet");
-  
   frame = new SEFrame[numberOfFrames];
 
   // Set up frames in golden ratio spiral
@@ -157,7 +155,7 @@ void setAlpha(float a) {
     float M = MaxRadius;
   
     for (int i = 0; i < frame.length; i++) {  // XXX
-      println("\nFrame "+i);
+    
       frame[i].display(M);
       frame[i].change(200);
       M = inverseGoldenRatio*M;
@@ -182,6 +180,7 @@ void setAlpha(float a) {
   float dr, dg, db;
   // float a;
 
+
   r1 = 0; 
   g1 = 100; 
   b1 = 200; 
@@ -196,8 +195,8 @@ void setAlpha(float a) {
   b2 = b1 + k*db;
 
  /////////UUUU
- colorBox1.setRGBAColor(r1, g1, b1, 255);
- colorBox2.setRGBAColor(r2, g2, b2, 255);
+// controller.colorBox1.setRGBAColor(r1, g1, b1, 255);
+controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
  
 
 
@@ -215,6 +214,7 @@ void setAlpha(float a) {
     // relative rates of change for colors
     frame[i].setDColor(1, 0, (i+1)*(i+1), 0);
   }
+ 
 }
 
 void setColorTori2(Box box1, Box box2) {
@@ -250,19 +250,16 @@ void setColorTori2(Box box1, Box box2) {
     // frame[i].setDColor(dr, (i+1)*dg, (i+1)*(i+1)*db, 0);
     frame[i].setDColor(dr, dg, db, 0);
   }
+  
 }
 
 ///////////////
 
 void setColorPhase(float p) {
   
-  println("setColorPhase");
-  
   for(int i = 0; i < frame.length; i++ ) {
     
    frame[i].setColorPhase( (i+1)*p ); 
-   println(i+", set colorPhase to "+frame[i].colorPhase);
-   
   }
   
 }

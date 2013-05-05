@@ -10,77 +10,30 @@ void setup () {
   
   }
   
+  // Appearance:
   int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
+  int WW;
+  if (screenControlsOn) { WW = WIDTH - controlMargin; } else { WW = WIDTH; }
+  font = loadFont("AndaleMono-48.vlw");
+  textFont(font);
+  size(WW, HEIGHT);
+  frameRate(baseFrameRate);
   
-  println("HEIGHT = "+HEIGHT);
-  println("WIDTH  = "+  WIDTH);
   
-  
+  // Serial communication
   port = new Serial(this, USB_PORT, 9600); 
   port.bufferUntil('\n');
 
-  font = loadFont("AndaleMono-48.vlw");
-  textFont(font);
-
-
-  
-  if (screenControlsOn) {
-    
-    size(WIDTH - controlMargin, HEIGHT);
-    
-  } else {
-    
-    size(WIDTH, HEIGHT);
-    
-  }
- 
  
 
-  frameRate(baseFrameRate); 
-
-
-  println("CONSTRUCTING FRAMESET");
-  if (screenControlsOn) 
-  {
-    frameSet = new FrameSet(WIDTH-controlMargin, NumberOfFrames);
-  } else {
-    frameSet = new FrameSet(WIDTH, NumberOfFrames);
-  }
+  // Create master objects
+  print("1");
+   controller = new Controller();   
+   print("2");
   
-  println(frameSet.frame.length+" FRAMES");
+  frameSet = new FrameSet(WW, NumberOfFrames);
   frameSet.setQualities();
   frameSet.setColorPhase(20);
-  
-  colorBox1 = new Box(20, height - 45, 30, 30, "");
-  colorBox2 = new Box(20, height - 5, 30, 30, "");
-  frameSet.setColorTori();
-  
-  fileControlBox = new Box(960, height - 45, 30, 30, "F");
-  textControlBox = new Box(960, height - 5, 30, 30, "T");
-  fileControlBox.setRGBAColor(0,0,200,255);
-  textControlBox.setRGBAColor(0,0,200,255);
-  
-  
-  String particleLabels[] = { 
-    "C", "T", "Q", "L", "W"
-  };
-  
-  control = new Control(270, height - 20, 150, 40, particleLabels.length, particleLabels); 
-  colorWheel1 = new ColorWheel(100, height - 40, 70, "Color 1");
-  colorWheel2 = new ColorWheel(180, height - 40, 70, "Color 2");
- 
-  speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
-  radiusSlider = new Slider(720, height - 20, 200, 40, MAXRADIUS, "r", "Radius");
-  
-  alphaSlider = new Slider(20, height - 25, 200, 40, maxAlpha, "a", "Alpha");
-  maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Level");
-  minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Level");
-  
-  speedSlider.setValue(baseFrameRate);  
-  radiusSlider.setValue(INITIAL_RADIUS);
-  alphaSlider.setValue(frameAlpha);
-  maxLevelSlider.setValue(maxLevel);
-  minLevelSlider.setValue(minLevel);
   
 
   controlsActive = false;
@@ -113,7 +66,7 @@ void draw () {
     
     //////////////////////  
    
-    displayControls();
+    controller.display();
     frameSet.display();
     displayMessage();
     

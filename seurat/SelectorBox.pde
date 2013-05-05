@@ -1,4 +1,4 @@
-class Control extends Widget {
+class SelectorBox extends Widget {
   
   // int x, y, w, h; // position
   
@@ -6,7 +6,7 @@ class Control extends Widget {
   
   String Labels[];
   
-  Control(int x_, int y_, int w_, int h_, int nSegments_, String L_[]) {
+  SelectorBox(int x_, int y_, int w_, int h_, int nSegments_, String L_[]) {
     
     super(x_, y_, w_, h_, "Shape");
     
@@ -95,7 +95,7 @@ class Control extends Widget {
   
   int react() 
   {
-     int segmentSelected = control.segmentSelected();
+     int segmentSelected = controller.shapeSelector.segmentSelected();
 
        
      if (segmentSelected  > -1) 

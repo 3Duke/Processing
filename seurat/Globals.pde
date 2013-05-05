@@ -21,15 +21,12 @@ int NFIELDS = 6;                                 // Number of fields in incoming
 float colorAngle1, colorAngle2, particleSize, speedRead;  // Analogue: values in range 0..1023.
 int switchA,  switchB, switchC;  // Digital.  Values are 0 and 1'
 
+//////// MASTER OBJECTS /////
 FrameSet frameSet;
+Controller controller;
+
 
 // Frames and Controls
-
-Control control;
-ColorWheel colorWheel1, colorWheel2;
-Box colorBox1, colorBox2;
-Box fileControlBox, textControlBox;
-Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
 
 // Switches
 boolean screenControlsOn = true;
@@ -37,6 +34,7 @@ boolean controlsActive, controlsActive2;
 boolean acceptText;
 boolean acceptFileName;
 boolean acceptDisplayString;
+
 
 // Text 
 PFont font;

@@ -9,7 +9,7 @@ float squaredDistance(float a, float b, float c, float d) {
  
 void manageParticleType() {
   
-  int particleType = control.react();
+  int particleType = controller.shapeSelector.react();
      if (particleType > -1) {
        frameSet.setParticleType( particleType );
      }
@@ -17,38 +17,38 @@ void manageParticleType() {
 
 void manageColors() {
   
-  colorWheel1.setColorOfBox(colorBox1);
-  colorWheel2.setColorOfBox(colorBox2);
+  controller.setColor1();
+  controller.setColor2();
      
-     if ( (colorWheel1.mouseInside()) || (colorWheel2.mouseInside() )) {
+     if ( (controller.colorWheel1.mouseInside()) || (controller.colorWheel2.mouseInside() )) {
       
-       frameSet.setColorTori2(colorBox1, colorBox2);
+       frameSet.setColorTori2(controller.colorBox1, controller.colorBox2);
        
      }
 }
 
 void manageFrameRate() {
   
-   if (speedSlider.mouseInside())  
+   if (controller.speedSlider.mouseInside())  
     {
-      manageFrameRate( speedSlider.read() );
-      speedSlider.saveValue();
+      manageFrameRate( controller.speedSlider.read() );
+      controller.speedSlider.saveValue();
     }
     
 }
 
 void manageRadius() {
   
-  if (radiusSlider.mouseInside())  
+  if (controller.radiusSlider.mouseInside())  
     {
-      MaxRadius =  radiusSlider.read();
-      radiusSlider.saveValue();
+      MaxRadius =  controller.radiusSlider.read();
+      controller.radiusSlider.saveValue();
     }
 }
 
 void manageFileControl() {
   
-    if (fileControlBox.mouseInside()) {
+    if (controller.fileControlBox.mouseInside()) {
       
       acceptFileName = !acceptFileName;
     
@@ -66,7 +66,7 @@ void manageFileControl() {
 
 void manageTextInput() {
   
-  if (textControlBox.mouseInside()) {
+  if (controller.textControlBox.mouseInside()) {
       
       acceptText = !acceptText;
     
@@ -84,28 +84,28 @@ void manageTextInput() {
 
 void manageAlpha() {
   
-  if (alphaSlider.mouseInside()) {
+  if (controller.alphaSlider.mouseInside()) {
      
-     alphaSlider.read();
-     alphaSlider.saveValue();
-     frameSet.setAlpha(alphaSlider.value); 
+     controller.alphaSlider.read();
+     controller.alphaSlider.saveValue();
+     frameSet.setAlpha(controller.alphaSlider.value); 
     }
 }
 
 void manageMinLevel() {
   
-  if (minLevelSlider.mouseInside() ) {
+  if (controller.minLevelSlider.mouseInside() ) {
         
-       float min = minLevelSlider.read();
-       float max = maxLevelSlider.savedValue;
+       float min = controller.minLevelSlider.read();
+       float max = controller.maxLevelSlider.savedValue;
        
        if (max < min) 
        { 
          max = min;
-         maxLevelSlider.setValue(min); 
-         maxLevelSlider.display();
+         controller.maxLevelSlider.setValue(min); 
+         controller.maxLevelSlider.display();
        }
-       minLevelSlider.saveValue();
+       controller.minLevelSlider.saveValue();
        
        frameSet.setLevelRange(min, max);  
       
@@ -114,17 +114,17 @@ void manageMinLevel() {
 
 void manageMaxLevel() {
   
-  if (maxLevelSlider.mouseInside() ) {
+  if (controller.maxLevelSlider.mouseInside() ) {
         
-     float max = maxLevelSlider.read();
-     float min = minLevelSlider.savedValue;
+     float max = controller.maxLevelSlider.read();
+     float min = controller.minLevelSlider.savedValue;
      if (max < min) 
      { 
        min = max; 
-       minLevelSlider.setValue(max); 
-       minLevelSlider.display();
+       controller.minLevelSlider.setValue(max); 
+       controller.minLevelSlider.display();
      }
-       maxLevelSlider.saveValue();
+       controller.maxLevelSlider.saveValue();
       
        
        frameSet.setLevelRange(min, max); 
