@@ -1,5 +1,5 @@
   
-class JCFrame {
+class SEFrame {
 
   // Geometry of frame
   float x, y;
@@ -9,7 +9,8 @@ class JCFrame {
   
   // Color of frame
   float r, g, b, a;
-  float dr, dg, db, da;// change in color
+  float dr, dg, db, da;  // change in color
+  float colorPhase;      // phase
   
   float level; // brightness
   float levelPhase; // frames
@@ -18,6 +19,7 @@ class JCFrame {
   float levelMin; //  0.0
   
   Particle [] particles;
+  int numberOfActiveParticles;
   
   int phase;  // numbrer of frames before staring
   float spacingFactor;
@@ -25,7 +27,7 @@ class JCFrame {
 
   // Constructor: parameters define frame, number of particles,
   // and drawing scale.  default values are set for other fields.
-  JCFrame(float xx, float yy, float ww, float hh, int n, float scale, float spacingFactor_) {
+  SEFrame(float xx, float yy, float ww, float hh, int numberOfParticles, float scale, float spacingFactor_) {
 
     // Geometry of frame
     x = xx; 
@@ -46,7 +48,9 @@ class JCFrame {
 
     speed = 0.1; // 0.01;
     
-    particles = new Particle[n];
+    particles = new Particle[numberOfParticles];
+    numberOfActiveParticles = numberOfParticles;
+    
     spacingFactor = spacingFactor_;
 
     
@@ -78,6 +82,19 @@ class JCFrame {
     }
   }
     
+  void setNumberOfActiveParticles(int n) {
+    
+    if (n > particles.length) {
+      
+      numberOfActiveParticles = particles.length;
+      
+    } 
+    else 
+    {
+      numberOfActiveParticles = n;
+    }
+      
+  }
 
   void changeColor(float A) {
 
@@ -85,6 +102,7 @@ class JCFrame {
     g = g + speed*dg;
     b = b + speed*db;
     a = a + speed*da;
+   
     
     if (r < 0) { 
       r = 255;
@@ -114,7 +132,8 @@ class JCFrame {
     
   }
   
-  void setColor(float rr, float gg, float bb, float aa) {
+  void setColor(float rr, float gg, float bb, float aa) 
+  {
     r = rr; g = gg; b = bb; g = gg; a = aa;
   }
   
@@ -141,7 +160,21 @@ class JCFrame {
       LF = abs(sin((levelMax - levelMin)*sin(TWO_PI*(frameCount - phase)/levelPeriod))) +levelMin;
      //  LF = 1;  // JC: disable change of contrast, value for now;
     }
-      fill(LF*r,LF*g,LF*b,a);
+    
+      colorMode(RGB);
+      
+      float rr = r + colorPhase*dr % 255;
+      float gg = g + colorPhase*dg % 255;
+      float bb = b + colorPhase*db % 255;
+      
+      
+      println("\ncolorPhase = "+colorPhase);
+      println("r = "+nfc(r,2)+", g = "+nfc(g, 2)+", b = "+nfc(b,2));
+      println("r = "+nfc(dr,2)+", dg = "+nfc(dg, 2)+", db = "+nfc(db,2));
+      println("rr = "+nfc(rr,2)+", gg = "+nfc(gg, 2)+", bb = "+nfc(bb,2));
+      
+      fill(LF*rr,LF*gg,LF*bb,a);
+      fill(rr,gg,bb,a); /// XXX TEMP
       // noStroke();
       stroke(0);
       rectMode(NORMAL);
@@ -151,28 +184,19 @@ class JCFrame {
    if (frameCount > phase) 
    {
       for(int i = 0; i < particles.length ; i++) {
-        particles[i].change(M);  // M = maximum particle radius
+        particles[i].change(M);  // M = maximum particle radius  
+      }
+      
+      for(int i = 0; i < numberOfActiveParticles ; i++) {
         particles[i].display();    
       }
     }
   }  // display
   
   
-} // Frame
-
-
-void setParticleTypeInframes(int particleType) {
- 
- for(int i = 0; i < frames.length; i++) {
+  void setColorPhase(float p) {
+    
+    colorPhase = p;
+  }
   
-   JCFrame f = frames[i];
-   
-   for (int j = 0; j < f.particles.length; j++ ) {
-     
-     f.particles[j].ptype = particleType;
-     
-   }
-   
-   
- } 
-}
+} // Frame

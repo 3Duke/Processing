@@ -10,7 +10,7 @@ void displayMessage() {
 
   textSize(12);
   // Erase the previous display of frameCount
-  fill(frames[0].r, frames[0].g, frames[0].b, 255);
+  fill(frameSet.red(0), frameSet.green(0), frameSet.blue(0), 255); // XXX
   text(previousMessage, 10, height - 8);
   // Display frameCount
   fill(200);
@@ -19,17 +19,7 @@ void displayMessage() {
   text(message, 10, height - 8);
 }
 
-void displayFrames () {
 
-  float M = MaxRadius;
-
-  for (int i = 0; i < frames.length; i++) {  // XXX
-
-    frames[i].display(M);
-    frames[i].change(200);
-    M = inverseGoldenRatio*M;
-  }
-}
 
 void manageFrameRate(float newFrameRate) {
   // changes frame rate

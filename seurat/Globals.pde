@@ -19,10 +19,12 @@ int NFIELDS = 6;                                 // Number of fields in incoming
 
 // Serial data
 float colorAngle1, colorAngle2, particleSize, speedRead;  // Analogue: values in range 0..1023.
-int switchA,  switchB, switchC;  // Digital.  Values are 0 and 1
+int switchA,  switchB, switchC;  // Digital.  Values are 0 and 1'
+
+FrameSet frameSet;
 
 // Frames and Controls
-JCFrame [] frames;
+
 Control control;
 ColorWheel colorWheel1, colorWheel2;
 Box colorBox1, colorBox2;
@@ -60,8 +62,8 @@ int NUMBER_OF_PARTICLES = 4  ;  // number of particles in each frame
 float MAXRADIUS = 180;
 float INITIAL_RADIUS = 36;
 float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
-float maxAlpha = 10.0;
-float frameAlpha = 7.5;  // increase to decrease persistence of drawing
+float maxAlpha = 5.0;
+float frameAlpha = 2.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
 float maxLevel = 1.0;
 float minLevel = 0.8;

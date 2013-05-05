@@ -95,9 +95,8 @@ class Control extends Widget {
   
   int react() 
   {
-    
      int segmentSelected = control.segmentSelected();
-     println("segment selected: " + segmentSelected );
+
        
      if (segmentSelected  > -1) 
      {
@@ -107,11 +106,7 @@ class Control extends Widget {
      } else {
        
         return -1;
-        
      }
-     
-    
-  
   }
   
  

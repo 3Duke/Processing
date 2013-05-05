@@ -22,11 +22,6 @@ class Box extends Widget {
    
  }
  
- void setColor( color c ) {
-    colorMode(RGB);
-    bg = c;
- }
- 
 
  
  void setRGBAColor( float r, float g, float b, float a ) {

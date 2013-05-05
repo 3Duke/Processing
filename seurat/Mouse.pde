@@ -11,19 +11,18 @@ void manageParticleType() {
   
   int particleType = control.react();
      if (particleType > -1) {
-       setParticleTypeInframes( particleType );
+       frameSet.setParticleType( particleType );
      }
 }
 
 void manageColors() {
   
   colorWheel1.setColorOfBox(colorBox1);
-     colorWheel2.setColorOfBox(colorBox2);
+  colorWheel2.setColorOfBox(colorBox2);
      
      if ( (colorWheel1.mouseInside()) || (colorWheel2.mouseInside() )) {
-       
-       println("Setting color tori");
-       setColorTori2(colorBox1, colorBox2);
+      
+       frameSet.setColorTori2(colorBox1, colorBox2);
        
      }
 }
@@ -89,7 +88,7 @@ void manageAlpha() {
      
      alphaSlider.read();
      alphaSlider.saveValue();
-     setAlphaOfFrames(alphaSlider.value); 
+     frameSet.setAlpha(alphaSlider.value); 
     }
 }
 
@@ -102,14 +101,13 @@ void manageMinLevel() {
        
        if (max < min) 
        { 
-         println("ADUSTING MAXSLIDER, max = "+nfc(max,2)+"  min = "+nfc(min,2));
          max = min;
          maxLevelSlider.setValue(min); 
          maxLevelSlider.display();
        }
        minLevelSlider.saveValue();
        
-       setLevelRangeOfFrames(min, max);  
+       frameSet.setLevelRange(min, max);  
       
     }
 }
@@ -122,7 +120,6 @@ void manageMaxLevel() {
      float min = minLevelSlider.savedValue;
      if (max < min) 
      { 
-       println("ADUSTING MINSLIDER, max = "+nfc(max,2)+"  min = "+nfc(min,2));
        min = max; 
        minLevelSlider.setValue(max); 
        minLevelSlider.display();
@@ -130,7 +127,7 @@ void manageMaxLevel() {
        maxLevelSlider.saveValue();
       
        
-       setLevelRangeOfFrames(min, max); 
+       frameSet.setLevelRange(min, max); 
     } 
 }
 

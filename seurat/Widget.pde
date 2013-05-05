@@ -20,6 +20,35 @@ class Widget {
     
   }
   
+  void setColor( color c ) {
+    colorMode(RGB);
+    bg = c;
+ }
+ 
+ float red() {
+   
+   return bg >> 16 & 0xFF;
+   
+ }
+ 
+ float green() {
+   
+   return bg >> 8 & 0xFF;
+   
+ }
+ 
+ float blue() {
+   
+   return bg & 0xFF;
+   
+ }
+ 
+ void report(String label) {
+   
+   println(label+": r = "+nfc(red(),0)+", g = "+nfc(green(),0)+", b = "+nfc(blue(),0));
+   
+ }
+  
   void display() {
     
     colorMode(RGB);

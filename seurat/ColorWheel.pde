@@ -45,7 +45,7 @@ class ColorWheel extends Widget {
      
        colorMode(RGB, 255, 255, 255, 255);
        
-       println("Box, r = "+nfc(red(B.bg),1)+", g = "+nfc(green(B.bg),1)+", b = "+nfc(blue(B.bg),1));
+       // println("Box, r = "+nfc(B.red()),1)+", g = "+nfc(green(B.bg),1)+", b = "+nfc(blue(B.bg),1));
      }
      
   }   
