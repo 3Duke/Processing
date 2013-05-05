@@ -2,6 +2,16 @@ class FrameSet {
   
   SEFrame [] frame;
   
+  // temporary variables //
+  float x = 0; 
+  float y = 0;
+
+  // wdith of square
+  float W = 621; 
+  float pW = W; // previous W
+  ////////////////////////////
+  
+
 
 FrameSet(float WIDTH, int numberOfFrames) {
   
@@ -12,87 +22,22 @@ FrameSet(float WIDTH, int numberOfFrames) {
   float scale = 1;
 
   // corner of square
-  float x = 0; 
-  float y = 0;
-
-  // wdith of square
-  float W = inverseGoldenRatio*WIDTH; 
-  float pW = W; // previous W
-
+  
     
   // first frame
   float sf = 1.0;
   frame[0] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
+  
 
   // the other frames
   for (int i = 1; i < frame.length; i++) {
-
-    // compute new upper left corner
-    if (i % 4 == 1) {
-
-      x = x + W;
-      pW = W;
-      W = inverseGoldenRatio*W;
-    } 
-    else if ( i % 4 == 2) {
-
-      x = x +  inverseGoldenRatio*(pW - W);
-      y = y + W;
-      pW = W;
-      W = inverseGoldenRatio*W;
-    }
-    else if ( i % 4 == 3) {
-
-      x = x - inverseGoldenRatio*W;
-      y = y + W;
-      y = y - inverseGoldenRatio*W;
-      W = inverseGoldenRatio*W;
-    }
-    else if ( i % 4 == 0) {
-
-      y = y - inverseGoldenRatio*W;
-      W = inverseGoldenRatio*W;
-    }
-
-    // compute width of square
-    // W = inverseGoldenRatio*W;
-
-    // scale factor to use inside frame for drawing
+    
+    println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));
+    nextSquare(i);
     scale = inverseGoldenRatio*scale;
-
-
-    sf = 2*sf;
-
-
+    sf = 2*sf;  // increase spancing factor in smaller frames
     frame[i] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
- 
-
-    if (i == frame.length - 1) {
-      if (i % 4 == 0 ) {
-       
-        frame[i].w =  frame[i].w/inverseGoldenRatio;
-      } 
-      else if (i % 4 == 1) {
-       
-        frame[i].h =  frame[i].h/inverseGoldenRatio;
-      } 
-      else if (i % 4 == 2) {
-       
-        float xx = frame[i].x;
-        float ww = frame[i].w/inverseGoldenRatio;
-        float dx = ww/inverseGoldenRatio - ww;
-        frame[i].x = xx - dx*inverseGoldenRatio;
-        frame[i].w = ww;
-      } 
-      else if (i % 4 == 3) {
-  
-        float yy = frame[i].y;
-        float ww = frame[i].w/inverseGoldenRatio;
-        float dy = ww/inverseGoldenRatio - ww;
-        frame[i].y = yy - dy*inverseGoldenRatio;
-        frame[i].h = ww;
-      }
-    }
+    lastFrame(i);
     
   } // end for
         
@@ -162,18 +107,11 @@ void setAlpha(float a) {
     }
   }
   
-  
- float red(int i) { return 25; }
+ 
+ float red(int i) { return frame[i].red(); }
  float green(int i) { return 255; }
  float blue(int i) { return 255; }
- 
- /**
- float red(int i) { return frame[i].r; }
- float green(int i) { return frame[i].g; }
- float blue(int i) { return frame[i].g; }
- ***/
- 
- 
+  
  void setColorTori() {
 
   float r1, g1, b1, r2, b2, g2;
@@ -262,6 +200,69 @@ void setColorPhase(float p) {
    frame[i].setColorPhase( (i+1)*p ); 
   }
   
+}
+
+void nextSquare(int i) {
+   // compute new upper left corner
+    if (i % 4 == 1) 
+    {
+      x = x + W;
+      pW = W;
+      W = inverseGoldenRatio*W;
+    } 
+    else if ( i % 4 == 2) 
+    {
+      x = x +  inverseGoldenRatio*(pW - W);
+      y = y + W;
+      pW = W;
+      W = inverseGoldenRatio*W;
+    }
+    else if ( i % 4 == 3) 
+    {
+      x = x - inverseGoldenRatio*W;
+      y = y + W;
+      y = y - inverseGoldenRatio*W;
+      W = inverseGoldenRatio*W;
+    }
+    else if ( i % 4 == 0) 
+    {
+      y = y - inverseGoldenRatio*W;
+      W = inverseGoldenRatio*W;
+    }
+}
+
+
+
+void lastFrame(int i) {
+  
+  // Last frame, which is a rectangle
+    if (i == frame.length - 1) {
+      if (i % 4 == 0 ) 
+      {   
+        frame[i].w =  frame[i].w/inverseGoldenRatio;
+      } 
+      else if (i % 4 == 1) 
+      {
+        frame[i].h =  frame[i].h/inverseGoldenRatio;
+      } 
+      else if (i % 4 == 2) 
+      {
+        float xx = frame[i].x;
+        float ww = frame[i].w/inverseGoldenRatio;
+        float dx = ww/inverseGoldenRatio - ww;
+        frame[i].x = xx - dx*inverseGoldenRatio;
+        frame[i].w = ww;
+      } 
+      else if (i % 4 == 3) 
+      {
+        float yy = frame[i].y;
+        float ww = frame[i].w/inverseGoldenRatio;
+        float dy = ww/inverseGoldenRatio - ww;
+        frame[i].y = yy - dy*inverseGoldenRatio;
+        frame[i].h = ww;
+      }
+    }
+    
 }
   
  } // FrameSet

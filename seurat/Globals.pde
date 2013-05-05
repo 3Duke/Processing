@@ -5,28 +5,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
-// Serial port
-import processing.serial.*;
-Serial port;
-String USB_PORT = "/dev/tty.usbmodem1411";
-String incomingMessage = "";                     // message recieved on serial port
-int NFIELDS = 6;                                 // Number of fields in incomingMessage
-
-// Serial protocal exampe: if incomiing message (e.g., produced by Arduino 
-// sketch SerialReportor) is "S,4,5,6", then NFIELDS = 3.  The leading "S"
-// is htere to confirm that the data is valid.
-
-
-// Serial data
-float colorAngle1, colorAngle2, particleSize, speedRead;  // Analogue: values in range 0..1023.
-int switchA,  switchB, switchC;  // Digital.  Values are 0 and 1'
-
-//////// MASTER OBJECTS /////
-FrameSet frameSet;
-Controller controller;
-
-
-// Frames and Controls
 
 // Switches
 boolean screenControlsOn = true;
@@ -65,8 +43,6 @@ float frameAlpha = 2.5;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
 float maxLevel = 1.0;
 float minLevel = 0.8;
-
-// color c1, c2;  // XXX: UNUSED
 
 // CONSTANTS
 float inverseGoldenRatio = 0.618;

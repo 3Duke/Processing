@@ -193,4 +193,8 @@ class SEFrame {
     colorPhase = p;
   }
   
+  float red() { return r; }
+  float green() { return g; }
+  float blue() { return b; }
+  
 } // Frame

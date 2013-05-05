@@ -8,18 +8,14 @@ class Controller {
   
   
   Controller () {
-    
    
     colorBox1 = new Box(20, height - 45, 30, 30, "");
     colorBox2 = new Box(20, height - 5, 30, 30, "");
-   
-    // frameSet.setColorTori();
     
     fileControlBox = new Box(960, height - 45, 30, 30, "F");
     textControlBox = new Box(960, height - 5, 30, 30, "T");
     fileControlBox.setRGBAColor(0,0,200,255);
     textControlBox.setRGBAColor(0,0,200,255);
-    
     
     String particleLabels[] = { 
       "C", "T", "Q", "L", "W"
@@ -52,6 +48,8 @@ class Controller {
 
     colorBox1.display(); 
     colorBox2.display();
+    
+    shapeSelector.display();
     
     fileControlBox.display();
     textControlBox.display();
