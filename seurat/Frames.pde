@@ -103,32 +103,10 @@ class SEFrame {
     b = b + speed*db;
     a = a + speed*da;
    
-    
-    if (r < 0) { 
-      r = 255;
-    }
-    if (r > 255) { 
-      r = 0;
-    } 
-
-    if (g < 0) { 
-      g = 255;
-    }
-    if (g > 255) { 
-      g = 0;
-    }
-
-    if (b < 0) { 
-      b = 255;
-    }
-    if (b > 255) { 
-      b = 0;
-    }
-
-    if (a > A) { 
-      a = 0;
-    }
-    
+    r = r % 255;
+    g = g % 255;
+    b = b % 255;
+    a = a % 255;
     
   }
   
@@ -168,8 +146,7 @@ class SEFrame {
       float bb = b + colorPhase*db % 255;
       
       fill(LF*rr,LF*gg,LF*bb,a);
-      fill(rr,gg,bb,a); /// XXX TEMP
-      // noStroke();
+
       stroke(0);
       rectMode(NORMAL);
       rect(x, y, x + w, y + h);

@@ -46,9 +46,12 @@ int WORD = 4;
     xspeed = 1;
     yspeed = 1;
     rspeed = 1;
-    cspeed = 0.25;
+    cspeed = CSPEED;
     
+    
+    // XXXX working on this
     dradius = 0.1;
+    dr = 1;
     
     ptype = TRI;  // initial value
   }
@@ -133,8 +136,12 @@ int WORD = 4;
   void changePosition(float M) {
     
     // Brownian motion:
-    x = x + spacingFactor*xspeed*random(-radius,radius);
-    y = y + spacingFactor*yspeed*random(-radius,radius);
+   // x = x + spacingFactor*xspeed*random(-radius,radius);
+   // y = y + spacingFactor*yspeed*random(-radius,radius);
+    float dd = 1;
+    // spacingFactor = 1.0/3;
+    x = x + spacingFactor*xspeed*random(-radius/dd,radius/dd);
+    y = y + spacingFactor*yspeed*random(-radius/dd,radius/dd);
     
     float k = 1.2;
     
@@ -160,18 +167,11 @@ int WORD = 4;
     
     
     radius = radius + rspeed*dradius;
-    if (abs(radius - M) > 1) {
-       radius = M - 4;
-    }
-    if( radius < 2) {
-      radius = 2;
-    }
-    
     
     if (radius > M) {
       radius = m;
     }
-    
+ 
   }
   
   

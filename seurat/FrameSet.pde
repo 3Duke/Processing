@@ -25,11 +25,12 @@ FrameSet(float WIDTH, int numberOfFrames) {
   
     
   // first frame
-  float sf = 1.0;
-  frame[0] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
+  
+  frame[0] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, spacingFactor);
   
 
   // the other frames
+  float sf = spacingFactor;
   for (int i = 1; i < frame.length; i++) {
     
     println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));

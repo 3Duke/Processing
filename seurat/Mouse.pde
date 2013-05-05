@@ -94,7 +94,7 @@ void manageAlpha() {
 
 void manageMinLevel() {
   
-  if (controller.minLevelSlider.mouseInside() ) {
+  if ((controller.minLevelSlider.mouseInside()) || (controller.maxLevelSlider.mouseInside()) ) {
         
        float min = controller.minLevelSlider.read();
        float max = controller.maxLevelSlider.savedValue;
@@ -107,7 +107,8 @@ void manageMinLevel() {
        }
        controller.minLevelSlider.saveValue();
        
-       frameSet.setLevelRange(min, max);  
+       frameSet.setLevelRange(min, max); 
+      println("Levels reset"); 
       
     }
 }
