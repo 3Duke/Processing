@@ -1,7 +1,8 @@
 
 There are two banks of controla, 1, and 2.
-Press 1 to activate/deactivate the first bank.
-Press 2 to activate/deactivate the second bank
+Press 1 to activate the first bank and deactive whatever bank is currently active
+Press 2 to activate the second bank and deactive whatever bank is currently active
+Press ` to deactvate the current bank of controls
 
 When the controls are active, you may
 
