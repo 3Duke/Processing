@@ -8,7 +8,7 @@
 
 // Switches
 boolean screenControlsOn = true;
-boolean controlsActive, controlsActive2;
+int numberOfControlBanks = 3;
 boolean acceptText;
 boolean acceptFileName;
 boolean acceptDisplayString;

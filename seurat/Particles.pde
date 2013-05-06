@@ -182,7 +182,10 @@ int WORD = 4;
   changeColor(50,100);
   
   }
-}  
+} 
+
+
+/// HELPERS
 
 void triangle_(float x, float y, float r) {
   

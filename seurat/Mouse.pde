@@ -134,7 +134,7 @@ void manageMaxLevel() {
 
 void mousePressed() {
  
-  if (controlsActive) 
+  if (controller.bankSelector.activeSwitch() == 0) 
   {  
      manageParticleType();
      manageColors();
@@ -144,7 +144,7 @@ void mousePressed() {
      manageTextInput();
   } 
   
-  if (controlsActive2) 
+  if (controller.bankSelector.activeSwitch() == 1)
   {
     manageAlpha();
     manageMinLevel();
@@ -154,18 +154,29 @@ void mousePressed() {
 
 void keyPressed() {
    
-  if ((key == '1') && (!controlsActive2)) { // toggle contrals
   
-    controlsActive = !controlsActive;
-    
+  if ((key == '1')) { // toggle contrals
+  
+    controller.bankSelector.all_off();
+    controller.bankSelector.on(0);
+  
   }
   
-  if ((key == '2') && (!controlsActive)) { // toggle contrals2
+  if ((key == '2')) { // toggle contrals
   
-    controlsActive2 = !controlsActive2;
-    
+    controller.bankSelector.all_off();
+    controller.bankSelector.on(1);
+  
   }
-
+  
+  if ((key == '`')) { // toggle contrals
+  
+    controller.bankSelector.all_off();
+    controller.hide();
+  
+  }
+  
+  
   
   if (key == CODED) {
     

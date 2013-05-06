@@ -55,9 +55,7 @@ void setup () {
   controller = new Controller(); 
 
   frameSet.setColorTori();  
-
-  controlsActive = false;
-  controlsActive2 = false;
+ 
   acceptDisplayString = false;
   acceptFileName = false;
   acceptText = false;

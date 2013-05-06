@@ -1,5 +1,6 @@
 class Controller {
   
+  SwitchBank bankSelector;
   SelectorBox shapeSelector;
   ColorWheel colorWheel1, colorWheel2;
   Box colorBox1, colorBox2;
@@ -8,9 +9,11 @@ class Controller {
   
   
   Controller () {
-   
+    
     colorBox1 = new Box(20, height - 45, 30, 30, "");
     colorBox2 = new Box(20, height - 5, 30, 30, "");
+    
+   bankSelector = new SwitchBank(3);
     
     fileControlBox = new Box(960, height - 45, 30, 30, "F");
     textControlBox = new Box(960, height - 5, 30, 30, "T");
@@ -40,6 +43,8 @@ class Controller {
     
     
   }
+  
+
   
   void displayBank1 () {
     
@@ -72,16 +77,34 @@ void displayBank2() {
   
 }
 
+void displayBank(int k) 
+{
+   switch(k) {
+     case 0:
+       displayBank1();
+       break;
+     case 1:
+       displayBank2();
+       break;
+     default:
+       println("Invalid bank selected: "+k);
+       break;
+   }
+       
+  
+}
+
 void display() {
   
 
   if (switchA == 1) { colorBox1.display();   colorBox2.display();  }
   
-  if (controlsActive) { displayBank1(); } 
-  
-  if (controlsActive2) { displayBank2(); } 
- 
-  if ((!controlsActive) && (!controlsActive2)) { hide(); }
+  int b = bankSelector.activeSwitch();
+  if (b > -1)
+  {
+    hide();
+    displayBank(b);
+  }
   
   
 }
