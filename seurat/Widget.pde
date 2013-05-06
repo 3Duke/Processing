@@ -3,6 +3,7 @@ class Widget {
   float x, y;        // position: upper left corner
   float w, h;        // diemsnsions
   float xc, yc;      // coordinates of center
+  float radius;      // radius
   color bg;          // background color
   String caption;
   
@@ -15,17 +16,19 @@ class Widget {
     bg = color(0,0,255);
     
     // Calculated values:
-    xc = x + w/2;
-    yc = y + h/2;
+    radius = min(w,h)/2;
+    xc = x + radius;
+    yc = y - radius;
     
-  }
-  
-  void setColor( color c ) {
-    colorMode(RGB);
-    bg = c;
- }
- 
- float red() {
+      
+    }
+    
+    void setColor( color c ) {
+      colorMode(RGB);
+      bg = c;
+   }
+   
+   float red() {
    
    return bg >> 16 & 0xFF;
    
@@ -45,12 +48,15 @@ class Widget {
  
  void report(String label) {
    
-   println(label+": r = "+nfc(red(),0)+", g = "+nfc(green(),0)+", b = "+nfc(blue(),0));
+   rectMode(CORNER);
+   // println(label+": r = "+nfc(red(),0)+", g = "+nfc(green(),0)+", b = "+nfc(blue(),0));
+   println(label+": corner = "+x+","+y+"   w = "+w+",  h = "+h+" --- center = "+xc+", "+yc);
    
  }
   
   void display() {
     
+    rectMode(CORNER);
     colorMode(RGB);
     fill(bg);
     noStroke();
@@ -68,11 +74,40 @@ class Widget {
   boolean mouseInside() {
     
     if ( (mouseX > x) && ( mouseX < x + w) && (mouseY > y - h) ) {
-      
+             
+      println("Hit at x,y = "+mouseX+", "+mouseY);
       return true;
+     
       
     } else {
       
+      return false;
+      
+    }
+    
+  }
+  
+    boolean mouseInsideCircle() {
+    
+    rectMode(CORNER);
+    int mx = mouseX;
+    int my = mouseY;
+    float d2 = squaredDistance(xc, yc, mx, my);
+    float distance = sqrt(d2);
+    
+    println("\nmouseInsideCircle");
+    if ( distance < radius ) {
+             
+      report(caption);
+      println(caption+" -- hit at x,y = "+mx+", "+my+"   distance = "+distance+",  radius = "+radius);
+      
+      return true;
+     
+      
+    } else {
+      
+      report(caption);
+      println(caption+" -- NO HIT at x,y = "+mx+", "+my+"   distance = "+distance+",  radius = "+radius);
       return false;
       
     }
@@ -110,21 +145,21 @@ class Widget {
     
     float xm = mouseX; float ym = mouseY;
     
-    float tan_ = -(ym - y)/(xm - x);  // infinities?
+    float tan_ = -(ym - yc)/(xm - xc);  // infinities?
     
    float angle = 360*atan(tan_)/(2*3.14159265);
    
-   if ((ym - y > 0) && (xm - x > 0)) { // Quadran1 IV
+   if ((ym - yc > 0) && (xm - xc > 0)) { // Quadran1 IV
      
      angle = 360 + angle;
    }
    
-   if ((ym - y > 0) && (xm - x < 0)) { // Quadrant III
+   if ((ym - yc > 0) && (xm - xc < 0)) { // Quadrant III
      
      angle = 180 + angle;
    }
    
-   if ((y - ym > 0) && (xm - x < 0)) { // Quadrant II
+   if ((yc - ym > 0) && (xm - xc < 0)) { // Quadrant II
      
      angle =  180 + angle;
    }
@@ -135,7 +170,6 @@ class Widget {
   
   float readRadius () {
    
-    float xm = mouseX; float ym = mouseY;
     float dx = mouseX - xc;
     float dy = mouseY - yc;
     return sqrt(dx*dx + dy*dy);

@@ -24,9 +24,9 @@ class Controller {
       "C", "T", "Q", "L", "W"
     };
     
-    shapeSelector = new SelectorBox(270, height - 20, 150, 40, particleLabels.length, particleLabels); 
-    colorWheel1 = new ColorWheel(100, height - 40, 70, "Color 1");
-    colorWheel2 = new ColorWheel(180, height - 40, 70, "Color 2");
+    shapeSelector = new SelectorBox(260, height - 20, 150, 40, particleLabels.length, particleLabels); 
+    colorWheel1 = new ColorWheel(70, height-10, 60, "Color 1");
+    colorWheel2 = new ColorWheel(145, height-10, 60, "Color 2");
    
     speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
     radiusSlider = new Slider(720, height - 20, 200, 40, MAXRADIUS, "r", "Radius");
@@ -104,6 +104,8 @@ void display() {
   {
     hide();
     displayBank(b);
+  } else {
+    hide();
   }
   
   

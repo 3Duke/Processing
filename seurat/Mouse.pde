@@ -17,6 +17,7 @@ void manageParticleType() {
 
 void manageColors() {
   
+  println("");
   controller.setColor1();
   controller.setColor2();
      

@@ -33,7 +33,7 @@ FrameSet(float WIDTH, int numberOfFrames) {
   float sf = spacingFactor;
   for (int i = 1; i < frame.length; i++) {
     
-    println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));
+    // println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));
     nextSquare(i);
     scale = inverseGoldenRatio*scale;
     sf = 2*sf;  // increase spancing factor in smaller frames
