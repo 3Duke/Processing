@@ -73,18 +73,14 @@ class Widget {
   
   boolean mouseInside() {
     
-    if ( (mouseX > x) && ( mouseX < x + w) && (mouseY > y - h) ) {
-             
-      println("Hit at x,y = "+mouseX+", "+mouseY);
-      return true;
-     
-      
-    } else {
-      
-      return false;
-      
-    }
-    
+    if ( (mouseX > x) && ( mouseX < x + w) && (mouseY > y - h) ) 
+    {
+       return true;
+    } 
+    else 
+    {
+      return false; 
+    } 
   }
   
     boolean mouseInsideCircle() {
@@ -95,21 +91,13 @@ class Widget {
     float d2 = squaredDistance(xc, yc, mx, my);
     float distance = sqrt(d2);
     
-    println("\nmouseInsideCircle");
-    if ( distance < radius ) {
-             
-      report(caption);
-      println(caption+" -- hit at x,y = "+mx+", "+my+"   distance = "+distance+",  radius = "+radius);
-      
+
+    if ( distance < radius ) 
+    {
       return true;
-     
-      
-    } else {
-      
-      report(caption);
-      println(caption+" -- NO HIT at x,y = "+mx+", "+my+"   distance = "+distance+",  radius = "+radius);
-      return false;
-      
+    } else 
+    {
+      return false; 
     }
     
   }

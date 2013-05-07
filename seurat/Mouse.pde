@@ -155,19 +155,13 @@ void mousePressed() {
 
 void keyPressed() {
    
+  int k = key - 49;
   
-  if ((key == '1')) { // toggle contrals
   
+  if ((k > -1) && (k < 3)) {
+    
     controller.bankSelector.all_off();
-    controller.bankSelector.on(0);
-  
-  }
-  
-  if ((key == '2')) { // toggle contrals
-  
-    controller.bankSelector.all_off();
-    controller.bankSelector.on(1);
-  
+    controller.bankSelector.on(k);
   }
   
   if ((key == '`')) { // toggle contrals
@@ -176,9 +170,7 @@ void keyPressed() {
     controller.hide();
   
   }
-  
-  
-  
+   
   if (key == CODED) {
     
     if (keyCode == SHIFT) 
