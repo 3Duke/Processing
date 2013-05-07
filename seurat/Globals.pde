@@ -5,13 +5,17 @@
 //
 ///////////////////////////////////////////////////////////////////////////
 
+// Initializatin of main
+boolean screenControlsOn = true;
+
+// Initializaton of controller:
+int numberOfControlBanks = 3;
+
 
 // Switches
-boolean screenControlsOn = true;
-int numberOfControlBanks = 3;
 boolean acceptText;
 boolean acceptFileName;
-boolean acceptDisplayString;
+//   boolean acceptDisplayString;
 
 
 // Text 
@@ -25,26 +29,32 @@ int count;
 String fileName = "frame";
 
 // Display
-int HEIGHT = 700; // displayHeight; // 700 for macbook air, 1390 for iMac
-float displayScale = HEIGHT/700;
 int controlMargin = 140;
 int displayMargin = 60;
 
 
-// ARTISTIC PARAMETERS
+//////////////////////////// ARTISTIC PARAMETERS /////////////////////////////////
 int NumberOfFrames = 11;
 int displayMode = 1;  // 1 for classic, 2 for diagonal 
-int NUMBER_OF_PARTICLES = 4  ;  // number of particles in each frame
-float MAXRADIUS = 180;
-float INITIAL_RADIUS = 130;
-float spacingFactor = 1.0;
-float CSPEED = 0.1;
-float MaxRadius = INITIAL_RADIUS; // 60; // maximum particle radius
+
+// Frames
 float maxAlpha = 10.0;
-float frameAlpha = 4.0;  // increase to decrease persistence of drawing
-float baseFrameRate = 30;
 float maxLevel = 1.0;
 float minLevel = 0.8;
+float frameAlpha = 4.0;  // increase to decrease persistence of drawing
+float baseFrameRate = 30;
+
+// Particles
+int   NUMBER_OF_PARTICLES = 4  ;       // number of particles in each frame
+float MAXRADIUS = 180;
+float INITIAL_RADIUS = 130;
+float MaxRadius = INITIAL_RADIUS;      // 60; // maximum particle radius
+float spacingFactor = 1.0;             // Particle spacing 
+float CSPEED = 0.1;                    // Color velocity
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 // CONSTANTS
 float inverseGoldenRatio = 0.618;

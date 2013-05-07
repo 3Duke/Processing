@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 //
 //     SERIAL
 //
@@ -86,6 +86,10 @@ void reactToData ()
 }
 
 
+// Read data on serial port one line at a time
+// and post it to the string variable incomingMessage.
+// In draw (), handleSerialInput() will process
+// incomingMessage:  
 
 void serialEvent(Serial port) {
   incomingMessage = port.readStringUntil('\n');

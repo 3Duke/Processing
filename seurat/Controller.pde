@@ -17,12 +17,12 @@ class Controller {
   Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
 
 
-  Controller () {
+  Controller (int numberOfControlBanks) {
 
     colorBox1 = new Box(20, height - 50, 30, 30, "");
     colorBox2 = new Box(20, height - 10, 30, 30, "");
 
-    bankSelector = new SwitchBank(3);
+    bankSelector = new SwitchBank(numberOfControlBanks);
 
     fileControlBox = new Box(960, height - 50, 30, 30, "F");
     textControlBox = new Box(960, height - 10, 30, 30, "T");
@@ -138,14 +138,41 @@ class Controller {
     }
   }
 
-  void setColor1 ()
+  void setColor1 ( color c)
+  {
+    c1 = c;
+  }
+  
+  void setColor2 (color c)
+  {
+    c2 = c;
+  }
+  
+  void readColorWheel1 ()
   {
     
-    c1 = colorWheel1.setColorOfBox(colorBox1);
+    // read color wheel, set c1, and set color of corresponging box
+    
+    c1 = colorWheel1.read();
+    colorBox1.setColor(c1);
+    colorMode(RGB, 255, 255, 255, 255);  
+   
   }
-
-  void setColor2 ()
+  
+  void readColorWheel2 ()
   {
-    c2 = colorWheel2.setColorOfBox(colorBox2);
+     // read color wheel, set c2, and set color of corresponging box
+    
+    c2 = colorWheel2.read();
+    colorBox2.setColor(c2);
+    colorMode(RGB, 255, 255, 255, 255);  
+   
   }
-}
+  
+  void updateColorTori() {
+    
+    frameSet.setColorTori2(c1, c2);
+    
+  }
+  
+}  // controller

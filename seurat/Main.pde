@@ -3,7 +3,7 @@
 // Serial port
 import processing.serial.*;
 Serial port;
-String USB_PORT = "/dev/tty.usbmodem1411";
+String USB_PORT = "dev/Bluetooth-PDA-Sync";    // "/dev/slave"; // "/dev/tty.usbmodem1411";
 String incomingMessage = "";                     // message recieved on serial port
 int NFIELDS = 6;                                 // Number of fields in incomingMessage
 
@@ -20,6 +20,7 @@ int switchA,  switchB, switchC;  // Digital.  Values are 0 and 1'
 FrameSet frameSet;
 Controller controller;
 
+int HEIGHT = displayHeight;
 
 void setup () {
   
@@ -47,16 +48,15 @@ void setup () {
 
 
   // Create master objects
-  
   frameSet = new FrameSet(WW, NumberOfFrames);
   frameSet.setQualities();
   frameSet.setColorPhase(20);
  
-  controller = new Controller(); 
+  controller = new Controller(numberOfControlBanks); 
 
   frameSet.setColorTori();  
  
-  acceptDisplayString = false;
+  /// acceptDisplayString = false;
   acceptFileName = false;
   acceptText = false;
   acceptFileName = false;
@@ -65,9 +65,8 @@ void setup () {
 }
 
 
-
-void draw () {
-
+void handleSerialInput() {
+  
   if (incomingMessage.length() > 0) 
   {
     if (incomingMessage.charAt(0) == 'S') 
@@ -76,9 +75,12 @@ void draw () {
       reactToData();
     }
   }
-  
-  
-  
+}
+
+void draw () {
+
+  handleSerialInput();
+   
   if ((!acceptText) && (!acceptFileName)) {
     count++;
     

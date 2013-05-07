@@ -1,4 +1,4 @@
-
+  
 
 float squaredDistance(float a, float b, float c, float d) {
 
@@ -16,16 +16,20 @@ void manageParticleType() {
 
 void manageColors() {
 
-  println("");
-  controller.setColor1();
-  controller.setColor2();
-
-  if ( (controller.colorWheel1.mouseInside()) || (controller.colorWheel2.mouseInside() )) 
-  {
-
-    frameSet.setColorTori2(controller.c1, controller.c2);
+  if (controller.colorWheel1.mouseInside()) {
+    
+    controller.readColorWheel1();
+    controller.updateColorTori();
     
   }
+  
+  if (controller.colorWheel2.mouseInside()) {
+    
+    controller.readColorWheel2();
+    controller.updateColorTori();
+    
+  }
+  
 }
 
 void manageFrameRate() {
@@ -35,6 +39,8 @@ void manageFrameRate() {
     manageFrameRate( controller.speedSlider.read() );
     controller.speedSlider.saveValue();
   }
+ 
+  
 }
 
 void manageRadius() {
