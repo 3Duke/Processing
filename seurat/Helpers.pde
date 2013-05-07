@@ -6,7 +6,7 @@ void displayMessage() {
 
   textSize(12);
   // Erase the previous display of frameCount
-  fill(frameSet.red(0), frameSet.green(0), frameSet.blue(0), 255); // XXX
+  // fill(frameSet.red(0), frameSet.green(0), frameSet.blue(0), 255); // XXX
   text(previousMessage, 10, height - 8);
   // Display frameCount
   fill(200);

@@ -22,9 +22,10 @@ class ColorWheel extends Widget {
     rectMode(CORNER);
     fill(128);
     rect(x,y,w,-h);
-    
-    super.display();
     */
+   
+    super.display();
+   
     
     rectMode(CENTER);
    
@@ -41,13 +42,15 @@ class ColorWheel extends Widget {
     
   }
 
-  void setColorOfBox( Box B ) {
+  color setColorOfBox( Box B ) {
+    
+    color c = color(0);
  
      if (mouseInside()) {
        
        colorMode(HSB, 360, 1, 1);
       
-       color c = color(readAngle(), readRadius(), 1);
+       c = color(readAngle(), readRadius(), 1);
       
        B.setColor(c);
      
@@ -55,6 +58,8 @@ class ColorWheel extends Widget {
        
        // println("Box, r = "+nfc(B.red()),1)+", g = "+nfc(green(B.bg),1)+", b = "+nfc(blue(B.bg),1));
      }
+     
+     return c;
      
   }   
 

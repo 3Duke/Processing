@@ -1,32 +1,45 @@
 class Controller {
+  
+  color c1, c2;
+  color c1Saved, c2Saved;
 
   SwitchBank bankSelector;
   SelectorBox shapeSelector;
   ColorWheel colorWheel1, colorWheel2;
+  
   Box colorBox1, colorBox2;
   Box fileControlBox, textControlBox;
+  Box lightsOutBox;
+  
+  // switches
+  boolean lightsAreOut;
+  
   Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
 
 
   Controller () {
 
-    colorBox1 = new Box(20, height - 45, 30, 30, "");
-    colorBox2 = new Box(20, height - 5, 30, 30, "");
+    colorBox1 = new Box(20, height - 50, 30, 30, "");
+    colorBox2 = new Box(20, height - 10, 30, 30, "");
 
     bankSelector = new SwitchBank(3);
 
-    fileControlBox = new Box(960, height - 45, 30, 30, "F");
-    textControlBox = new Box(960, height - 5, 30, 30, "T");
+    fileControlBox = new Box(960, height - 50, 30, 30, "F");
+    textControlBox = new Box(960, height - 10, 30, 30, "T");
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
+    
+    lightsOutBox = new Box(20, height - 50, 30, 30, "B");
+    lightsAreOut = false;
 
     String particleLabels[] = { 
       "C", "T", "Q", "L", "W"
     };
 
     shapeSelector = new SelectorBox(260, height - 20, 150, 40, particleLabels.length, particleLabels); 
-    colorWheel1 = new ColorWheel(70, height-10, 60, "Color 1");
-    colorWheel2 = new ColorWheel(145, height-10, 60, "Color 2");
+    
+    colorWheel1 = new ColorWheel(70, height-20, 60, "Color 1");  colorWheel1.bg = color(0);
+    colorWheel2 = new ColorWheel(145, height-20, 60, "Color 2");  colorWheel2.bg = color(0);
 
     speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
     radiusSlider = new Slider(720, height - 20, 200, 40, MAXRADIUS, "r", "Radius");
@@ -72,6 +85,11 @@ class Controller {
     minLevelSlider.display();
     maxLevelSlider.display();
   }
+  
+   void displayBank3() {
+
+    lightsOutBox.display();
+  }
 
   void displayBank(int k) 
   {
@@ -81,6 +99,9 @@ class Controller {
       break;
     case 1:
       displayBank2();
+      break;
+    case 2:
+      displayBank3();
       break;
     default:
       println("Invalid bank selected: "+k);
@@ -119,11 +140,12 @@ class Controller {
 
   void setColor1 ()
   {
-    colorWheel1.setColorOfBox(colorBox1);
+    
+    c1 = colorWheel1.setColorOfBox(colorBox1);
   }
 
   void setColor2 ()
   {
-    colorWheel2.setColorOfBox(colorBox2);
+    c2 = colorWheel2.setColorOfBox(colorBox2);
   }
 }

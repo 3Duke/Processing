@@ -6,6 +6,7 @@ class Widget {
   float radius;      // radius
   color bg;          // background color
   String caption;
+  boolean highlighted;
   
   Widget(float x_, float y_, float w_, float h_, String caption_) {
     
@@ -19,6 +20,8 @@ class Widget {
     radius = min(w,h)/2;
     xc = x + radius;
     yc = y - radius;
+    
+    highlighted = false;
     
       
     }
@@ -58,7 +61,13 @@ class Widget {
     
     rectMode(CORNER);
     colorMode(RGB);
-    fill(bg);
+    
+    if (!highlighted) {
+      fill(bg);
+    } else {
+      fill(0);
+      highlighted = false;  // turn off on next cycle
+    }
     noStroke();
     
     rectMode(CORNER);
@@ -162,6 +171,13 @@ class Widget {
     float dy = mouseY - yc;
     return sqrt(dx*dx + dy*dy);
   }
+  
+  void highLight() {
+    
+    highlighted = true;
+    
+  }
+    
   
 } // class
   

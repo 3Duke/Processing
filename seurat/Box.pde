@@ -1,6 +1,7 @@
 class Box extends Widget {
   
  float r, g, b, a;
+ 
  String text;
 
  Box(float x_, float y_, float w_, float h_, String text_) {
@@ -22,13 +23,14 @@ class Box extends Widget {
    
  }
  
-
+ 
  
  void setRGBAColor( float r, float g, float b, float a ) {
    
     colorMode(RGB, 255, 255, 255, 255);
     
     bg = color(r,g,b,a);
+    
  }
  
   

@@ -108,10 +108,11 @@ void setAlpha(float a) {
     }
   }
   
- 
+ /*
  float red(int i) { return frame[i].red(); }
  float green(int i) { return 255; }
  float blue(int i) { return 255; }
+ */
   
  void setColorTori() {
 
@@ -156,12 +157,12 @@ controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
  
 }
 
-void setColorTori2(Box box1, Box box2) {
+void setColorTori2(color c1, color c2) {
 
   float r1, g1, b1, r2, g2, b2;
   
-  r1 = box1.red();  g1 = box1.green(); b1 = box1.blue();
-  r2 = box2.red();  g2 = box2.green(); b2 = box2.blue();
+  r1 = red(c1);  g1 = green(c1); b1 = blue(c1);
+  r2 = red(c2);  g2 = green(c2); b2 = blue(c2);
   // 
   for (int i = 0; i < frame.length; i++) {
     // frames[i].randomSetColor();
