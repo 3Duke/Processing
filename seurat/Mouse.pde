@@ -136,11 +136,7 @@ void manageLightsOut() {
       controller.lightsOutBox.bg = color(0,0,255);
       controller.lightsAreOut = false;
       
-    }
-    
-    
-    
-     
+    }  
 
   }
   
@@ -185,6 +181,25 @@ void manageMaxLevel() {
   }
 }
 
+///////////////////////////////////////////////////////
+
+void manageNumberOfParticles() {
+
+  if (controller.numberOfParticlesSlider.mouseInside()) {
+
+    int n = controller.numberOfParticlesSlider.readInteger();
+    controller.numberOfParticlesSlider.setValue(n);
+    controller.numberOfParticlesSlider.saveValue();
+   
+    frameSet.numberOfActiveParticles = n;
+    frameSet.setQualities();
+    
+  }
+}
+
+
+///////////////////////////////////////////////////////
+
 void mousePressed() {
 
   if (controller.bankSelector.activeSwitch() == 0) 
@@ -208,6 +223,7 @@ void mousePressed() {
   if (controller.bankSelector.activeSwitch() == 2)
   {
     manageLightsOut();
+    manageNumberOfParticles();
   }
   
 }

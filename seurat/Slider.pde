@@ -66,6 +66,13 @@ class Slider extends Widget {
    
     return value;
   }
+  
+  int readInteger() {
+    
+    float val = read();
+    return int(val);
+    
+  }
  
   
   void setValue(float val) {
@@ -75,9 +82,16 @@ class Slider extends Widget {
     
   }
   
+  void setIntegerValue(int val) {
+    
+    setValue(float(val));
+    
+  }
+  
   void saveValue() {
     
     savedValue = value;
     
   }
+  
 }

@@ -27,31 +27,26 @@ class FrameSet {
   
   color c1, c2;
   
-  int number_of_particles = 1;
+  int numberOfParticles = 32;
+  int numberOfActiveParticles = 1;
   float spacingFactor = 0.1;
   float colorVelocity = 0.2;
   float scale = 1;
   
 
 
-FrameSet(float WIDTH, int numberOfFrames) {
+FrameSet(float WIDTH, int numberOfFrames_) {
   
-  frame = new SEFrame[numberOfFrames];
-
-  // Set up frames in golden ratio spiral
-
-  // corner of square
- 
+  frame = new SEFrame[numberOfFrames_];
         
-}  // constructor
+}  
 
 
 void makeFrames() {
-  
-    
+
   // first frame
   
-  frame[0] = new SEFrame(x, y, W, W, number_of_particles, scale, spacingFactor);
+  frame[0] = new SEFrame(x, y, W, W, numberOfParticles, scale, spacingFactor);
   frame[0].colorVelocity = colorVelocity;
   frame[0].setParticles(1.0);
   
@@ -65,7 +60,7 @@ void makeFrames() {
     
     float sf = spacingFactor + i/10.0;
     sf = min(sf,1.4);
-    frame[i] = new SEFrame(x, y, W, W, number_of_particles, scale, sf);
+    frame[i] = new SEFrame(x, y, W, W, numberOfParticles, scale, sf);
     
     // propagate properties from frameSet to framw
     frame[i].colorVelocity = colorVelocity;   
@@ -85,7 +80,7 @@ void makeFrames() {
   
     for(int i = 0; i < frame.length; i++) {
   
-      
+      frame[i].numberOfActiveParticles = numberOfActiveParticles;
       frame[i].phase = 200*i;  // 200*i ==> 10*i for test
       frame[i].levelMin = minLevel;
       frame[i].levelMax = maxLevel;

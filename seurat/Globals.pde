@@ -34,18 +34,9 @@ int displayMargin = 60;
 
 
 //////////////////////////// ARTISTIC PARAMETERS /////////////////////////////////
+
 int NumberOfFrames = 11;
 int displayMode = 1;  // 1 for classic, 2 for diagonal 
-
-// Frames
-
-
-
-// Particles
-// int   NUMBER_OF_PARTICLES = 2  ;       // number of particles in each frame
-    // 60; // maximum particle radius
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,10 +47,3 @@ float deg = 2*PI/360;
 
 
 //////////////////////////////////////////
-
-void printColor(color c, String label) {
-  
-  colorMode(RGB);
-  println(label + ": rgb = " + red(c) + ", " + green(c) + ", " + blue(c));
-  
-}

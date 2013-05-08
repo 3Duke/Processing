@@ -16,6 +16,7 @@ class Controller {
   
   Slider radiusSlider, speedSlider;
   Slider alphaSlider, maxLevelSlider, minLevelSlider, colorVelocitySlider;
+  Slider numberOfParticlesSlider;
 
   Controller (int numberOfControlBanks) {
 
@@ -47,8 +48,12 @@ class Controller {
     alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
     minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Brightness");
     maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Brightness");
-    colorVelocitySlider = new Slider(680, height - 25, 200, 40, 1.0, "veloc", "Color Velocity");
+    colorVelocitySlider = new Slider(680, height - 25, 200, 40, 1.0, "v", "Color Velocity");
     colorVelocitySlider.digits = 2;
+    
+    numberOfParticlesSlider = new Slider(20, height - 25, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
+    numberOfParticlesSlider.setValue(frameSet.numberOfActiveParticles);
+    numberOfParticlesSlider.digits = 0;
 
     speedSlider.setValue(frameSet.baseFrameRate);  
     radiusSlider.setValue(frameSet.INITIAL_RADIUS);
@@ -95,6 +100,7 @@ class Controller {
   
    void displayBank3() {
 
+     numberOfParticlesSlider.display();
     lightsOutBox.display();
   }
 

@@ -47,3 +47,12 @@ void keyReleased() {
     }
   }
 }
+
+//////////////
+
+void printColor(color c, String label) {
+  
+  colorMode(RGB);
+  println(label + ": rgb = " + red(c) + ", " + green(c) + ", " + blue(c));
+  
+}

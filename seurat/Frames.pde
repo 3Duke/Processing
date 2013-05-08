@@ -169,7 +169,7 @@ class SEFrame {
       
    if (frameCount > phase) 
    {
-      for(int i = 0; i < particles.length ; i++) {
+      for(int i = 0; i < numberOfActiveParticles ; i++) {
         particles[i].change(M);  // M = maximum particle radius  
       }
       
