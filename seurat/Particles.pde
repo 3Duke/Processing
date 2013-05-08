@@ -8,7 +8,8 @@ int WORD = 4;
   class Particle {
 
   // frame:
-  float fx, fy, fxx, fyy;
+  float fx, fy;         // a corner of the frame in which particle lives
+  float fxx, fyy;       // opposit corner
   
   // position and size
   float x, y, radius;
@@ -27,9 +28,9 @@ int WORD = 4;
   int ptype;
 
 
-  Particle(float tfx, float tfy, float tfxx, float tfyy) {
+  Particle(float fx_, float fy_, float fxx_, float fyy_) {
     
-    fx = tfx; fy = tfy; fxx = tfxx; fyy = tfyy;
+    fx = fx_; fy = fy_; fxx = fxx_; fyy = fyy_;
 
     r = random(255);
     g = random(255);
@@ -153,19 +154,20 @@ int WORD = 4;
     y = y + spacingFactor*yspeed*random(-radius/dd,radius/dd);
     
     float k = 1.2;
+    float collisionRadius = radius/8;  // allow it to partially penetrate the wall
     
     // Reflect off walls:
-    if (x + radius > fxx) {
+    if (x + collisionRadius > fxx) {
       x = fxx - k*xspeed*random(1,M) - 1;
     }
-    if (x - radius < fx) {
+    if (x - collisionRadius < fx) {
       x = fx + k*xspeed*random(1,M) + 1;
     } 
     
-    if (y + radius > fyy) {
+    if (y + collisionRadius > fyy) {
       y = fyy - k*yspeed*random(1,M) - 1;
     }
-    if (y - radius < fy) {
+    if (y - collisionRadius < fy) {
       y = fy + k*yspeed*random(1,M) + 1;
     } 
     
@@ -203,8 +205,13 @@ void triangle_(float x, float y, float r) {
   x1 = x + random(0,r);
   y1 = y + random(0,r);
   
-  x2 = x + random(0,-r);
-  y2 = y + random(0,r);
+  if ( random(0,100) > 50 ) { // second quadrant
+    x2 = x + random(0,-r);
+    y2 = y + random(0,r);
+  } else { // third quadrant
+    x2 = x + random(0,r);
+    y2 = y + random(0,-r);
+  }
   
   x3 = x + random(0,-r);
   y3 = y + random(0,-r);
