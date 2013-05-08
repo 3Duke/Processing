@@ -31,7 +31,7 @@ String fileName = "frame";
 // Display
 int controlMargin = 140;
 int displayMargin = 60;
-
+char lastKey;;
 
 //////////////////////////// ARTISTIC PARAMETERS /////////////////////////////////
 

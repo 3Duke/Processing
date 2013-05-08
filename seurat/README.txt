@@ -33,6 +33,12 @@ way with the "t" key: it is for etnering text to be displayed onte screen.
 
 Press the OPTION key to pause/run the program.
 
+---
 
+Art tips.
 
-   
+1.  At the beginning of a session, set the file name.
+
+2.  Begin with a low value of alpha, say 2.0,  and a modest number of particles,
+    say 4, to build up a background. Then switch to a highe value of alpha, say 5.0,
+    and a single particle to "paint" over this background.

@@ -81,7 +81,7 @@ int WORD = 4;
           float tSize = radius;
           textSize(tSize);
         
-          text(key,x,y); 
+          text(lastKey,x,y); 
           
     } else if (ptype == WORD) {
       

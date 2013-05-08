@@ -95,7 +95,10 @@ void manageTextInput() {
     } 
     else {
 
-      displayString = typedText.trim();
+      typedText = typedText.trim();
+      if (typedText != "") {
+        displayString = typedText;
+      }
     }
   }
 }
@@ -231,6 +234,10 @@ void mousePressed() {
 void keyPressed() {
 
   int k = key - 49;
+  
+  if ((key > 32) && (key < 127)) {
+    lastKey = key;
+  }
 
 
   if ((k > -1) && (k < 3)) {
