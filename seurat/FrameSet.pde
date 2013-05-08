@@ -81,11 +81,33 @@ void makeFrames() {
     for(int i = 0; i < frame.length; i++) {
   
       frame[i].numberOfActiveParticles = numberOfActiveParticles;
+      frame[i].spacingFactor = spacingFactor;
+      
       frame[i].phase = 200*i;  // 200*i ==> 10*i for test
       frame[i].levelMin = minLevel;
       frame[i].levelMax = maxLevel;
       frame[i].levelPhase = frame[i].phase*sqrt(2);
       frame[i].levelPeriod  = 20000/(i+1);
+      
+      // frame[i].setParticles(scale);  /// propagate changes
+    }
+  }
+  
+  void setParticles () {
+    
+    for(int i = 0; i < frame.length; i++) {
+      
+      frame[i].setParticles(1.0);  /// propagate changes
+      
+    }
+  }
+  
+  void setParticleQualities () {
+    
+    for(int i = 0; i < frame.length; i++) {
+      
+      frame[i].setParticleQualities(1.0);  /// propagate changes
+      
     }
   }
   

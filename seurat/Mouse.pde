@@ -200,6 +200,18 @@ void manageNumberOfParticles() {
   }
 }
 
+void manageParticleSpacing() {
+
+  if (controller.particleSpacingSlider.mouseInside()) {
+
+    frameSet.spacingFactor = controller.particleSpacingSlider.read();
+    controller.particleSpacingSlider.saveValue();
+    frameSet.setQualities();
+    frameSet.setParticleQualities();
+    
+  }
+}
+
 
 ///////////////////////////////////////////////////////
 
@@ -225,8 +237,9 @@ void mousePressed() {
   
   if (controller.bankSelector.activeSwitch() == 2)
   {
-    manageLightsOut();
     manageNumberOfParticles();
+    manageParticleSpacing();
+    manageLightsOut();
   }
   
 }

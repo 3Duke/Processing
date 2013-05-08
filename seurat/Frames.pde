@@ -89,6 +89,22 @@ class SEFrame {
     
   }
   
+  void setParticleQualities(float scale) {
+    
+    for (int i = 0; i < particles.length; i++) {
+        
+      // Adjust particle parameters for the drawing scale;
+      particles[i].radius = scale*particles[i].radius;
+      particles[i].xspeed = scale*particles[i].xspeed;
+      particles[i].yspeed = scale*particles[i].yspeed;
+      particles[i].colorVelocity = colorVelocity;
+      particles[i].rspeed = scale*0.5; // scale*particles[i].rspeed;
+      particles[i].spacingFactor = spacingFactor;
+      
+    }
+    
+  }
+  
   void updateParticleType(int newType) {
     
     for (int i = 0; i < particles.length; i++) {

@@ -16,7 +16,7 @@ class Controller {
   
   Slider radiusSlider, speedSlider;
   Slider alphaSlider, maxLevelSlider, minLevelSlider, colorVelocitySlider;
-  Slider numberOfParticlesSlider;
+  Slider numberOfParticlesSlider, particleSpacingSlider;
 
   Controller (int numberOfControlBanks) {
 
@@ -30,7 +30,7 @@ class Controller {
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
     
-    lightsOutBox = new Box(620, height - 50, 30, 30, "B");
+    lightsOutBox = new Box(920, height - 50, 30, 30, "B");
     lightsAreOut = false;
 
     String particleLabels[] = { 
@@ -54,6 +54,8 @@ class Controller {
     numberOfParticlesSlider = new Slider(20, height - 25, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
     numberOfParticlesSlider.setValue(frameSet.numberOfActiveParticles);
     numberOfParticlesSlider.digits = 0;
+    particleSpacingSlider = new Slider(240, height - 25, 200, 40, 1.0, "sf", "Particle Spacing Factor");
+    particleSpacingSlider.setValue(frameSet.spacingFactor);
 
     speedSlider.setValue(frameSet.baseFrameRate);  
     radiusSlider.setValue(frameSet.INITIAL_RADIUS);
@@ -100,7 +102,8 @@ class Controller {
   
    void displayBank3() {
 
-     numberOfParticlesSlider.display();
+    numberOfParticlesSlider.display();
+    particleSpacingSlider.display();
     lightsOutBox.display();
   }
 
