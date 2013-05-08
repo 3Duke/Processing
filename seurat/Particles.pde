@@ -93,6 +93,15 @@ int WORD = 4;
   // rectMode(CORNER);  // XXX
   }
   
+  
+  void setColor( color c ) {
+    
+    colorMode(RGB, 255, 255, 255, 255);
+    r = red(c); g = green(c); b = blue(c); a = alpha(c);
+    
+  }
+  
+  
   void reflectAcross() {
     
     float midpoint = width/2;

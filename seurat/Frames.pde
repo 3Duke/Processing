@@ -69,11 +69,16 @@ class SEFrame {
   
   void setParticles(float scale) {
     
+    ColorParticle colorParticle = new ColorParticle();
+    
     for (int i = 0; i < particles.length; i++) {
       
       // Put particle at center of frame
       particles[i].x = x + w/2;
       particles[i].y = y + h/2;
+      
+      particles[i].setColor( colorParticle.getColor() );
+      colorParticle.randomStep(0.1);
       
    
       
