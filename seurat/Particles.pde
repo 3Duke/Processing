@@ -59,11 +59,11 @@ int WORD = 4;
 
   void  display() {
 
-    println("particle spacing = "+spacingFactor);
+    
     rectMode(CENTER);
     fill(r,g,b,a);
     noStroke();
-
+  
     
     if (ptype == CIRCLE) {
       
@@ -235,7 +235,7 @@ void quad_(float x, float y, float r) {
   y3 = y + random(0,-r);
   
   x4 = x + random(0,r);
-  y4 = y + random(0,r);
+  y4 = y + random(0,-r);
   
   quad(x1, y1, x2, y2, x3, y3, x4, y4);
 }
