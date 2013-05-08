@@ -5,6 +5,7 @@ class Slider extends Widget {
   float maxValue;
   float value, savedValue;
   color indicatorColor;
+  int digits = 1;
 
 
   Slider(float x_, float y_, float w_, float h_, float mv_, String L_, String caption_) {
@@ -42,7 +43,7 @@ class Slider extends Widget {
     
     fill(255);
     textSize(12);
-    text(label +": "+nfc(value,1), x+10, y-16); 
+    text(label +": "+nfc(value,digits), x+10, y-16); 
     
    
   }

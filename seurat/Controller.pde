@@ -2,7 +2,7 @@ class Controller {
   
   color c1, c2;
   color c1Saved, c2Saved;
-
+  
   SwitchBank bankSelector;
   SelectorBox shapeSelector;
   ColorWheel colorWheel1, colorWheel2;
@@ -14,8 +14,8 @@ class Controller {
   // switches
   boolean lightsAreOut;
   
-  Slider radiusSlider, speedSlider, alphaSlider, maxLevelSlider, minLevelSlider;
-
+  Slider radiusSlider, speedSlider;
+  Slider alphaSlider, maxLevelSlider, minLevelSlider, colorVelocitySlider;
 
   Controller (int numberOfControlBanks) {
 
@@ -29,7 +29,7 @@ class Controller {
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
     
-    lightsOutBox = new Box(20, height - 50, 30, 30, "B");
+    lightsOutBox = new Box(620, height - 50, 30, 30, "B");
     lightsAreOut = false;
 
     String particleLabels[] = { 
@@ -45,14 +45,18 @@ class Controller {
     radiusSlider = new Slider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
 
     alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
-    maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Level");
-    minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Level");
+    minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Brightness");
+    maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Brightness");
+    colorVelocitySlider = new Slider(680, height - 25, 200, 40, 1.0, "veloc", "Color Velocity");
+    colorVelocitySlider.digits = 2;
 
     speedSlider.setValue(frameSet.baseFrameRate);  
     radiusSlider.setValue(frameSet.INITIAL_RADIUS);
+    
     alphaSlider.setValue(frameSet.frameAlpha);
     maxLevelSlider.setValue(frameSet.maxLevel);
     minLevelSlider.setValue(frameSet.minLevel);
+    colorVelocitySlider.setValue(frameSet.colorVelocity);
   }
 
 
@@ -84,6 +88,9 @@ class Controller {
 
     minLevelSlider.display();
     maxLevelSlider.display();
+    
+    colorVelocitySlider.display();
+    colorVelocitySlider.read();
   }
   
    void displayBank3() {

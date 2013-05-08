@@ -33,6 +33,15 @@ void manageColors() {
   
 }
 
+void manageColorVelocity() {
+  
+  if (controller.colorVelocitySlider.mouseInside())  
+  {
+    frameSet.colorVelocity =  controller.colorVelocitySlider.read();
+    controller.colorVelocitySlider.saveValue();
+  }
+}
+
 void manageFrameRate() {
 
   if (controller.speedSlider.mouseInside())  
@@ -193,6 +202,7 @@ void mousePressed() {
     manageAlpha();
     manageMinLevel();
     manageMaxLevel();
+    manageColorVelocity();
   }
   
   if (controller.bankSelector.activeSwitch() == 2)
