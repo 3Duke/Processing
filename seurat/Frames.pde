@@ -11,6 +11,7 @@ class SEFrame {
   float r, g, b, a;
   float dr, dg, db, da;  // change in color
   float colorPhase;      // phase
+  float colorVelocity;
   
   float level; // brightness
   float levelPhase; // frames
@@ -23,6 +24,7 @@ class SEFrame {
   
   int phase;  // numbrer of frames before staring
   float spacingFactor;
+  
 
 
   // Constructor: parameters define frame, number of particles,
@@ -48,31 +50,43 @@ class SEFrame {
 
     speed = 0.1; // 0.01;
     
+    
+    // Create particles
     particles = new Particle[numberOfParticles];
     numberOfActiveParticles = numberOfParticles;
-    
-    spacingFactor = spacingFactor_;
-
-    
     for (int i = 0; i < particles.length; i++) {
       
       // Create new paricle with motion constrained to 
       // the frame (x, y, x + w, y + h)
       particles[i] = new Particle(x, y, x + w, y + h);
+    }
+    
+    spacingFactor = spacingFactor_;
+
+    setParticles(1.0);
+    
+  }
+  
+  void setParticles(float scale) {
+    
+    for (int i = 0; i < particles.length; i++) {
       
       // Put particle at center of frame
       particles[i].x = x + w/2;
       particles[i].y = y + h/2;
       
+   
+      
       // Adjust particle parameters for the drawing scale;
       particles[i].radius = scale*particles[i].radius;
       particles[i].xspeed = scale*particles[i].xspeed;
       particles[i].yspeed = scale*particles[i].yspeed;
-      particles[i].cspeed = scale*particles[i].cspeed;
+      particles[i].colorVelocity = colorVelocity;
       particles[i].rspeed = scale*0.5; // scale*particles[i].rspeed;
       particles[i].spacingFactor = spacingFactor;
       
     }
+    
   }
   
   void updateParticleType(int newType) {
@@ -131,6 +145,7 @@ class SEFrame {
 
   void display(float M) {
 
+  
   // adjust level
     float LF = 1.0;
     if (levelPeriod > 0) {

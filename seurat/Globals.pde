@@ -45,11 +45,11 @@ float frameAlpha = 4.0;  // increase to decrease persistence of drawing
 float baseFrameRate = 30;
 
 // Particles
-int   NUMBER_OF_PARTICLES = 4  ;       // number of particles in each frame
+int   NUMBER_OF_PARTICLES = 2  ;       // number of particles in each frame
 float MAXRADIUS = 180;
 float INITIAL_RADIUS = 130;
 float MaxRadius = INITIAL_RADIUS;      // 60; // maximum particle radius
-float spacingFactor = 1.0;             // Particle spacing 
+
 float CSPEED = 0.1;                    // Color velocity
 
 
@@ -60,3 +60,13 @@ float CSPEED = 0.1;                    // Color velocity
 float inverseGoldenRatio = 0.618;
 int COMMAND = 157;
 float deg = 2*PI/360;
+
+
+//////////////////////////////////////////
+
+void printColor(color c, String label) {
+  
+  colorMode(RGB);
+  println(label + ": rgb = " + red(c) + ", " + green(c) + ", " + blue(c));
+  
+}

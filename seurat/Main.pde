@@ -49,6 +49,8 @@ void setup () {
 
   // Create master objects
   frameSet = new FrameSet(WW, NumberOfFrames);
+  frameSet.spacingFactor = 0.3;
+  frameSet.makeFrames();
   frameSet.setQualities();
   frameSet.setColorPhase(20);
  

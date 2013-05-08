@@ -20,7 +20,8 @@ int WORD = 4;
   float dr, dg, db, da;
   
   // speed
-  float xspeed, yspeed, rspeed, cspeed;
+  float xspeed, yspeed, rspeed;
+  float colorVelocity;
   
   // particle ptype
   int ptype;
@@ -46,7 +47,6 @@ int WORD = 4;
     xspeed = 1;
     yspeed = 1;
     rspeed = 1;
-    cspeed = CSPEED;
     
     
     // XXXX working on this
@@ -58,7 +58,7 @@ int WORD = 4;
 
   void  display() {
 
-    
+    println("particle spacing = "+spacingFactor);
     rectMode(CENTER);
     fill(r,g,b,a);
     noStroke();
@@ -114,10 +114,10 @@ int WORD = 4;
 
   void changeColor(float alphaMin, float alphaMax) {
     
-      r = r + cspeed*dr;
-      g = g + cspeed*dg;
-      b = b + cspeed*db;
-      a = a + cspeed*da;
+      r = r + colorVelocity*dr;
+      g = g + colorVelocity*dg;
+      b = b + colorVelocity*db;
+      a = a + colorVelocity*da;
       
       if (r < 0) {  r = 255; }
       if (r > 255) { r = 0;} 

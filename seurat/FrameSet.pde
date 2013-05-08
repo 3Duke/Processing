@@ -11,6 +11,15 @@ class FrameSet {
   float pW = W; // previous W
   ////////////////////////////
   
+  
+  //////////////
+  
+  color c1, c2;
+  
+  float spacingFactor = 0.1;
+  float colorVelocity = 0.2;
+  float scale = 1;
+  
 
 
 FrameSet(float WIDTH, int numberOfFrames) {
@@ -19,31 +28,44 @@ FrameSet(float WIDTH, int numberOfFrames) {
 
   // Set up frames in golden ratio spiral
 
-  float scale = 1;
-
   // corner of square
+ 
+        
+}  // constructor
+
+
+void makeFrames() {
   
     
   // first frame
   
   frame[0] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, spacingFactor);
+  frame[0].colorVelocity = colorVelocity;
+  frame[0].setParticles(1.0);
   
 
   // the other frames
-  float sf = spacingFactor;
   for (int i = 1; i < frame.length; i++) {
     
     // println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));
     nextSquare(i);
-    scale = inverseGoldenRatio*scale;
-    sf = 2*sf;  // increase spancing factor in smaller frames
+    scale = inverseGoldenRatio*scale;  // increase spancing factor in smaller frames
+    
+    float sf = spacingFactor + i/10.0;
+    sf = min(sf,1.4);
     frame[i] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
+    
+    // propagate properties from frameSet to framw
+    frame[i].colorVelocity = colorVelocity;   
+     
+    // propagate properties fom frame to particles
+    frame[i].setParticles(1.0);
+    
     lastFrame(i);
     
   } // end for
-        
-}  // constructor
-
+  
+}
 
 ///////////////////////////////////////
 
@@ -51,7 +73,7 @@ FrameSet(float WIDTH, int numberOfFrames) {
   
     for(int i = 0; i < frame.length; i++) {
   
-  
+      
       frame[i].phase = 200*i;  // 200*i ==> 10*i for test
       frame[i].levelMin = minLevel;
       frame[i].levelMax = maxLevel;
@@ -123,7 +145,12 @@ void setAlpha(float a) {
 
   r1 = 0; 
   g1 = 100; 
-  b1 = 200; 
+  b1 = 200;
+  
+  colorMode(RGB, 255, 255, 255);
+  c1 = color(r1, g1, b1, 200);
+ 
+  
   // a = 200;
   dr = 1; 
   dg = 0; 
@@ -133,6 +160,8 @@ void setAlpha(float a) {
   r2 = r1 + k*dr; 
   g2 = g1 + k*dg;  
   b2 = b1 + k*db;
+  
+  c2 = color(r2, g2, b2, 200);
 
  /////////UUUU
 // controller.colorBox1.setRGBAColor(r1, g1, b1, 255);
@@ -157,9 +186,12 @@ controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
  
 }
 
-void setColorTori2(color c1, color c2) {
+void setColorTori2() {
 
   float r1, g1, b1, r2, g2, b2;
+  
+  printColor(c1, "setColorTori(1)");
+  printColor(c2, "setColorTori(2)");
   
   r1 = red(c1);  g1 = green(c1); b1 = blue(c1);
   r2 = red(c2);  g2 = green(c2); b2 = blue(c2);

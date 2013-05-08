@@ -148,30 +148,38 @@ class Controller {
     c2 = c;
   }
   
-  void readColorWheel1 ()
+  color readColorWheel1 ()
   {
     
     // read color wheel, set c1, and set color of corresponging box
-    
-    c1 = colorWheel1.read();
-    colorBox1.setColor(c1);
-    colorMode(RGB, 255, 255, 255, 255);  
+ 
+    color c = colorWheel1.read();
+    printColor(c, "readColorWheel(1)");
+    colorBox1.setColor(c);
+    colorMode(RGB, 255, 255, 255, 255); 
+    return c; 
    
   }
   
-  void readColorWheel2 ()
+  color readColorWheel2 ()
   {
      // read color wheel, set c2, and set color of corresponging box
     
-    c2 = colorWheel2.read();
-    colorBox2.setColor(c2);
-    colorMode(RGB, 255, 255, 255, 255);  
+    // read color wheel, set c1, and set color of corresponging box
+
+    color c = colorWheel2.read();
+    printColor(c, "readColorWheel(2)");
+    colorBox2.setColor(c);
+    colorMode(RGB, 255, 255, 255, 255); 
+    return c;       
    
   }
   
-  void updateColorTori() {
+  void updateColorBoxes() {
     
-    frameSet.setColorTori2(c1, c2);
+    colorMode(RGB,255,255,255);
+    colorBox1.setColor(frameSet.c1);
+    colorBox2.setColor(frameSet.c2);
     
   }
   

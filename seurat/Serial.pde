@@ -27,11 +27,9 @@ void parseSerialData(int n_serial_inputs) {
      
      if (switchA == 1) // Manage bank 1 -- colors
      {
-       colorAngle1 = float(value[1]);
-       colorAngle2 = float(value[2]);  
-
-       colorAngle1 = map(colorAngle1, 0, 1023, 0, 360); 
-       colorAngle2 = map(colorAngle2, 0, 1023, 0, 360);
+       controller.c1 = convertReading2color(value[1]);
+       controller.c2 = convertReading2color(value[2]);
+       
      } 
     else  // Manage bank 0 -- speed, size, 
     {
@@ -60,24 +58,15 @@ void reactToData ()
   
   if (switchA == 1)  // Bank 1 --- manage colors
   {
-    colorMode(HSB, 360, 1, 1);
-    color cc = color(colorAngle1, 1, 1);
-    controller.colorBox1.setColor(cc);
-    
-    colorMode(HSB, 360, 1, 1);
-    cc = color(colorAngle2, 1, 1);
-    println("CA2 = "+nfc(colorAngle2,1));
-    controller.colorBox2.setColor(cc);
-    
-  } else 
+    controller.updateColorBoxes();
+    frameSet.setColorTori2(); 
+  } 
+  else 
   {
-
     if (particleSize > 0) {
       MaxRadius = particleSize;
-    }
-    
+    }   
     if (speedRead > 0) {
-
       manageFrameRate(speedRead);
       
     }
@@ -96,4 +85,17 @@ void serialEvent(Serial port) {
   incomingMessage = incomingMessage.trim();
   // println(incomingMessage);
 
+}
+
+float convertReading(String input, float MAX) {
+  
+  return map(float(input), 0, 1023, 0, MAX);
+  
+}
+
+color convertReading2color(String input) {
+  
+  float hue  = map(float(input), 0, 1023, 0, 360);
+  colorMode(HSB, 360, 1, 1);
+  return color(hue, 1, 1);
 }

@@ -27,7 +27,8 @@ class Widget {
     }
     
     void setColor( color c ) {
-      colorMode(RGB);
+      colorMode(RGB,255,255,255);
+      printColor(c, "Widget");
       bg = c;
    }
    
@@ -60,7 +61,7 @@ class Widget {
   void display() {
     
     rectMode(CORNER);
-    colorMode(RGB);
+    colorMode(RGB,255,255,255);
     
     if (!highlighted) {
       fill(bg);

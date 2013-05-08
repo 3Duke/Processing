@@ -18,15 +18,16 @@ void manageColors() {
 
   if (controller.colorWheel1.mouseInside()) {
     
-    controller.readColorWheel1();
-    controller.updateColorTori();
-    
+    frameSet.c1 = controller.readColorWheel1();
+    printColor(frameSet.c1, "manageColors(1)");
+    frameSet.setColorTori2();
   }
   
   if (controller.colorWheel2.mouseInside()) {
     
-    controller.readColorWheel2();
-    controller.updateColorTori();
+    frameSet.c2 = controller.readColorWheel2();
+    printColor(frameSet.c2, "manageColors(2)");
+    frameSet.setColorTori2();
     
   }
   
@@ -109,10 +110,10 @@ void manageLightsOut() {
       controller.c1Saved = controller.c1;
       controller.c2Saved = controller.c2;
       
-      controller.c1 = color(0);
-      controller.c2 = color(0);
+      frameSet.c1 = color(0);
+      frameSet.c2 = color(0);
       
-      frameSet.setColorTori2(controller.c1,controller.c2);
+      frameSet.setColorTori2();
       
       controller.lightsAreOut = true;
       controller.lightsOutBox.bg = color(0,0,128);
@@ -120,9 +121,9 @@ void manageLightsOut() {
       
     } else {
       
-      controller.c1 = color(128); // controller.c1Saved;
-      controller.c2 = color(128); // controller.c2Saved;
-      frameSet.setColorTori2(controller.c1,controller.c2);
+      frameSet.c1 = color(128); // controller.c1Saved;
+      frameSet.c2 = color(128); // controller.c2Saved;
+      frameSet.setColorTori2();
       controller.lightsOutBox.bg = color(0,0,255);
       controller.lightsAreOut = false;
       

@@ -48,7 +48,7 @@ class ColorWheel extends Widget {
       
     color c = color(readAngle(), readRadius(), 1);
        
-    // colorMode(RGB);
+    colorMode(RGB,255,255,255);
     
     return c;
   }
