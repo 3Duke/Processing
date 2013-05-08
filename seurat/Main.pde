@@ -39,7 +39,7 @@ void setup () {
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
   size(WW, HEIGHT);
-  frameRate(baseFrameRate);
+  
   
   
   // Serial communication
@@ -49,6 +49,7 @@ void setup () {
 
   // Create master objects
   frameSet = new FrameSet(WW, NumberOfFrames);
+  frameRate(frameSet.baseFrameRate);
   frameSet.spacingFactor = 0.3;
   frameSet.makeFrames();
   frameSet.setQualities();

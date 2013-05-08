@@ -38,19 +38,12 @@ int NumberOfFrames = 11;
 int displayMode = 1;  // 1 for classic, 2 for diagonal 
 
 // Frames
-float maxAlpha = 10.0;
-float maxLevel = 1.0;
-float minLevel = 0.8;
-float frameAlpha = 4.0;  // increase to decrease persistence of drawing
-float baseFrameRate = 30;
+
+
 
 // Particles
-int   NUMBER_OF_PARTICLES = 2  ;       // number of particles in each frame
-float MAXRADIUS = 180;
-float INITIAL_RADIUS = 130;
-float MaxRadius = INITIAL_RADIUS;      // 60; // maximum particle radius
-
-float CSPEED = 0.1;                    // Color velocity
+// int   NUMBER_OF_PARTICLES = 2  ;       // number of particles in each frame
+    // 60; // maximum particle radius
 
 
 

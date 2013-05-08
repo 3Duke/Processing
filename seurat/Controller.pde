@@ -42,17 +42,17 @@ class Controller {
     colorWheel2 = new ColorWheel(145, height-20, 60, "Color 2");  colorWheel2.bg = color(0);
 
     speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
-    radiusSlider = new Slider(720, height - 20, 200, 40, MAXRADIUS, "r", "Radius");
+    radiusSlider = new Slider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
 
-    alphaSlider = new Slider(20, height - 25, 200, 40, maxAlpha, "a", "Alpha");
+    alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
     maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Level");
     minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Level");
 
-    speedSlider.setValue(baseFrameRate);  
-    radiusSlider.setValue(INITIAL_RADIUS);
-    alphaSlider.setValue(frameAlpha);
-    maxLevelSlider.setValue(maxLevel);
-    minLevelSlider.setValue(minLevel);
+    speedSlider.setValue(frameSet.baseFrameRate);  
+    radiusSlider.setValue(frameSet.INITIAL_RADIUS);
+    alphaSlider.setValue(frameSet.frameAlpha);
+    maxLevelSlider.setValue(frameSet.maxLevel);
+    minLevelSlider.setValue(frameSet.minLevel);
   }
 
 

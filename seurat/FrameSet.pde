@@ -14,8 +14,20 @@ class FrameSet {
   
   //////////////
   
+  float baseFrameRate = 30;
+  
+  float MAXRADIUS = 180;
+  float INITIAL_RADIUS = 130;
+  float MaxRadius = INITIAL_RADIUS; 
+ 
+ float maxAlpha = 10.0;
+ float frameAlpha = 4.0;  // increase to decrease persistence of drawing 
+ float maxLevel = 1.0;
+ float minLevel = 0.8;
+  
   color c1, c2;
   
+  int number_of_particles = 1;
   float spacingFactor = 0.1;
   float colorVelocity = 0.2;
   float scale = 1;
@@ -39,7 +51,7 @@ void makeFrames() {
     
   // first frame
   
-  frame[0] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, spacingFactor);
+  frame[0] = new SEFrame(x, y, W, W, number_of_particles, scale, spacingFactor);
   frame[0].colorVelocity = colorVelocity;
   frame[0].setParticles(1.0);
   
@@ -53,7 +65,7 @@ void makeFrames() {
     
     float sf = spacingFactor + i/10.0;
     sf = min(sf,1.4);
-    frame[i] = new SEFrame(x, y, W, W, NUMBER_OF_PARTICLES, scale, sf);
+    frame[i] = new SEFrame(x, y, W, W, number_of_particles, scale, sf);
     
     // propagate properties from frameSet to framw
     frame[i].colorVelocity = colorVelocity;   

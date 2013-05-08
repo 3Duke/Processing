@@ -19,8 +19,8 @@ void displayMessage() {
 
 void manageFrameRate(float newFrameRate) {
   // changes frame rate
-  baseFrameRate = newFrameRate;
-  float currentFrameRate = baseFrameRate + 7*sin(TWO_PI*frameCount/20000);
+  frameSet.baseFrameRate = newFrameRate;
+  float currentFrameRate =   frameSet.baseFrameRate + 7*sin(TWO_PI*frameCount/20000);
   frameRate(currentFrameRate);
 }
 
