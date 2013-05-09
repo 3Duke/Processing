@@ -254,8 +254,18 @@ void keyPressed() {
 
     if (keyCode == SHIFT) 
     {
-      println("Saved frame "+frameCount+" as "+fileName);
-      saveFrame(fileName+"-"+foobar+"-######.png");
+      // String F = fileName+"-"+foobar+"-######.png";
+      
+      String index = nfs(frameCount,6).trim();
+      String F = fileName+"-"+foobar+"-"+index+".png";
+      println("Saved file: "+F);
+      saveFrame(F);
+      
+      logString = "File: "+F+"; parameters: "+frameSet.stringValOfParameters()+"\n\n";
+      logStringArray = append(logStringArray, logString);
+      
+      saveStrings(foobar+"-log.txt", logStringArray);
+
     }
 
     if (keyCode == ALT) 

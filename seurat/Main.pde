@@ -9,6 +9,8 @@
 // Initializatin of main
 boolean screenControlsOn = true;
 String foobar;
+String logString;
+String logStringArray[] = new String[0];
 
 // Initializaton of controller:
 int numberOfControlBanks = 3;

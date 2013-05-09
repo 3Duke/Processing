@@ -57,6 +57,13 @@ void printColor(color c, String label) {
   
 }
 
+String colorString (color c) {
+  
+  colorMode(RGB);
+  return "rgb: " + red(c) + ", " + green(c) + ", " + blue(c);
+  
+}
+
 String randomString(int n) {
   
   String val = "";

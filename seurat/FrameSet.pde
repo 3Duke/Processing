@@ -16,6 +16,8 @@ class FrameSet {
   
   float baseFrameRate = 30;
   
+  int particleType = 1;
+  
   float MAXRADIUS = 180;
   float INITIAL_RADIUS = 130;
   float maxRadius = INITIAL_RADIUS; 
@@ -134,7 +136,9 @@ void setAlpha(float a) {
 }
 
 
-  void setParticleType(int particleType) {
+  void setParticleType(int particleType_) {
+    
+    particleType = particleType_;
  
  for(int i = 0; i < frame.length; i++) {
   
@@ -324,6 +328,26 @@ void lastFrame(int i) {
       }
     }
     
+}
+
+String stringValOfParameters() {
+  
+  String val = "";
+  
+  val = "c1:"+colorString(c1);
+  val += "; c2: "+colorString(c2);
+  val += "; particleType: "+particleType;
+  val += ", minRadius: "+minRadius;
+  val += ", maxRadius: "+maxRadius;
+  val += ", frameAlpha: "+frameAlpha; 
+  val += ", minBrightness: "+minLevel;
+  val += ", maxBrightness: "+maxLevel;
+  val += ", colorVelocity: "+colorVelocity;
+  val += ", frameAlpha: "+frameAlpha;
+  val += ", numberOfActiveParticles: "+numberOfActiveParticles;
+  val += ", particleSpacingFactor: "+spacingFactor;
+
+  return val; 
 }
   
  } // FrameSet

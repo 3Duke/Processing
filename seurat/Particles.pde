@@ -54,7 +54,7 @@ int WORD = 4;
     dradius = 0.1;
     dr = 1;
     
-    ptype = TRI;  // initial value
+    ptype = frameSet.particleType;  // initial value
   }
 
   void  display() {
