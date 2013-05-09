@@ -70,8 +70,8 @@ class Controller {
     radiusSlider.setValue(frameSet.INITIAL_RADIUS);
     
     alphaSlider.setValue(frameSet.frameAlpha);
-    brightnessSlider.setValue(frameSet.maxLevel);
-    brightnessSlider.setValue2(frameSet.minLevel);
+    brightnessSlider.setValue(frameSet.maxBrightness);
+    brightnessSlider.setValue2(frameSet.minBrightness);
     colorVelocitySlider.setValue(frameSet.colorVelocity);
   }
 

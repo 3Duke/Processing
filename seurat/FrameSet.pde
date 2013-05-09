@@ -25,8 +25,8 @@ class FrameSet {
  
  float maxAlpha = 10.0;
  float frameAlpha = 4.0;  // increase to decrease persistence of drawing 
- float maxLevel = 1.0;
- float minLevel = 0.8;
+ float maxBrightness = 1.0;
+ float minBrightness = 0.8;
   
   color c1, c2;
   
@@ -87,8 +87,8 @@ void makeFrames() {
       frame[i].spacingFactor = spacingFactor;
       
       frame[i].phase = 200*i;  // 200*i ==> 10*i for test
-      frame[i].levelMin = minLevel;
-      frame[i].levelMax = maxLevel;
+      frame[i].levelMin = minBrightness;
+      frame[i].levelMax = maxBrightness;
       frame[i].levelPhase = frame[i].phase*sqrt(2);
       frame[i].levelPeriod  = 20000/(i+1);
       
@@ -330,6 +330,67 @@ void lastFrame(int i) {
     
 }
 
+XML appendXMLOfParameters(XML xml, String fileName_) {
+  
+  // XML xml = createXML("parameters");
+  XML ff = xml.addChild("fileSaved");
+  
+  XML fn = ff.addChild("fileName");
+  fn.setContent(fileName);
+  
+  XML cc1 = ff.addChild("color1");
+  XML cc1r = cc1.addChild("red");
+  cc1r.setContent(nfc(red(c1),2));
+  XML cc1g = cc1.addChild("green");
+  cc1g.setContent(nfc(green(c1),2));
+  XML cc1b = cc1.addChild("blue");
+  cc1b.setContent(nfc(blue(c1),2));
+  XML cc1a = cc1.addChild("alpha");
+  cc1a.setContent(nfc(alpha(c1),2));
+  
+  XML cc2 = ff.addChild("color2");
+  XML cc2r = cc2.addChild("red");
+  cc2r.setContent(nfc(red(c2),2));
+  XML cc2g = cc2.addChild("green");
+  cc2g.setContent(nfc(green(c2),2));
+  XML cc2b = cc2.addChild("blue");
+  cc2b.setContent(nfc(blue(c2),2));
+  XML cc2a = cc2.addChild("alpha");
+  cc2a.setContent(nfc(alpha(c2),2));
+  
+  XML pt = ff.addChild("particleType");
+  pt.setContent( nfc(particleType,0) );
+  
+  XML mr = ff.addChild("minRadius");
+  mr.setContent(nfc(minRadius,2));
+  
+  XML MR = ff.addChild("maxRadius");
+  MR.setContent(nfc(maxRadius,2));
+  
+  XML fa = ff.addChild("frameAlpha");
+  fa.setContent(nfc(frameAlpha,2));
+  
+  XML mb = ff.addChild("minBrightness");
+  mb.setContent(nfc(minBrightness,2));
+  
+  XML MB = ff.addChild("maxBrightness");
+  MB.setContent(nfc(maxBrightness,2));
+  
+  XML cv = ff.addChild("colorVelocity");
+  cv.setContent(nfc(colorVelocity,2));
+  
+  XML nap = ff.addChild("numberOfActiveParticles");
+  nap.setContent(nfc(numberOfActiveParticles,0));
+  
+  
+  XML psf = ff.addChild("particleSpacingFactor");
+  psf.setContent(nfc(spacingFactor,2));
+  
+  return xml;
+  
+}
+
+
 String stringValOfParameters() {
   
   String val = "";
@@ -340,8 +401,8 @@ String stringValOfParameters() {
   val += ", minRadius: "+minRadius;
   val += ", maxRadius: "+maxRadius;
   val += ", frameAlpha: "+frameAlpha; 
-  val += ", minBrightness: "+minLevel;
-  val += ", maxBrightness: "+maxLevel;
+  val += ", minBrightness: "+minBrightness;
+  val += ", maxBrightness: "+maxBrightness;
   val += ", colorVelocity: "+colorVelocity;
   val += ", frameAlpha: "+frameAlpha;
   val += ", numberOfActiveParticles: "+numberOfActiveParticles;

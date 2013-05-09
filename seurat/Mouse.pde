@@ -259,6 +259,8 @@ void keyPressed() {
       String index = nfs(frameCount,6).trim();
       String F = fileName+"-"+foobar+"-"+index+".png";
       println("Saved file: "+F);
+      frameSet.appendXMLOfParameters(xml, F);
+      println(xml);  
       saveFrame(F);
       
       logString = "File: "+F+"; parameters: "+frameSet.stringValOfParameters()+"\n\n";

@@ -9,6 +9,7 @@
 // Initializatin of main
 boolean screenControlsOn = true;
 String foobar;
+XML xml = createXML("filesSaved");
 String logString;
 String logStringArray[] = new String[0];
 
