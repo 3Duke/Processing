@@ -174,9 +174,7 @@ int WORD = 4;
   }
   
   void changeRadius(float m, float M) {
-    
-    
-    
+      
     radius = radius + rspeed*dradius;
     
     if (radius > M) {
@@ -186,10 +184,10 @@ int WORD = 4;
   }
   
   
-  void  change(float M) { 
+  void  change(float m, float M) { 
     
   changePosition(M);
-  changeRadius(M/10, M);
+  changeRadius(m, M);
   changeColor(50,100);
   
   }

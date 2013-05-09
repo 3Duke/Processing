@@ -164,7 +164,7 @@ class SEFrame {
     
   }
 
-  void display(float M) {
+  void display(float m, float M) {
 
   
   // adjust level
@@ -191,7 +191,7 @@ class SEFrame {
    if (frameCount > phase) 
    {
       for(int i = 0; i < numberOfActiveParticles ; i++) {
-        particles[i].change(M);  // M = maximum particle radius  
+        particles[i].change(m, M);  // M = maximum particle radius  
       }
       
       for(int i = 0; i < numberOfActiveParticles ; i++) {

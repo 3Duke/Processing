@@ -64,7 +64,7 @@ void reactToData ()
   else 
   {
     if (particleSize > 0) {
-      frameSet.MaxRadius = particleSize;
+      frameSet.maxRadius = particleSize;
     }   
     if (speedRead > 0) {
       manageFrameRate(speedRead);

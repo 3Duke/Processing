@@ -14,7 +14,8 @@ class Controller {
   // switches
   boolean lightsAreOut;
   
-  Slider radiusSlider, speedSlider;
+  DoubleSlider radiusSlider;
+  Slider speedSlider;
   Slider alphaSlider, colorVelocitySlider; 
   DoubleSlider brightnessSlider;
   Slider numberOfParticlesSlider, particleSpacingSlider;
@@ -46,11 +47,13 @@ class Controller {
     colorWheel2 = new ColorWheel(145, height-20, 60, "Color 2");  colorWheel2.bg = color(0);
 
     speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
-    radiusSlider = new Slider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
+    radiusSlider = new DoubleSlider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
+    radiusSlider.setValue(frameSet.maxRadius);
+    radiusSlider.setValue2(frameSet.minRadius);
 
     alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
     brightnessSlider = new DoubleSlider(240, height - 25, 200, 40, 1.0, "b", "Brightness");
-    colorVelocitySlider = new Slider(680, height - 25, 200, 40, 1.0, "v", "Color Velocity");
+    colorVelocitySlider = new Slider(460, height - 25, 200, 40, 1.0, "v", "Color Velocity");
     colorVelocitySlider.digits = 2;
     
     numberOfParticlesSlider = new Slider(20, height - 25, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
@@ -90,8 +93,6 @@ class Controller {
     radiusSlider.display();
     speedSlider.display();
 
-    radiusSlider.read();
-    speedSlider.read();
   }
 
   void displayBank2() {

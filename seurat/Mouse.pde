@@ -57,8 +57,9 @@ void manageRadius() {
 
   if (controller.radiusSlider.mouseInside())  
   {
-    frameSet.MaxRadius =  controller.radiusSlider.read();
-    controller.radiusSlider.saveValue();
+    controller.radiusSlider.read();
+    frameSet.maxRadius =  controller.radiusSlider.value;
+    frameSet.minRadius = controller.radiusSlider.value2;
   }
 }
 

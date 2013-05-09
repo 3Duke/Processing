@@ -18,7 +18,8 @@ class FrameSet {
   
   float MAXRADIUS = 180;
   float INITIAL_RADIUS = 130;
-  float MaxRadius = INITIAL_RADIUS; 
+  float maxRadius = INITIAL_RADIUS; 
+  float minRadius = INITIAL_RADIUS/4;
  
  float maxAlpha = 10.0;
  float frameAlpha = 4.0;  // increase to decrease persistence of drawing 
@@ -149,21 +150,16 @@ void setAlpha(float a) {
   
   void display () {
 
-    float M = MaxRadius;
+    float M = maxRadius;
   
-    for (int i = 0; i < frame.length; i++) {  // XXX
-    
-      frame[i].display(M);
+    for (int i = 0; i < frame.length; i++) 
+    {  
+      frame[i].display(minRadius, maxRadius);
       frame[i].change(200);
       M = inverseGoldenRatio*M;
     }
   }
-  
- /*
- float red(int i) { return frame[i].red(); }
- float green(int i) { return 255; }
- float blue(int i) { return 255; }
- */
+ 
   
  void setColorTori() {
 
