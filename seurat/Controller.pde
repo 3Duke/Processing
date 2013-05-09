@@ -15,8 +15,11 @@ class Controller {
   boolean lightsAreOut;
   
   Slider radiusSlider, speedSlider;
-  Slider alphaSlider, maxLevelSlider, minLevelSlider, colorVelocitySlider;
+  Slider alphaSlider, colorVelocitySlider; 
+  DoubleSlider brightnessSlider;
   Slider numberOfParticlesSlider, particleSpacingSlider;
+  
+  DoubleSlider fooSlider;
 
   Controller (int numberOfControlBanks) {
 
@@ -30,7 +33,7 @@ class Controller {
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
     
-    lightsOutBox = new Box(920, height - 50, 30, 30, "B");
+    lightsOutBox = new Box(980, height - 50, 30, 30, "B");
     lightsAreOut = false;
 
     String particleLabels[] = { 
@@ -46,8 +49,7 @@ class Controller {
     radiusSlider = new Slider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
 
     alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
-    minLevelSlider = new Slider(240, height - 25, 200, 40, 1.0, "min", "Minimum Brightness");
-    maxLevelSlider = new Slider(460, height - 25, 200, 40, 1.0, "max", "Maximum Brightness");
+    brightnessSlider = new DoubleSlider(240, height - 25, 200, 40, 1.0, "b", "Brightness");
     colorVelocitySlider = new Slider(680, height - 25, 200, 40, 1.0, "v", "Color Velocity");
     colorVelocitySlider.digits = 2;
     
@@ -56,13 +58,17 @@ class Controller {
     numberOfParticlesSlider.digits = 0;
     particleSpacingSlider = new Slider(240, height - 25, 200, 40, 1.0, "sf", "Particle Spacing Factor");
     particleSpacingSlider.setValue(frameSet.spacingFactor);
+    
+    fooSlider = new DoubleSlider(660, height - 25, 200, 40, 8, "foo", "Foo Factor");
+    fooSlider.setValue(4);
+    fooSlider.setValue2(2);
 
     speedSlider.setValue(frameSet.baseFrameRate);  
     radiusSlider.setValue(frameSet.INITIAL_RADIUS);
     
     alphaSlider.setValue(frameSet.frameAlpha);
-    maxLevelSlider.setValue(frameSet.maxLevel);
-    minLevelSlider.setValue(frameSet.minLevel);
+    brightnessSlider.setValue(frameSet.maxLevel);
+    brightnessSlider.setValue2(frameSet.minLevel);
     colorVelocitySlider.setValue(frameSet.colorVelocity);
   }
 
@@ -93,8 +99,7 @@ class Controller {
     alphaSlider.display();
     alphaSlider.read();
 
-    minLevelSlider.display();
-    maxLevelSlider.display();
+    brightnessSlider.display();
     
     colorVelocitySlider.display();
     colorVelocitySlider.read();
@@ -105,6 +110,8 @@ class Controller {
     numberOfParticlesSlider.display();
     particleSpacingSlider.display();
     lightsOutBox.display();
+    
+    fooSlider.display();
   }
 
   void displayBank(int k) 

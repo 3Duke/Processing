@@ -145,44 +145,19 @@ void manageLightsOut() {
   
 }
 
-void manageMinLevel() {
 
-  if ((controller.minLevelSlider.mouseInside()) || (controller.maxLevelSlider.mouseInside()) ) {
 
-    float min = controller.minLevelSlider.read();
-    float max = controller.maxLevelSlider.savedValue;
+void manageBrightness() {
 
-    if (max < min) 
-    { 
-      max = min;
-      controller.maxLevelSlider.setValue(min); 
-      controller.maxLevelSlider.display();
-    }
-    controller.minLevelSlider.saveValue();
-
-    frameSet.setLevelRange(min, max); 
+  if (controller.brightnessSlider.mouseInside()) {
+    
+    controller.brightnessSlider.read();
+    frameSet.setLevelRange( controller.brightnessSlider.value2, controller.brightnessSlider.value); 
+    
     println("Levels reset");
   }
 }
 
-void manageMaxLevel() {
-
-  if (controller.maxLevelSlider.mouseInside() ) {
-
-    float max = controller.maxLevelSlider.read();
-    float min = controller.minLevelSlider.savedValue;
-    if (max < min) 
-    { 
-      min = max; 
-      controller.minLevelSlider.setValue(max); 
-      controller.minLevelSlider.display();
-    }
-    controller.maxLevelSlider.saveValue();
-
-
-    frameSet.setLevelRange(min, max);
-  }
-}
 
 ///////////////////////////////////////////////////////
 
@@ -213,6 +188,15 @@ void manageParticleSpacing() {
 }
 
 
+void manageFoo() {
+
+  if (controller.fooSlider.mouseInside()) {
+
+    controller.fooSlider.read();
+ 
+  }
+}
+
 ///////////////////////////////////////////////////////
 
 void mousePressed() {
@@ -230,8 +214,7 @@ void mousePressed() {
   if (controller.bankSelector.activeSwitch() == 1)
   {
     manageAlpha();
-    manageMinLevel();
-    manageMaxLevel();
+    manageBrightness();
     manageColorVelocity();
   }
   
@@ -239,6 +222,7 @@ void mousePressed() {
   {
     manageNumberOfParticles();
     manageParticleSpacing();
+    manageFoo();
     manageLightsOut();
   }
   
