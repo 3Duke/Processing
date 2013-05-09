@@ -336,7 +336,7 @@ XML appendXMLOfParameters(XML xml, String fileName_) {
   XML ff = xml.addChild("fileSaved");
   
   XML fn = ff.addChild("fileName");
-  fn.setContent(fileName);
+  fn.setContent(fileName_);
   
   XML cc1 = ff.addChild("color1");
   XML cc1r = cc1.addChild("red");

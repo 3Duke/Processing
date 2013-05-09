@@ -266,7 +266,8 @@ void keyPressed() {
       logString = "File: "+F+"; parameters: "+frameSet.stringValOfParameters()+"\n\n";
       logStringArray = append(logStringArray, logString);
       
-      saveStrings(foobar+"-log.txt", logStringArray);
+      // saveStrings(foobar+"-log.txt", logStringArray);
+      saveXML(xml, foobar+".xml");
 
     }
 
