@@ -255,7 +255,7 @@ void keyPressed() {
     if (keyCode == SHIFT) 
     {
       println("Saved frame "+frameCount+" as "+fileName);
-      saveFrame(fileName+"-######.png");
+      saveFrame(fileName+"-"+foobar+"-######.png");
     }
 
     if (keyCode == ALT) 

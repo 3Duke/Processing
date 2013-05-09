@@ -151,12 +151,14 @@ void setAlpha(float a) {
   void display () {
 
     float M = maxRadius;
+    float m = minRadius;
   
     for (int i = 0; i < frame.length; i++) 
     {  
-      frame[i].display(minRadius, maxRadius);
+      frame[i].display(m, M);
       frame[i].change(200);
       M = inverseGoldenRatio*M;
+      m = inverseGoldenRatio*m;
     }
   }
  

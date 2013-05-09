@@ -8,6 +8,7 @@
 
 // Initializatin of main
 boolean screenControlsOn = true;
+String foobar;
 
 // Initializaton of controller:
 int numberOfControlBanks = 3;
@@ -73,6 +74,10 @@ Controller controller;
 int HEIGHT = displayHeight;
 
 void setup () {
+  
+  
+  foobar = randomString(4);
+  println("foobar = "+foobar);
   
   smooth();
   
