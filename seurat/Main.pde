@@ -76,8 +76,47 @@ Controller controller;
 
 int HEIGHT = displayHeight;
 
+///////////
+
+// SOUND
+
+import ddf.minim.*;
+import ddf.minim.ugens.*;
+// this time we also need effects because the filters are there for this release
+import ddf.minim.effects.*;
+
+// create all of the variables that will need to be accessed in
+// more than one methods (setup(), draw(), stop()).
+Minim minim;
+AudioOutput out;
+NoiseInstrument myNoise, myNoise2, myNoise3, myNoise4;
+
+//////////
+
 void setup () {
+
+   //// SOUND
+  float soundLevel = 4.0;
+  // initialize the minim and out objects
+  minim = new Minim( this );
+  out = minim.getLineOut( Minim.MONO, 512 );
+  // need to initialize the myNoise object   
+  myNoise = new NoiseInstrument( 2.0*soundLevel, out );
+  myNoise2 = new NoiseInstrument( 4.0*soundLevel, out );
+  myNoise3 = new NoiseInstrument( 1.0*soundLevel, out );
+  myNoise4 = new NoiseInstrument( 2.0*soundLevel, out );
+
   
+  // play the note for 100.0 seconds
+  out.playNote( 0.1, 10000.0, myNoise );
+  /*
+  out.playNote( 1, 10000.0, myNoise2 );
+  out.playNote( 2, 10000.0, myNoise3 );
+  // out.playNote( 3, 10000.0, myNoise4 );
+  */
+
+  //// END SOUND
+
   
   foobar = randomString(4);
   println("foobar = "+foobar);
@@ -141,6 +180,8 @@ void handleSerialInput() {
 void draw () {
 
   handleSerialInput();
+  
+  dialSound();
    
   if ((!acceptText) && (!acceptFileName)) {
     count++;
@@ -164,5 +205,65 @@ void draw () {
     
       // println("A: OFF");
   }
+  
 
 }  // end draw
+
+
+void stop()
+{
+  // close the AudioOutput
+  out.close();
+  // stop the minim object
+  minim.stop();
+  // stop the processing object
+  super.stop();
+  
+}
+
+/// SOUND
+
+void dialSound() {
+  
+  float freq = map( frameSet.frame[0].hue_(), 0, 360, 220, 440 );
+  float q = map( frameSet.frame[0].particles[0].x, 0, frameSet.frame[0].w, 20, 100 );
+  // and call the methods of the instrument to change the sound
+  myNoise.setFilterCF( freq );
+  myNoise.setFilterQ( q );
+  
+  /*
+ float freq2 = map( frameSet.frame[0].particles[0].x, 0, frameSet.frame[0].w, 60, 120 );
+ float q2 = map( frameSet.frame[1].particles[0].y, 0, frameSet.frame[0].h, 20, 100 );
+  // and call the methods of the instrument to change the sound
+  myNoise2.setFilterCF( freq2 );
+  myNoise2.setFilterQ( q2 );
+  
+  float freq3 = map( frameSet.frame[1].hue_(), 0, 360, 120, 240 );
+  float q3 = map( frameSet.frame[1].particles[0].x, 0, frameSet.frame[1].w, 20, 100 );
+  // and call the methods of the instrument to change the sound
+  myNoise3.setFilterCF( freq3 );
+  myNoise3.setFilterQ( q3 );
+  
+  
+ float freq4 = map( frameSet.frame[0].particles[0].x, 0, frameSet.frame[1].w, 120, 240 );
+ float q4 = map( frameSet.frame[1].particles[0].y, 0, frameSet.frame[1].h, 20, 100 );
+  // and call the methods of the instrument to change the sound
+  myNoise4.setFilterCF( freq4 );
+  myNoise4.setFilterQ( q4 );
+  */
+}
+
+void mouseMoved()
+{
+  /*
+  // map the position of the mouse to useful values
+  float freq = map( mouseY, 0, height, 1500, 150 );
+  float q = map( mouseX, 0, width, 0.9, 100 );
+  // and call the methods of the instrument to change the sound
+  myNoise.setFilterCF( freq );
+  myNoise.setFilterQ( q );
+  */
+  
+}
+
+/// END SOUND

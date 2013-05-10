@@ -52,14 +52,14 @@ void keyReleased() {
 
 void printColor(color c, String label) {
   
-  colorMode(RGB);
-  println(label + ": rgb = " + red(c) + ", " + green(c) + ", " + blue(c));
+  colorMode(RGB,255,255,255,255);
+  println(label + ": rgb = " + nfc(red(c),0) + ", " + nfc(green(c),0) + ", " + nfc(blue(c),0));
   
 }
 
 String colorString (color c) {
   
-  colorMode(RGB);
+  colorMode(RGB,255,25,255);
   return "rgb: " + red(c) + ", " + green(c) + ", " + blue(c);
   
 }

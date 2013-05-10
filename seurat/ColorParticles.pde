@@ -34,13 +34,13 @@ void randomStep( float relativeSize ) {
   float step = 255*relativeSize;
   
   r = r + random(-step, step);
-  r = r % 255;
+  r = r % 256;
   
   g = g + random(-step, step);
-  g = g % 255;
+  g = g % 256;
   
   b = b + random(-step, step);
-  b = b % 255;
+  b = b % 256;
   
 }
 

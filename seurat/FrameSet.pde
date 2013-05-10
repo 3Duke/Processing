@@ -160,7 +160,7 @@ void setAlpha(float a) {
     for (int i = 0; i < frame.length; i++) 
     {  
       frame[i].display(m, M);
-      frame[i].change(200);
+      frame[i].change(  );
       M = inverseGoldenRatio*M;
       m = inverseGoldenRatio*m;
     }
@@ -198,7 +198,7 @@ void setAlpha(float a) {
 // controller.colorBox1.setRGBAColor(r1, g1, b1, 255);
 controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
  
-
+  println("\n\nSetting colors of frames ...");
 
   for (int i = 0; i < frame.length; i++) {
     // frames[i].randomSetColor();
@@ -219,6 +219,7 @@ controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
 
 void setColorTori2() {
 
+  colorMode(RGB,255,255,255,255);
   float r1, g1, b1, r2, g2, b2;
   
   printColor(c1, "setColorTori(1)");

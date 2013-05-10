@@ -1,6 +1,6 @@
   
 class SEFrame {
-
+  
   // Geometry of frame
   float x, y;
   float w, h;
@@ -12,6 +12,8 @@ class SEFrame {
   float dr, dg, db, da;  // change in color
   float colorPhase;      // phase
   float colorVelocity;
+  color frameColor;
+  float frameHue;
   
   float level; // brightness
   float levelPhase; // frames
@@ -40,7 +42,13 @@ class SEFrame {
     // Default color of frame
     r = random(100,200);
     g = random(100,200);
-    b = random(100,200);                                                                                                                                                                                        
+    b = random(100,200);  
+
+    colorMode(RGB,255,255,255,255);
+    frameColor = color(r,g,b);
+    colorMode(HSB,360, 360, 360);
+    frameHue = hue(frameColor);
+    
 
     // Change of color of frame
     dr = random(-1,1);
@@ -131,61 +139,82 @@ class SEFrame {
       
   }
 
-  void changeColor(float A) {
+  void changeColor() {
 
     r = r + speed*dr;
     g = g + speed*dg;
     b = b + speed*db;
     a = a + speed*da;
    
-    r = r % 255;
-    g = g % 255;
-    b = b % 255;
-    a = a % 255;
+    r = r % 256;
+    g = g % 256;
+    b = b % 256;
+    a = a % 256;
     
   }
   
-  void setColor(float rr, float gg, float bb, float aa) 
+  void setColor(float r_, float g_, float b_, float a_) 
   {
-    r = rr; g = gg; b = bb; g = gg; a = aa;
+    r = r_; g = g_; b = b_; g = g_; a = a_;
+    print("SC: "+r+", "+g+", "+b+" -- "); count = 0;
+    colorMode(RGB,255,255,255,255);
+    frameColor = color(r,g,b,a);
+    
+    colorMode(HSB,360, 1, 1);
+    float h = hue(frameColor);
+    printColor(frameColor, "frameColor");
+    println("!! frameHue = "+h);
+    println("## frameHue = "+hue_());
+    // colorMode(RGB,255,255,255);
   }
   
   void randomSetColor() {
     setColor(random(255), random(255), random(255), random(255));
   }
   
-  void setDColor(float rr, float gg, float bb, float aa) {
-    dr = rr; dg = gg; db = bb; dg = gg; da = aa;
+  void setDColor(float dr_, float dg_, float db_, float da_) {
+    dr = dr_; dg = dg_; db = db_; da = da_;
   }
 
-  void change(float A) {
+  void change() {
     
-    changeColor(A);
+    changeColor();
     
   }
 
   void display(float m, float M) {
 
-  
+   
   // adjust level
     float LF = 1.0;
     if (levelPeriod > 0) {
       
       LF = abs(sin((levelMax - levelMin)*sin(TWO_PI*(frameCount - phase)/levelPeriod))) +levelMin;
-     //  LF = 1;  // JC: disable change of contrast, value for now;
+      if (LF  > 1) {
+          LF = 1;
+      }
+     LF = 1;  // JC: disable change of contrast, value for now;
     }
     
-      colorMode(RGB);
       
-      float rr = r + colorPhase*dr % 255;
-      float gg = g + colorPhase*dg % 255;
-      float bb = b + colorPhase*db % 255;
+      float rr = r + colorPhase*dr % 256;
+      float gg = g + colorPhase*dg % 256;
+      float bb = b + colorPhase*db % 256;
+    
+ 
+      float rrr = LF*rr; 
+      float ggg = LF*gg; 
+      float bbb = LF*bb;
       
-      fill(LF*rr,LF*gg,LF*bb,a);
+      colorMode(RGB,255,255,255,255);
+      fill(rrr,ggg,bbb,a);
 
       stroke(0);
       rectMode(NORMAL);
       rect(x, y, x + w, y + h);
+      
+      frameColor = color(rrr,ggg,bbb,a);
+      // printColor(frameColor, "DIS");
    
       
    if (frameCount > phase) 
@@ -209,5 +238,14 @@ class SEFrame {
   float red() { return r; }
   float green() { return g; }
   float blue() { return b; }
+  
+  float hue_() { 
+    
+   colorMode(HSB,360, 1, 1);
+   return hue(frameColor);
+
+    
+  }
+    
   
 } // Frame

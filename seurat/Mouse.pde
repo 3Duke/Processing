@@ -16,6 +16,7 @@ void manageParticleType() {
 
 void manageColors() {
 
+  println("\n\nmanageColors() ...");
   if (controller.colorWheel1.mouseInside()) {
     
     frameSet.c1 = controller.readColorWheel1();

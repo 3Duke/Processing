@@ -161,7 +161,7 @@ class Widget {
      
      angle =  180 + angle;
    }
-   
+   println("Angle: "+nfc(angle,0));
    return angle; 
    
   }
