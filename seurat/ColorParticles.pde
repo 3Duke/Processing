@@ -1,48 +1,60 @@
 class ColorParticle {
-  
- float r, g, b, a;
 
- ColorParticle() {
-  
-     r = random(0,255);
-     g = random(0,255);
-     b = random(0,255);
-     a = 255;
- } 
-  
- color getColor() {
-   
-   colorMode(RGB, 255, 255, 255, 255);
-   return color(r,g,b,a);
+  float r, g, b, a;
 
- }
- 
+  ColorParticle() {
 
-float red() { return r; }
-float green() { return g; }
-float blue() { return b; }
-float alpha() { return a; }
+    r = random(0, 255);
+    g = random(0, 255);
+    b = random(0, 255);
+    a = 255;
+  } 
 
-void setRed(float r_) { r = r_; }
-void setGreen(float g_) { g = g_; }
-void setBlue(float b_) { b = b_; }
-void setAlpha(float a_) { a = a_; }
+  color getColor() {
+
+    colorMode(RGB, 255, 255, 255, 255);
+    return color(r, g, b, a);
+  }
 
 
-void randomStep( float relativeSize ) {
-  
-  float step = 255*relativeSize;
-  
-  r = r + random(-step, step);
-  r = r % 256;
-  
-  g = g + random(-step, step);
-  g = g % 256;
-  
-  b = b + random(-step, step);
-  b = b % 256;
-  
-}
+  float red() { 
+    return r;
+  }
+  float green() { 
+    return g;
+  }
+  float blue() { 
+    return b;
+  }
+  float alpha() { 
+    return a;
+  }
+
+  void setRed(float r_) { 
+    r = r_;
+  }
+  void setGreen(float g_) { 
+    g = g_;
+  }
+  void setBlue(float b_) { 
+    b = b_;
+  }
+  void setAlpha(float a_) { 
+    a = a_;
+  }
 
 
+  void randomStep( float relativeSize ) {
+
+    float step = 255*relativeSize;
+
+    r = r + random(-step, step);
+    r = r % 256;
+
+    g = g + random(-step, step);
+    g = g % 256;
+
+    b = b + random(-step, step);
+    b = b % 256;
+  }
 }

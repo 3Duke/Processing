@@ -8,43 +8,40 @@ Sound sound;
 
 
 void setup () {
-  
+
   HEIGHT = displayHeight;
   setAppearance();
-  
+
   // SERIAL OOMMUNICATION
   port = new Serial(this, USB_PORT, 9600); 
   serialManager = new SerialManager(port, 6);
-   
+
   // FRAMESET
   frameSet = new FrameSet(WW, NumberOfFrames);
   frameSet.configure();
-  
+
   // CONTROLLER
   controller = new Controller(numberOfControlBanks); 
   frameSet.setColorTori();
-  
+
   responder = new Responder(frameSet, controller);
 
   // SOUND
-  sound = new Sound();  
+  sound = new Sound();
 }
 
 void draw () {
 
-   serialManager.handleInput();
-   sound.play();
-   display();
-   
-  
-  
+  serialManager.handleInput();
+  sound.play();
+  display();
 }  // end draw
 
 
 void stop()
 {
   sound.stop();
-  super.stop(); 
+  super.stop();
 }
 
 //////////////////////////////////////////////////
@@ -52,14 +49,12 @@ void stop()
 void mousePressed() {
 
   responder.manageMousePress();
-  
 }
-  
+
 
 void keyPressed() {
 
   responder.manageKeyPress();
-  
 }
 
 void keyReleased() {
@@ -89,39 +84,40 @@ void keyReleased() {
 /////////////////////////////////////////////////
 
 void display() {
-  
+
   if (displayOn) {
     count++;   
     controller.display();
     frameSet.display();
     displayMessage();
-    
   } 
   else 
   {
     text(responder.typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
   }
-  
 }
 
 void setAppearance() {
-  
+
   int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
-  
+
   if (screenControlsOn) {
-  
+
     HEIGHT = displayHeight - displayMargin;  // Set HEIGHT to some value manually if you wish
-  
   }
-  
+
   // Appearance:
 
-  if (screenControlsOn) { WW = WIDTH - controlMargin; } else { WW = WIDTH; }
+  if (screenControlsOn) { 
+    WW = WIDTH - controlMargin;
+  } 
+  else { 
+    WW = WIDTH;
+  }
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
   size(WW, HEIGHT);
-  
+
   smooth();
   background(0);
-  
 }
