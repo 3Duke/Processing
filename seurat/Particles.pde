@@ -4,8 +4,9 @@ int TRI = 1;
 int SQU = 2;
 int QUA = 3;
 int STA = 4;
-int LETTER = 5;
-int WORD = 6;
+int SQ2 = 5;
+int LETTER = 6;
+int WORD = 7;
 
   class Particle {
 
@@ -88,9 +89,19 @@ int WORD = 6;
     } else if (ptype == STA) {
     
      color c = color(r,g,b,a);
+     
      SEStar star = new SEStar(x, y, radius, 12, c);
      
      star.display();
+     
+    } else if (ptype == SQ2) {
+ 
+     color c = color(r,g,b,a);
+     noFill();
+     stroke(c);
+     rectMode(CENTER);
+     rect(x,y,radius/2,radius/2);
+     
       
     }
     else if (ptype == LETTER) {

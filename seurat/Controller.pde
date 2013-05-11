@@ -38,10 +38,10 @@ class Controller {
     lightsAreOut = false;
 
     String particleLabels[] = { 
-      "C", "T", "S", "Q", "*", "L", "W"
+      "C", "T", "S", "Q", "*", "s", "L", "W"
     };
 
-    shapeSelector = new SelectorBox(260, height - 20, 180, 40, particleLabels.length, particleLabels); 
+    shapeSelector = new SelectorBox(230, height - 20, 230, 40, particleLabels.length, particleLabels); 
     
     colorWheel1 = new ColorWheel(70, height-20, 60, "Color 1");  colorWheel1.bg = color(0);
     colorWheel2 = new ColorWheel(145, height-20, 60, "Color 2");  colorWheel2.bg = color(0);
