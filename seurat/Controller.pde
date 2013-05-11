@@ -136,7 +136,7 @@ class Controller {
   void display() {
 
 
-    if (switchA == 1) { 
+    if (serialManager.switchA == 1) { 
       colorBox1.display();   
       colorBox2.display();
     }

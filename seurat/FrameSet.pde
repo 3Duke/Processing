@@ -44,6 +44,16 @@ FrameSet(float WIDTH, int numberOfFrames_) {
         
 }  
 
+void configure () {
+  
+  frameRate(frameSet.baseFrameRate);
+  frameSet.spacingFactor = 0.3;
+  frameSet.makeFrames();
+  frameSet.setQualities();
+  frameSet.setColorPhase(20);
+  
+}
+
 
 void makeFrames() {
 
