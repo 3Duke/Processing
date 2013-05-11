@@ -96,7 +96,7 @@ class Particle {
 
       color c = color(r, g, b, a);
 
-      SEStar star = new SEStar(x, y, radius, 12, c);
+      SEStar star = new SEStar(x, y, radius/2, 6, c);
 
       star.display();
     } 

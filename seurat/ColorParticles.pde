@@ -56,5 +56,7 @@ class ColorParticle {
 
     b = b + random(-step, step);
     b = b % 256;
+    
+    a = a % 256;
   }
 }
