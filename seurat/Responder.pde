@@ -4,10 +4,33 @@ class Responder {
   FrameSet fs;
   Controller ct;
   
+  char lastKey;
+  String typedText = "";
+  
+  XML xml;
+  String foobar;
+  String logString;
+  String logStringArray[];
+  
+  // Switches
+  boolean acceptText;
+  boolean acceptFileName;
+  
+  String fileName = "frame";
+  String displayString = "art";
+  
+  
   Responder (FrameSet fs_, Controller ct_) {
     
     fs = fs_; ct = ct_;
     
+    foobar = randomString(4);
+    xml = createXML("filesSaved");
+    logStringArray = new String[0];
+    
+    acceptFileName = false;
+    acceptText = false;
+   
   }
   
   ///////////////  MANAGERS ///////////////
@@ -90,6 +113,8 @@ void manageFileControl() {
 }
 
 void manageTextInput() {
+  
+  
 
   if (ct.textControlBox.mouseInside()) {
 
@@ -290,6 +315,15 @@ void manageKeyPress() {
       manageLightsOut();
     }
   
+    if ((!acceptText) && (!acceptFileName)) {
+      
+      displayOn = true;
+      
+    } else {
+      
+      displayOn = false;
+      
+    }
   }
 
  

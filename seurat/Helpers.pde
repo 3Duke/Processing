@@ -24,29 +24,7 @@ void manageFrameRate(float newFrameRate) {
   frameRate(currentFrameRate);
 }
 
-void keyReleased() {
 
-  if (key != CODED) {
-    switch(key) {
-    case BACKSPACE:
-      typedText = typedText.substring(0, max(0, typedText.length()-1));
-      break;
-    case TAB:
-      typedText += "";
-      break;
-    case ENTER:
-    case RETURN:
-      // comment out the following two lines to disable line-breaks
-      // typedText += "\n";
-      //  break;
-    case ESC:
-    case DELETE:
-      break;
-    default:
-      typedText += key;
-    }
-  }
-}
 
 //////////////
 

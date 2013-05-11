@@ -1,4 +1,5 @@
 
+float deg = 2*PI/360;
 
 class ColorWheel extends Widget {
   

@@ -1,24 +1,6 @@
 
 
-
-//////// MASTER OBJECTS /////
-FrameSet frameSet;
-Controller controller;
-Responder responder;
-Serial port;
-SerialManager serialManager;
-Sound sound;
-
-
-///
-
-int WW, HEIGHT;
-
-String USB_PORT = "dev/Bluetooth-PDA-Sync";    // "/dev/slave"; // "/dev/tty.usbmodem1411"
-
 void setup () {
-  
-  foobar = randomString(4);
   
   HEIGHT = displayHeight;
   setAppearance();
@@ -39,12 +21,6 @@ void setup () {
 
   // SOUND
   sound = new Sound();  
- 
-  /// acceptDisplayString = false;
-  acceptFileName = false;
-  acceptText = false;
-  acceptFileName = false;
-  
 }
 
 void draw () {
@@ -66,9 +42,6 @@ void stop()
 
 //////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////
-
 void mousePressed() {
 
   responder.manageMousePress();
@@ -82,21 +55,44 @@ void keyPressed() {
   
 }
 
+void keyReleased() {
+
+  if (key != CODED) {
+    switch(key) {
+    case BACKSPACE:
+      responder.typedText = responder.typedText.substring(0, max(0, responder.typedText.length()-1));
+      break;
+    case TAB:
+      responder.typedText += "";
+      break;
+    case ENTER:
+    case RETURN:
+      // comment out the following two lines to disable line-breaks
+      // typedText += "\n";
+      //  break;
+    case ESC:
+    case DELETE:
+      break;
+    default:
+      responder.typedText += key;
+    }
+  }
+}
+
 /////////////////////////////////////////////////
 
 void display() {
   
-  if ((!acceptText) && (!acceptFileName)) {
+  if (displayOn) {
     count++;   
     controller.display();
     frameSet.display();
     displayMessage();
     
-    // manageFrameRate();
-  }
-
-  if ((acceptText) || (acceptFileName)) {
-    text(typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
+  } 
+  else 
+  {
+    text(responder.typedText+(frameCount/10 % 2 == 0 ? "_" : ""), 35, 45);
   }
   
 }

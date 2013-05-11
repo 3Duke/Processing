@@ -82,13 +82,13 @@ int WORD = 4;
           float tSize = radius;
           textSize(tSize);
         
-          text(lastKey,x,y); 
+          text(responder.lastKey,x,y); 
           
     } else if (ptype == WORD) {
       
        float tSize = radius;
           textSize(tSize);
-          text (displayString, x - textWidth(displayString)/2, y);
+          text (responder.displayString, x - textWidth(responder.displayString)/2, y);
     }
     
   // rectMode(CORNER);  // XXX
