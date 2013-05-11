@@ -3,8 +3,9 @@ int CIRCLE = 0;
 int TRI = 1;
 int SQU = 2;
 int QUA = 3;
-int LETTER = 4;
-int WORD = 5;
+int STA = 4;
+int LETTER = 5;
+int WORD = 6;
 
   class Particle {
 
@@ -84,7 +85,15 @@ int WORD = 5;
       
       quad_(x,y,radius);
       
-    } else if (ptype == LETTER) {
+    } else if (ptype == STA) {
+    
+     color c = color(r,g,b,a);
+     SEStar star = new SEStar(x, y, radius, 12, c);
+     
+     star.display();
+      
+    }
+    else if (ptype == LETTER) {
       
           float tSize = radius;
           textSize(tSize);
