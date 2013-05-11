@@ -1,9 +1,10 @@
 
 int CIRCLE = 0;
 int TRI = 1;
-int QUA = 2;
-int LETTER = 3;
-int WORD = 4;
+int SQU = 2;
+int QUA = 3;
+int LETTER = 4;
+int WORD = 5;
 
   class Particle {
 
@@ -64,6 +65,8 @@ int WORD = 4;
     fill(r,g,b,a);
     noStroke();
   
+ 
+    
     
     if (ptype == CIRCLE) {
       
@@ -72,6 +75,10 @@ int WORD = 4;
     } else if (ptype == TRI) {
       
       triangle_(x,y,radius);
+      
+    } else if (ptype == SQU) {
+      
+      rect(x,y,radius,radius);
       
     } else if (ptype == QUA) {
       

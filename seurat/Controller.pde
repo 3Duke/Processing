@@ -38,7 +38,7 @@ class Controller {
     lightsAreOut = false;
 
     String particleLabels[] = { 
-      "C", "T", "Q", "L", "W"
+      "C", "T", "S", "Q", "L", "W"
     };
 
     shapeSelector = new SelectorBox(260, height - 20, 150, 40, particleLabels.length, particleLabels); 
