@@ -35,6 +35,7 @@ void setup () {
 void draw () {
   
   
+  
 fc = frameCount % 7000;
     phase = 1;
     if (fc < 500) { 
