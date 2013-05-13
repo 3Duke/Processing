@@ -24,7 +24,7 @@ class FrameSet {
   float minRadius = INITIAL_RADIUS/4;
 
   float maxAlpha = 10.0;
-  float frameAlpha = 4.0;  // increase to decrease persistence of drawing 
+  float frameAlpha = 2.0;  // increase to decrease persistence of drawing 
   float maxBrightness = 1.0;
   float minBrightness = 0.8;
 

@@ -6,6 +6,8 @@ Serial port;
 SerialManager serialManager;
 Sound sound;
 
+int fc;
+float phase;
 
 void setup () {
 
@@ -31,6 +33,25 @@ void setup () {
 }
 
 void draw () {
+  
+  
+fc = frameCount % 7000;
+    phase = 1;
+    if (fc < 500) { 
+      phase = 0.5;
+    } else if (fc < 1500) {
+      phase = 1;
+    } else if (fc < 3000) {
+      phase = 2;
+    } else if (fc < 5000) {
+      phase = 0.5;
+    } else if (fc < 6000) {
+      phase = 0.25;
+    } else if ( fc < 7000) {
+      phase = -1;
+    }
+    
+    println(fc+": "+ phase);
 
   serialManager.handleInput();
   sound.play();
