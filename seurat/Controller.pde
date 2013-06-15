@@ -13,6 +13,8 @@ class Controller {
 
   // switches
   boolean lightsAreOut;
+  
+  Widget test;
 
   DoubleSlider radiusSlider;
   Slider speedSlider;
@@ -24,47 +26,55 @@ class Controller {
 
   Controller (int numberOfControlBanks) {
 
+    /*
     colorBox1 = new Box(20, height - 50, 30, 30, "");
     colorBox2 = new Box(20, height - 10, 30, 30, "");
+    */
+    int yOffset = 50;
+    int xOffset = 160;
+    test = new Widget(10, 700, 140, 40, "Monitor");
+    
+    colorBox1 = new Box(20 + xOffset, height - 50 - yOffset, 30, 30, "");
+    colorBox2 = new Box(20+ xOffset, height - 10 - yOffset, 30, 30, "");
 
     bankSelector = new SwitchBank(numberOfControlBanks);
 
-    fileControlBox = new Box(960, height - 50, 30, 30, "F");
-    textControlBox = new Box(960, height - 10, 30, 30, "T");
+    fileControlBox = new Box(960 + xOffset, height - 50 - yOffset, 30, 30, "F");
+    textControlBox = new Box(960 + xOffset, height - 10 - yOffset, 30, 30, "T");
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
 
-    lightsOutBox = new Box(980, height - 50, 30, 30, "B");
+    lightsOutBox = new Box(980 + xOffset, height - 50 - yOffset, 30, 30, "B");
     lightsAreOut = false;
 
     String particleLabels[] = { 
       "C", "T", "S", "Q", "*", "s", "L", "W"
     };
 
-    shapeSelector = new SelectorBox(230, height - 20, 230, 40, particleLabels.length, particleLabels); 
+    shapeSelector = new SelectorBox(230 + xOffset, height - 20 - yOffset, 230, 40, particleLabels.length, particleLabels); 
 
-    colorWheel1 = new ColorWheel(70, height-20, 60, "Color 1");  
+    colorWheel1 = new ColorWheel(70 + xOffset, height-20 - yOffset, 60, "Color 1");  
     colorWheel1.bg = color(0);
-    colorWheel2 = new ColorWheel(145, height-20, 60, "Color 2");  
+    colorWheel2 = new ColorWheel(145 + xOffset, height-20 - yOffset, 60, "Color 2");  
     colorWheel2.bg = color(0);
 
-    speedSlider = new Slider(480, height - 20, 200, 40, 100, "fps", "Framerate");
-    radiusSlider = new DoubleSlider(720, height - 20, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
+    speedSlider = new Slider(480 + xOffset, height - 20 - yOffset, 200, 40, 100, "fps", "Framerate");
+    radiusSlider = new DoubleSlider(720 + xOffset, height - 20 - yOffset, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
     radiusSlider.setValue(frameSet.maxRadius);
     radiusSlider.setValue2(frameSet.minRadius);
 
-    alphaSlider = new Slider(20, height - 25, 200, 40, frameSet.maxAlpha, "a", "Alpha");
-    brightnessSlider = new DoubleSlider(240, height - 25, 200, 40, 1.0, "b", "Brightness");
-    colorVelocitySlider = new Slider(460, height - 25, 200, 40, 1.0, "v", "Color Velocity");
+    alphaSlider = new Slider(20 + xOffset, height - 25 - yOffset, 200, 40, frameSet.maxAlpha, "a", "Alpha");
+    brightnessSlider = new DoubleSlider(240 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "b", "Brightness");
+    colorVelocitySlider = new Slider(460 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "v", "Color Velocity");
     colorVelocitySlider.digits = 2;
 
-    numberOfParticlesSlider = new Slider(20, height - 25, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
+    numberOfParticlesSlider = new Slider(20 + xOffset, height - 25 - yOffset, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
     numberOfParticlesSlider.setValue(frameSet.numberOfActiveParticles);
     numberOfParticlesSlider.digits = 0;
-    particleSpacingSlider = new Slider(240, height - 25, 200, 40, 1.0, "sf", "Particle Spacing Factor");
+    particleSpacingSlider = new Slider(240 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "sf", "Particle Spacing Factor");
     particleSpacingSlider.setValue(frameSet.spacingFactor);
 
-    fooSlider = new DoubleSlider(660, height - 25, 200, 40, 8, "foo", "Foo Factor");
+    fooSlider = new DoubleSlider(660 + xOffset, height - 25 - yOffset, 200, 40, 8, "foo", "Foo Factor");
     fooSlider.setValue(4);
     fooSlider.setValue2(2);
 
@@ -77,9 +87,21 @@ class Controller {
     colorVelocitySlider.setValue(frameSet.colorVelocity);
   }
 
-
+  
+  String bool2string(boolean b) {
+    if (b) {
+      return "T";
+    } else {
+      return "F";
+    }
+  }
 
   void displayBank1 () {
+    
+    boolean a1 = sound.phaseIsActive( phase , sound.part1);
+    boolean a2 = sound.phaseIsActive( phase , sound.part2);
+    test.setText(nfc(frameCount) + ": "+nfc(phase % sound.part1.length) + ", " + bool2string(a1) + ", " + bool2string(a2));
+    test.display();
 
     colorWheel1.display();
     colorWheel2.display();

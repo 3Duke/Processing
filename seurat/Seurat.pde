@@ -5,9 +5,13 @@ Responder responder;
 Serial port;
 SerialManager serialManager;
 Sound sound;
+int longCount = 200;
+int phase = 0;
+/// period = 2000 works
+int period = 2000;
+int onPeriod = period;  // int(0.9*period);
 
-int fc;
-float phase;
+// int fc;
 
 void setup () {
 
@@ -30,32 +34,19 @@ void setup () {
 
   // SOUND
   sound = new Sound();
+ 
 }
 
 void draw () {
   
-  
-  
-fc = frameCount % 7000;
-    phase = 1;
-    if (fc < 500) { 
-      phase = 0.5;
-    } else if (fc < 1500) {
-      phase = 1;
-    } else if (fc < 3000) {
-      phase = 2;
-    } else if (fc < 5000) {
-      phase = 0.5;
-    } else if (fc < 6000) {
-      phase = 0.25;
-    } else if ( fc < 7000) {
-      phase = -1;
-    }
-    
-    println(fc+": "+ phase);
 
+  // println(nfc(1+frameCount/MODULUS,0) +", "+frameCount+": "+fc+", "+ phase);
+  phase = int(frameCount/longCount);
+  int periodCount = int(frameCount/period) + 1;
+  println(periodCount+", "+phase+": "+frameCount);
   serialManager.handleInput();
   sound.play();
+  // sound.test();
   display();
 }  // end draw
 
@@ -138,7 +129,8 @@ void setAppearance() {
   }
   font = loadFont("AndaleMono-48.vlw");
   textFont(font);
-  size(WW, HEIGHT);
+  // size(WW, HEIGHT);
+  size(displayWidth, displayHeight);
 
   smooth();
   background(0);

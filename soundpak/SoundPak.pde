@@ -1,45 +1,77 @@
-/* pitchNameExample
-   is an example of using the pitch names for notes instead
-   of the frequency in Hertz or the midi note number.  This is
-   achieved in the pitchNameInstrument using the ofPitch() and
-   asHz() methods of the Frequency class.
-   author: Anderson Mills
-   Anderson Mills's work was supported by numediart (www.numediart.org)
+/* 
+   
 */
 
-// import everything necessary to make sound.
 import ddf.minim.*;
 import ddf.minim.ugens.*;
 
-// create all of the variables that will need to be accessed in
-// more than one methods (setup(), draw(), stop()).
 Minim minim;
 AudioOutput out;
 
-// setup is run once at the beginning
+int p = 1;
+String className;
+
+
+
+
 void setup()
 {
-  // initialize the drawing window
+  
+  String className = this.getClass().getName();
+  println("className: "+className);
+  
+         // Class clazz = Class.forName("Demo");
+        // Demo demo = (Demo) clazz.newInstance();
+ 
+
   size( 512, 200, P2D );
+  minim = new Minim( this );
+  out = minim.getLineOut( Minim.MONO, 2048 );
+  
+  /////////////////////////////////////////////////////////////////////
+  // Set up the music
   
   String [ ] notes  = {"C3", "D3", "E3"};
   float [ ] durations = { 1.0, 0.5, 0.5};
   // float [ ] bar = { 0.9 };
   NoteSequence ns1 = new NoteSequence( notes, durations, 6, "foo");
+  ns1.instrumentName = "FooInstrument";
+  NoteSequence ns1b = new NoteSequence( notes, durations, 6, "foo");
+  ns1b.instrumentName = "SPInstrument";
   
   float [ ] freqs = { 256, 356, 456 };
   float [ ] durations2 = { 0.2, 0.1, 0.1};
-  NoteSequence ns2 = new NoteSequence( freqs, durations2, 9, "bar");
+  NoteSequence ns2 = new NoteSequence( freqs, durations2, 20, "bar");
+  ns2.instrumentName = "SPInstrument";
   
   NoteSequence ns3 =  ns1.copy();
   ns3.reverse_(); 
   ns3.name = "foobar";
- 
-
-  // initialize the minim and out objects
-  minim = new Minim( this );
-  out = minim.getLineOut( Minim.MONO, 2048 );
+ // ns2.transposeDown("UN");
+  // ns2.timeScale = 0.5;
   
+  Voice voice = new Voice(ns1, "Test voice");
+  // voice.appendPiece(ns2);
+  // voice.appendPiece(ns3);
+  Voice voice1b = new Voice(ns1b, "Test voice B");
+ 
+  // Voice voice2 = new Voice(ns2, "Test voice 2"); 
+  Voice voice2 = voice.copy(voice, "Test voice 2");
+  // voice2.transposeUp("OC");
+  
+  // Voice voice3 = voice.copy(voice, "Test voice 3");
+  // voice3.transposeUp("P5");
+  
+  // Voice voice4 = voice.copy(voice, "Test voice 4");
+ // voice4.transposeUp("M7");
+  
+  voice.report();
+  voice1b.report();
+  // voice3.report();
+  // voice4.report();
+  
+   /////////////////////////////////////////////////////////////////////
+ 
   // pause time when adding a bunch of notes at once
   // This guarantees accurate timing between all notes added at once.
   out.pauseNotes();
@@ -52,36 +84,14 @@ void setup()
 
   // using a single parameter to control the amplitude (volume) of all notes
   float vol = 0.33;
+   
   
-  ns2.transposeDown("OC");
-  ns2.timeScale = 0.5;
-  
-  Voice voice = new Voice(ns1, "Test voice");
-  // voice.transposeUp("UN");
-  // voice.transposeNotes();
-  // voice.appendPiece(ns2);
-  // voice.appendPiece(ns3);
-  
-  Voice voice2 = voice.copy(voice, "Test voice 2");
-  voice2.transposeUp("M3");
-  voice2.transposeNotes();
-  
-  Voice voice3 = voice.copy(voice, "Test voice 3");
-  voice3.transposeUp("P5");
-  
-  Voice voice4 = voice.copy(voice, "Test voice 4");
-  voice4.transposeUp("M7");
-  
-  voice.report();
-  voice2.report();
-  // voice3.report();
-  // voice4.report();
-  
-  voice.play(0, 1.0);
-  voice2.play(voice.duration(), 1.0);
+  //voice.play(0, 1.0);
+  // voice1b.play(voice.duration(), 1.0);
+  voice1b.play(0, 1.0);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  voice2.play(voice.duration(), 1.0);
   // voice3.play(0, 1.0);
   // voice4.play(0, 1.0);
-  
 
   // finally, resume time after adding all of these notes at once.
   out.resumeNotes();
@@ -90,7 +100,13 @@ void setup()
 // draw is run many times
 void draw()
 {
-  // erase the window to black
+  drawWaveform();
+  
+}
+
+void drawWaveform() {
+  
+   // erase the window to black
   background( 64, 64, 192 );
   // draw using a white stroke
   stroke( 64, 192, 64 );
@@ -103,16 +119,14 @@ void draw()
     // draw a line from one buffer position to the next for both channels
     line( x1, 50 + out.left.get(i)*50, x2, 50 + out.left.get(i+1)*50);
     line( x1, 150 + out.right.get(i)*50, x2, 150 + out.right.get(i+1)*50);
-  }  
+  } 
+  
 }
 
-// stop is run when the user presses stop
+
 void stop()
 {
-  // close the AudioOutput
   out.close();
-  // stop the minim object
   minim.stop();
-  // stop the processing object
   super.stop();
 }

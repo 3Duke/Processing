@@ -76,12 +76,5 @@ float duration() {
     } 
  } // transposeUp   
  
- /////////
- void transposeNotes() {
-    
-    for(int i = 0; i < pieces.length; i++) {
-       pieces[i].transposeNotes();
-    } 
- } // transposeUp   
-
+ 
 } //

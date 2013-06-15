@@ -3,11 +3,11 @@ class FrameSet {
   SEFrame [] frame;
 
   // temporary variables //
-  float x = 0; 
-  float y = 0;
+  float x = 180; 
+  float y = 20;
 
   // wdith of square
-  float W = 621; 
+  float W = 621; // 1350; // 621; 
   float pW = W; // previous W
   ////////////////////////////
 

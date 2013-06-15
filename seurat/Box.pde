@@ -1,4 +1,13 @@
-class Box extends Widget {
+import processing.serial.*;
+
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
+    class Box extends Widget {
 
   float r, g, b, a;
 

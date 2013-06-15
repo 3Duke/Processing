@@ -1,4 +1,13 @@
 class ColorParticle {
+  
+  /*
+  A ColorParticle has an rgba color state which changes by 
+  Browniam motion.  If p is a ColorParticle, then p.randomStep(0.01)
+  changes the color parameters r, g, b by at most +/- 1 percent.
+  
+  
+  
+  */
 
   float r, g, b, a;
 

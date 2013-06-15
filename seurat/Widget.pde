@@ -7,6 +7,7 @@ class Widget {
   color bg;          // background color
   String caption;
   boolean highlighted;
+  String text;
 
   Widget(float x_, float y_, float w_, float h_, String caption_) {
 
@@ -15,6 +16,8 @@ class Widget {
     w = w_; 
     h = h_;
     caption = caption_;
+    text = "";
+   
 
     bg = color(0, 0, 255);
 
@@ -24,6 +27,10 @@ class Widget {
     yc = y - radius;
 
     highlighted = false;
+  }
+  
+  void setText(String text_) {
+    text = text_;
   }
 
   void setColor( color c ) {
@@ -74,6 +81,10 @@ class Widget {
     fill(255);
     textSize(12);
     text(caption, x, y+15);
+    
+    fill(255);
+    textSize(12);
+    text(text, x + 10, y - 12);
   }
 
   boolean mouseInside() {

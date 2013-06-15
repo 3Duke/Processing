@@ -26,7 +26,7 @@ class Responder {
     ct = ct_;
 
     foobar = randomString(4);
-    xml = createXML("filesSaved");
+    // xml = createXML("filesSaved");
     logStringArray = new String[0];
 
     acceptFileName = false;
