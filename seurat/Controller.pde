@@ -58,7 +58,7 @@ class Controller {
     colorWheel2 = new ColorWheel(145 + xOffset, height-20 - yOffset, 60, "Color 2");  
     colorWheel2.bg = color(0);
 
-    speedSlider = new Slider(480 + xOffset, height - 20 - yOffset, 200, 40, 100, "fps", "Framerate");
+    speedSlider = new Slider(480 + xOffset, height - 20 - yOffset, 200, 40, 200, "fps", "Framerate");
     radiusSlider = new DoubleSlider(720 + xOffset, height - 20 - yOffset, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
     radiusSlider.setValue(frameSet.maxRadius);
     radiusSlider.setValue2(frameSet.minRadius);

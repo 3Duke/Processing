@@ -197,11 +197,11 @@ class Sound {
 
 
   // High and low frequencies for parts
-   float part1Low = 240;
-  float part1High = 960;
+   float part1Low = 120;
+  float part1High = 3840;
   
-  float part2Low = 60;
-  float part2High = 240;
+  float part2Low = 30;
+  float part2High = 120;
   
  
   
@@ -309,6 +309,9 @@ class Sound {
     if ((frameCount % longCount == 0) && (frameCount % period < onPeriod)) {
       
       float timePerFrame = 4/frameRate;
+      if (frameRate < 10) {
+        timePerFrame = timePerFrame/2;
+      }
       
       // int numberOfPulses = 1 + frameCount % 64;
       
@@ -341,16 +344,16 @@ class Sound {
       numberOfPulses = 3*(8 + int(random(0,8) + 0.1));
       NoteSequence bass = new NoteSequence(sound);
       bass.noteSpacing = 3*timePerFrame;
-      bass.volume = 2;
+      bass.volume = 2  ;
       bass.noteDuration = 0.005;
       bass.minPitch = part2Low;
       bass.maxPitch = part2High;
       bass.cueSheet = part2;
             
       freq2 = bass.playOnCue(intervals, direction, numberOfPulses, freq2, 5, phase);
-      // bass.playNotes(bassLine, -1, numberOfPulses, 1, 1);
-      //  treble.playNotes(CM7, 0, 4, 1, 1.0/2);
-       // void playNotes(float [] notes, int index, int numberOfNotes, int direction, float transpositionFactor) 
+      // bass.playNotes(bassLine, -1, numberOfPulses/2, 1, 1.0/2);
+     
+      
       
     }
     
