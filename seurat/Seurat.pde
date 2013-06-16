@@ -30,7 +30,7 @@ void setup () {
   Instruction [ ] program = { i0, i1, i2, i3, i4, i5, i6 };
   */
   
-  interpreter = new Interpreter("program1" );
+  interpreter = new Interpreter("program2" );
 
   HEIGHT = displayHeight;
   setAppearance();

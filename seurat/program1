@@ -1,0 +1,7 @@
+1 color 255 0 0 0 0 255
+2 radius 100 200
+3 shape quad
+4 framerate 15
+5 alpha 1.0
+6 colorvelocity 0.9
+7 currentradius 100
