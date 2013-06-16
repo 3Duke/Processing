@@ -1,0 +1,8 @@
+# low value red initial screen
+1 color 50 0 0 255 0 50
+2 radius 100 200
+3 shape quad
+4 framerate 30
+5 alpha 1.5
+6 colorvelocity 0.9
+7 currentradius 100

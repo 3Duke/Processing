@@ -114,6 +114,17 @@ class FrameSet {
     }
   }
   
+  void setParticleSpacingFactor(float spacingFactor_) {
+
+   spacingFactor = spacingFactor_;
+    
+    for (int i = 0; i < frame.length; i++) {
+
+      frame[i].setParticleSpacingFactor(spacingFactor_);  /// propagate changes
+    
+    }
+  }
+  
   void setParticleColorVelocities (float velocity) {
 
     for (int i = 0; i < frame.length; i++) {

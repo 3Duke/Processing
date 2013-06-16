@@ -14,7 +14,7 @@ class Controller {
   // switches
   boolean lightsAreOut;
   
-  Widget test;
+  Widget test, test2;
 
   DoubleSlider radiusSlider;
   Slider speedSlider;
@@ -34,6 +34,8 @@ class Controller {
     int xOffset = 160;
     test = new Widget(5, 700, 150, 40, "  phase");
     test.bg = color(0);
+    test2 = new Widget(5, 650, 150, 40, "  frame count");
+    test2.bg = color(0);
     
     colorBox1 = new Box(20 + xOffset, height - 50 - yOffset, 30, 30, "");
     colorBox2 = new Box(20+ xOffset, height - 10 - yOffset, 30, 30, "");
@@ -173,6 +175,8 @@ class Controller {
     
     test.setText(nfc((phase % sound.scoreLength) + 1) + "/" + nfc(sound.scoreLength) + " " + soprano + " " + tenor+ " " + bass);
     test.display();
+    test2.setText(nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
+    test2.display();
 
 
     if (serialManager.switchA == 1) { 

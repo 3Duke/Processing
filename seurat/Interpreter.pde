@@ -1,6 +1,7 @@
 
 String [ ] opNames = { 
-  "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius" };
+  "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius", "particlespacing", "loop", 
+    "numberofframes", "label" };
 // alpha: 0
 // color: 1
 // radius: 2 // radius 1.0 10.0
@@ -8,6 +9,10 @@ String [ ] opNames = {
 // framerate: 4
 // colorvelocity: 5
 // currentradius: 6
+// spacingfacgtor: 7
+// loop: 8 // e.g., loop 0 to go all the way back, loop 3 to go back to instruction 3
+// numberofframes: 9
+// label: 10 // define label
 
 String [ ] shapes = { 
   "circle", "triangle", "square", "quad", "*", "s", "L", "W"
@@ -48,8 +53,10 @@ class Instruction {
 class Interpreter {
 
   Instruction [] program; // program = array of instructions
+  int [ ] label;
   int programLength;
   int instructionPointer;
+  int baseFrame;
   Instruction currentInstruction;
   boolean running;
  
@@ -63,17 +70,30 @@ class Interpreter {
       }
       println("\n");
       
-     Instruction [] prog = new Instruction[lines.length];
-     
+     int numberOfCommentLines = 0;
      for (int i = 0; i < lines.length; i++) {
-        prog[i] = new Instruction(lines[i]); 
+        if (lines[i].charAt(0) == '#') {
+          numberOfCommentLines++;
+        }
+     }
+      
+     Instruction [] prog = new Instruction[lines.length - numberOfCommentLines];
+     
+     int j = 0;
+     for (int i = 0; i < lines.length; i++) {
+        if (lines[i].charAt(0) != '#') {
+          prog[j] = new Instruction(lines[i]); 
+          j++;
+        }
      }
      
      program = prog;
      
     programLength = program.length;
+    label = new int[10];
     instructionPointer = 0;
     currentInstruction = program[instructionPointer];
+    baseFrame = 0;
     running = true;
   }
   
@@ -82,14 +102,30 @@ class Interpreter {
 
     program = prog_;
     programLength = program.length;
+    label = new int[10];
     instructionPointer = 0;
     currentInstruction = program[instructionPointer];
+    baseFrame = 0;
     running = true;
   }
-
+  
+  void initialize() {
+    
+    int address = currentInstruction.frame;
+    
+    while (address < 0) {
+      
+      execute(currentInstruction);
+      instructionPointer++;
+      currentInstruction = program[instructionPointer];
+      address = currentInstruction.frame;
+    }
+  }
+  
+  
   void run(int currentFrame) {
 
-    if (running && (currentFrame == currentInstruction.frame)) {
+    if (running && (currentFrame - baseFrame == currentInstruction.frame)) {
 
       execute(currentInstruction);
 
@@ -156,8 +192,28 @@ class Interpreter {
     case 6: // set current radius
       frameSet.setParticleRadii(float(instr.args[2]), 0.95);
       break;
+      
+      
+   case 7: // set current radius
+      frameSet.setParticleSpacingFactor(float(instr.args[2]));
+      break;
     
-    
+   case 8: // loop back
+      baseFrame = frameCount;
+      // example: 1000 loop label 0
+      int lineNumber = label[int(instr.args[3])];
+      println("Loop to line number "+nfc(lineNumber));
+      instructionPointer = lineNumber;
+      break;
+      
+   case 9: // numberofframes: set number of frames
+      NumberOfFrames = int(instr.args[2]);
+      break;
+      
+   case 10:
+      label[int(instr.args[2])] = instructionPointer; 
+      break;
+   
     } // end switch
   }  // end execute
 } // end class Interprete

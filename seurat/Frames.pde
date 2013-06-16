@@ -111,6 +111,15 @@ class SEFrame {
     }  
   }
   
+  void setParticleSpacingFactor(float spacingFactor_)  {
+    
+    for (int i = 0; i < particles.length; i++) {
+     
+      particles[i].spacingFactor = spacingFactor_;
+      
+    }  
+  }
+  
   void setParticleColorVelocities(float velocity) {
     
     for (int i = 0; i < particles.length; i++) {
