@@ -7,7 +7,7 @@ import ddf.minim.analysis.*;
 import ddf.minim.ugens.*;
 import ddf.minim.effects.*;
 
-    class Box extends Widget {
+ class Box extends Widget {
 
   float r, g, b, a;
 
@@ -40,4 +40,4 @@ import ddf.minim.effects.*;
 
     bg = color(r, g, b, a);
   }
-}
+ }

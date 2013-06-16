@@ -16,6 +16,8 @@ import ddf.minim.effects.*;
     float maxPitch;       
     int [ ] score;
     float volume;
+    int meter;
+    int notesPerBeat;
     Sound sound;
     
     NoteSequence(Sound sound_) {
@@ -26,18 +28,18 @@ import ddf.minim.effects.*;
     }
     
     
-    float playOnCue(float [] intervals, int direction, int numberOfNotes_, float startingPitch_, int beatsPerMeasure, int phase) {
+    float playFromScore(float [] intervals, int direction, int beatsPerPhrase_, float startingPitch_, int phase) {
     if (sound.phaseIsActive( phase , score)) {
-        return  play(intervals, 0, numberOfNotes_, startingPitch_, beatsPerMeasure);  
+        return  play(intervals, 0, beatsPerPhrase_, startingPitch_);  
       } else {
         return startingPitch_;
       }
     }
     
     
-    float play(float [] intervals, int direction, int numberOfNotes_, float startingPitch_, int beatsPerMeasure) { 
+    float play(float [] intervals, int direction, int beatsPerPhrase_, float startingPitch_) { 
 
-      numberOfNotes = numberOfNotes_;
+      numberOfNotes = notesPerBeat*beatsPerPhrase_;
       startingPitch = startingPitch_;
       
       float p = startingPitch;
@@ -77,7 +79,7 @@ import ddf.minim.effects.*;
           localVolume = 0;
         }
         
-        if (i % beatsPerMeasure == 0) { // Introduce meter
+        if (i % meter == 0) { // Introduce meter
           localVolume = 1.5*localVolume;
         }
         
@@ -92,6 +94,7 @@ import ddf.minim.effects.*;
       }
      return p;
     }
+  
     
     void playNotes(float [] notes, int index, int numberOfNotes, int direction, float transpositionFactor) {
       
@@ -191,11 +194,24 @@ class Sound {
   float intervals2[ ] = { m3, M3, m3, M3, m3, M3, m3, M3, m3, M3, M3 };
   
   
-  int sopranoScore[] = { 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0 };
-  int tenorScore[] = { 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0 };
-  int bassScore[] = { 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0 };
+  int sopranoScore[] = {0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1 };
+  int tenorScore[] = { 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0 };
+  int bassScore[] = { 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0 };
+  
+  float tempoFactor = 1;
   
   int scoreLength = 13;
+  
+  
+  // TEMPO PARAMETERS:
+  int beatsPerPhrase = 30;
+  float bpm = 92;  // beats per minute
+  
+  // float minutesPerPhrase = beatsPerPhrase/bpm;
+  // float secondsPerPhrase = 60*minutesPerPhrase;
+  // float framesPerPhrase = framesPerSecond/secondsPerPhrase --- defined later
+  // float framesPerPhrase = 1/(frameRate*secondsPerPhrase)
+  // float framesPerPhrase = bpm/(60*frameRate*beatsPerPhrase) <<<< KEY FORMULA
   
   
   /*
@@ -303,8 +319,11 @@ class Sound {
       soprano.noteDuration = 1;
       soprano.minPitch = sopranoLow;
       soprano.maxPitch = sopranoHigh;
+      
+      int beatsPerPhrase = 5;
+      float framesPerPhrase = bpm/(60*frameRate*beatsPerPhrase);
      
-      if (millis() % 300 == 0) {
+      if (frameCount % framesPerPhrase == 20) {
         soprano.playNotes(CM7, 0, 4, 1, 1.0/2);
        // void playNotes(float [] notes, int index, int numberOfNotes, int direction) 
       } 
@@ -314,8 +333,9 @@ class Sound {
       
     
   }
-    
+   
   void play() {
+    
     
     int maxNoteSequenceLengthParameter = 12;
    
@@ -327,40 +347,59 @@ class Sound {
       volume = 0;
     }
 
-    int seconds = 1000;
-     /// Modulus 150 works
-    if ((frameCount % longCount == 0) && (frameCount % period < onPeriod)) {
-    // if (millis() % 10*seconds == 0) {
+   
+     /// Modulus 150 work
+    
+    int beatsPerPhrase = 10;
+    float framesPerPhrase =   60*frameRate*beatsPerPhrase/bpm;                 // bpm/(60.0*frameRate*beatsPerPhrase);
+    
+    // if ((frameCount % int(noteFrameSize/tempoFactor) == 20) && (frameCount % period < onPeriod)) {
       
-      float noteSpacing = 4/frameRate;
-      // float noteSpacing = 1.0; // seconds
+  
+    if (frameCount % int(framesPerPhrase) == 0)  {
       
+      /*
+      println("\n@@@ framesPerPhrase: "+nfc(int(framesPerPhrase)));
+      println("frameRate: "+nfc(frameRate));
+      println(" ");
+      */
+      
+      float bps = bpm/60.0;
+      float beatSpacing = 1/bps;
+      
+      println("@ framecount "+nfc(frameCount)+", bpm = "+nfc(bpm,2));
+    
       
       // int numberOfPulses = 1 + frameCount % 64;
       
-      int numberOfPulses = 3*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));
+      int bpp =  (8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));  // 20 beats max
+      println("bpp: "+nfc(bpp,1));
       
       NoteSequence soprano = new NoteSequence(sound);
-      soprano.noteSpacing = noteSpacing;
+      soprano.notesPerBeat = 3;
+      soprano.noteSpacing = beatSpacing/soprano.notesPerBeat; // triplets
       soprano.volume = 0.66;
       soprano.noteDuration = 0.005;
       soprano.minPitch = sopranoLow;
       soprano.maxPitch = sopranoHigh;
+      soprano.meter = 3;
       soprano.score = sopranoScore;
       
-      sopranoFreq = soprano.playOnCue(intervals, 0, numberOfPulses, sopranoFreq, 3, phase);
+      sopranoFreq = soprano.playFromScore(intervals, 0, bpp, sopranoFreq, phase);
       
       NoteSequence tenor = new NoteSequence(sound);
-      tenor.noteSpacing = noteSpacing;
+      tenor.notesPerBeat = 3;
+      tenor.noteSpacing = beatSpacing/tenor.notesPerBeat; // triplets
       tenor.volume = 0.66;
       tenor.noteDuration = 0.1;
       tenor.minPitch = tenorLow;
       tenor.maxPitch = tenorHigh;
+      tenor.meter = 4;
       tenor.score = tenorScore;
       
-      numberOfPulses = 3*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));
+      bpp =  (8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));  // 20 beats max
       
-      tenorFreq = tenor.playOnCue(intervals, 0, numberOfPulses, tenorFreq, 4, phase);
+      tenorFreq = tenor.playFromScore(intervals, 0, bpp, tenorFreq, phase);
       
       // Determine direction of Brownian path through the interval array:
       // -1 for down, 0 for no direciotn, +1 for up.
@@ -376,26 +415,27 @@ class Sound {
       }
      
       // numberOfPulses = (8 + int(random(0,8) + 0.1));
-      numberOfPulses = 2*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.1));
+      bpp = (8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));  // 20 beats max
+      
       NoteSequence bass = new NoteSequence(sound);
-      bass.noteSpacing = 3*noteSpacing;
+      bass.notesPerBeat = 1;
+      bass.noteSpacing = beatSpacing/bass.notesPerBeat; // triplets
       bass.volume = 2  ;
       bass.noteDuration = 0.005;
       bass.minPitch = bassLow;
       bass.maxPitch = bassHigh;
+      bass.meter = 5;
       bass.score = bassScore;
             
-      bassFreq = bass.playOnCue(intervals, direction, numberOfPulses, bassFreq, 5, phase);
-      // bass.playNotes(bassLine, -1, numberOfPulses/2, 1, 1.0/2);
-     
-      
-      
-    }
-    
+      bassFreq = bass.playFromScore(intervals, direction, bpp, bassFreq, phase);
+      // bass.playNotes(bassLine, -1, numberOfPulses/2, 1, 1.0/2);      
+    } 
   }
+  
 
   void stop() {
     out.close();
     minim.stop();
   }
+  
 }

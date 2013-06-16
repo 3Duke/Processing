@@ -4,7 +4,7 @@
 1 radius 5 5
 2 shape circle
 3 framerate 200
-4 colorvelocity 0.01
+4 colorvelocity 0.02
 5 currentradius 5
 6 particlespacing 1.8
 7 label 0

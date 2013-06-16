@@ -210,7 +210,7 @@ class Interpreter {
       NumberOfFrames = int(instr.args[2]);
       break;
       
-   case 10:
+   case 10: // label: define label in program
       label[int(instr.args[2])] = instructionPointer; 
       break;
    

@@ -6,7 +6,7 @@ Responder responder;
 Serial port;
 SerialManager serialManager;
 Sound sound;
-int longCount = 220;  // 200
+int noteFrameSize = 220;  // 200
 int phase = 0;
 /// period = 2000 works
 int period = 2000;
@@ -30,7 +30,7 @@ void setup () {
   Instruction [ ] program = { i0, i1, i2, i3, i4, i5, i6 };
   */
   
-  interpreter = new Interpreter("program4" );
+  interpreter = new Interpreter("program1" );
   interpreter.initialize();
 
   HEIGHT = displayHeight;
@@ -59,7 +59,7 @@ void draw () {
 
   interpreter.run(frameCount);
   // println(nfc(1+frameCount/MODULUS,0) +", "+frameCount+": "+fc+", "+ phase);
-  phase = int(frameCount/longCount);
+  phase = int(frameCount/noteFrameSize);
   int periodCount = int(frameCount/period) + 1;
   // println(periodCount+", "+phase+": "+frameCount);
   serialManager.handleInput();
