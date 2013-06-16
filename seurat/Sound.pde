@@ -14,7 +14,7 @@ import ddf.minim.effects.*;
     int numberOfNotes;   
     float minPitch;        
     float maxPitch;       
-    int [ ] cueSheet;
+    int [ ] score;
     float volume;
     Sound sound;
     
@@ -27,7 +27,7 @@ import ddf.minim.effects.*;
     
     
     float playOnCue(float [] intervals, int direction, int numberOfNotes_, float startingPitch_, int beatsPerMeasure, int phase) {
-    if (sound.phaseIsActive( phase , cueSheet)) {
+    if (sound.phaseIsActive( phase , score)) {
         return  play(intervals, 0, numberOfNotes_, startingPitch_, beatsPerMeasure);  
       } else {
         return startingPitch_;
@@ -189,19 +189,38 @@ class Sound {
   
   float intervals[ ] = { hs, hs, ws, ws, ws, m3, M3, p4, p5, m6, M6 };
   float intervals2[ ] = { m3, M3, m3, M3, m3, M3, m3, M3, m3, M3, M3 };
-  int part1[] = { 0, 1, 0, 1, 1, 1, 0, 0 };
-  int part2[] = { 1, 0, 1, 1, 1, 0, 1, 0 };
+  
+  
+  int sopranoScore[] = { 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0 };
+  int tenorScore[] = { 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0 };
+  int bassScore[] = { 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0 };
+  
+  int scoreLength = 13;
+  
+  
+  /*
+  int sopranoScore[] = { 1, 0 };
+  int tenorScore[] = { 0, 1, 1 };
+  int bassScore[] = { 0, 0, 1, 1, 0, 1, 1 };
+  
+  int scoreLength = 2*3*7;
+  */
+ 
+  
   float CM7[] = { C, E, G, B, C2 };
   float bassLine1[] = { C, E, G, B,     C2, C, G, E,     F, A, C, Bb,    F2, D2, A, Fs,   D, G, D, B, G};
   float bassLine[] = { C, E, G, B,     C2, Bb, A, Ab,    G, Gb, F, E,     Eb, D, Db};
 
 
   // High and low frequencies for parts
-   float part1Low = 120;
-  float part1High = 3840;
+  float sopranoLow = 120;
+  float sopranoHigh = 3840;
   
-  float part2Low = 30;
-  float part2High = 120;
+  float tenorLow = 120;
+  float tenorHigh = 360;
+  
+  float bassLow = 30;
+  float bassHigh = 120;
   
  
   
@@ -270,22 +289,23 @@ class Sound {
   
    
   
-  float freq1 = selectFrequency();
-  float freq2 = selectFrequency()/2;
+  float sopranoFreq = (3.0/2)*selectFrequency();
+  float bassFreq = selectFrequency()/2;
+  float tenorFreq = selectFrequency();
   
   void test() {
     
       
       float freq = 440;
     
-      NoteSequence treble = new NoteSequence(sound);
-      treble.noteSpacing = 2;
-      treble.noteDuration = 1;
-      treble.minPitch = part1Low;
-      treble.maxPitch = part1High;
+      NoteSequence soprano = new NoteSequence(sound);
+      soprano.noteSpacing = 2;
+      soprano.noteDuration = 1;
+      soprano.minPitch = sopranoLow;
+      soprano.maxPitch = sopranoHigh;
      
-      if (frameCount % 300 == 0) {
-        treble.playNotes(CM7, 0, 4, 1, 1.0/2);
+      if (millis() % 300 == 0) {
+        soprano.playNotes(CM7, 0, 4, 1, 1.0/2);
        // void playNotes(float [] notes, int index, int numberOfNotes, int direction) 
       } 
       // float play(float [] intervals, int direction, int numberOfNotes_, float startingPitch_, int beatsPerMeasure)
@@ -296,6 +316,8 @@ class Sound {
   }
     
   void play() {
+    
+    int maxNoteSequenceLengthParameter = 12;
    
     // Impose periodic amplitude profile
     if (frameCount % period < onPeriod) {
@@ -305,27 +327,40 @@ class Sound {
       volume = 0;
     }
 
+    int seconds = 1000;
      /// Modulus 150 works
     if ((frameCount % longCount == 0) && (frameCount % period < onPeriod)) {
+    // if (millis() % 10*seconds == 0) {
       
-      float timePerFrame = 4/frameRate;
-      if (frameRate < 10) {
-        timePerFrame = timePerFrame/2;
-      }
+      float noteSpacing = 4/frameRate;
+      // float noteSpacing = 1.0; // seconds
+      
       
       // int numberOfPulses = 1 + frameCount % 64;
       
-      int numberOfPulses = 3*(8 + int(random(0,8) + 0.01));
+      int numberOfPulses = 3*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));
       
-      NoteSequence treble = new NoteSequence(sound);
-      treble.noteSpacing = timePerFrame;
-      treble.volume = 0.66;
-      treble.noteDuration = 0.005;
-      treble.minPitch = part1Low;
-      treble.maxPitch = part1High;
-      treble.cueSheet = part1;
+      NoteSequence soprano = new NoteSequence(sound);
+      soprano.noteSpacing = noteSpacing;
+      soprano.volume = 0.66;
+      soprano.noteDuration = 0.005;
+      soprano.minPitch = sopranoLow;
+      soprano.maxPitch = sopranoHigh;
+      soprano.score = sopranoScore;
       
-      freq1 = treble.playOnCue(intervals, 0, numberOfPulses, freq1, 3, phase);
+      sopranoFreq = soprano.playOnCue(intervals, 0, numberOfPulses, sopranoFreq, 3, phase);
+      
+      NoteSequence tenor = new NoteSequence(sound);
+      tenor.noteSpacing = noteSpacing;
+      tenor.volume = 0.66;
+      tenor.noteDuration = 0.1;
+      tenor.minPitch = tenorLow;
+      tenor.maxPitch = tenorHigh;
+      tenor.score = tenorScore;
+      
+      numberOfPulses = 3*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.01));
+      
+      tenorFreq = tenor.playOnCue(intervals, 0, numberOfPulses, tenorFreq, 4, phase);
       
       // Determine direction of Brownian path through the interval array:
       // -1 for down, 0 for no direciotn, +1 for up.
@@ -341,16 +376,16 @@ class Sound {
       }
      
       // numberOfPulses = (8 + int(random(0,8) + 0.1));
-      numberOfPulses = 3*(8 + int(random(0,8) + 0.1));
+      numberOfPulses = 2*(8 + int(random(0,maxNoteSequenceLengthParameter) + 0.1));
       NoteSequence bass = new NoteSequence(sound);
-      bass.noteSpacing = 3*timePerFrame;
+      bass.noteSpacing = 3*noteSpacing;
       bass.volume = 2  ;
       bass.noteDuration = 0.005;
-      bass.minPitch = part2Low;
-      bass.maxPitch = part2High;
-      bass.cueSheet = part2;
+      bass.minPitch = bassLow;
+      bass.maxPitch = bassHigh;
+      bass.score = bassScore;
             
-      freq2 = bass.playOnCue(intervals, direction, numberOfPulses, freq2, 5, phase);
+      bassFreq = bass.playOnCue(intervals, direction, numberOfPulses, bassFreq, 5, phase);
       // bass.playNotes(bassLine, -1, numberOfPulses/2, 1, 1.0/2);
      
       

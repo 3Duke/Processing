@@ -1,19 +1,36 @@
 
+Interpreter interpreter;
 FrameSet frameSet;
 Controller controller;
 Responder responder;
 Serial port;
 SerialManager serialManager;
 Sound sound;
-int longCount = 200;
+int longCount = 220;  // 200
 int phase = 0;
 /// period = 2000 works
 int period = 2000;
 int onPeriod = period;  // int(0.9*period);
 
+
+
 // int fc;
 
 void setup () {
+  
+  /*
+  Instruction i0 = new Instruction("1 color 255 0 0 0 0 255");
+  Instruction i1 = new Instruction("2 radius 100 200");
+  Instruction i2 = new Instruction("3 shape quad");
+  Instruction i3 = new Instruction("4 framerate 15");
+  Instruction i4 = new Instruction("5 alpha 1.0");
+  Instruction i5 = new Instruction("6 colorvelocity 0.9");
+  Instruction i6 = new Instruction("7 currentradius 100");  
+  
+  Instruction [ ] program = { i0, i1, i2, i3, i4, i5, i6 };
+  */
+  
+  interpreter = new Interpreter("program1" );
 
   HEIGHT = displayHeight;
   setAppearance();
@@ -38,12 +55,12 @@ void setup () {
 }
 
 void draw () {
-  
 
+  interpreter.run(frameCount);
   // println(nfc(1+frameCount/MODULUS,0) +", "+frameCount+": "+fc+", "+ phase);
   phase = int(frameCount/longCount);
   int periodCount = int(frameCount/period) + 1;
-  println(periodCount+", "+phase+": "+frameCount);
+  // println(periodCount+", "+phase+": "+frameCount);
   serialManager.handleInput();
   sound.play();
   // sound.test();

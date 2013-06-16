@@ -252,19 +252,25 @@ class Responder {
       if (keyCode == SHIFT) 
       {
         // String F = fileName+"-"+foobar+"-######.png";
-
+        println("SAVE FILE (1)");
         String index = nfs(frameCount, 6).trim();
         String F = fileName+"-"+foobar+"-"+index+".png";
         println("Saved file: "+F);
-        fs.appendXMLOfParameters(xml, F);
-        println(xml);  
+         println("SAVE FILE (2)");
+        // fs.appendXMLOfParameters(xml, F);
+        println("SAVE FILE (3)");
+        println(xml);
+        println("SAVE FILE (4)"); 
         saveFrame(F);
-
+        println("SAVE FILE (5)"); 
         logString = "File: "+F+"; parameters: "+fs.stringValOfParameters()+"\n\n";
+        println("SAVE FILE (6)"); 
         logStringArray = append(logStringArray, logString);
+        println("SAVE FILE (7)"); 
 
         // saveStrings(foobar+"-log.txt", logStringArray);
-        saveXML(xml, foobar+".xml");
+        // saveXML(xml, foobar+".xml");
+        println("SAVE FILE (8)"); 
       }
 
       if (keyCode == ALT) 

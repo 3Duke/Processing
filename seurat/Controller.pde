@@ -32,7 +32,8 @@ class Controller {
     */
     int yOffset = 50;
     int xOffset = 160;
-    test = new Widget(10, 700, 140, 40, "Monitor");
+    test = new Widget(5, 700, 150, 40, "  phase");
+    test.bg = color(0);
     
     colorBox1 = new Box(20 + xOffset, height - 50 - yOffset, 30, 30, "");
     colorBox2 = new Box(20+ xOffset, height - 10 - yOffset, 30, 30, "");
@@ -97,11 +98,6 @@ class Controller {
   }
 
   void displayBank1 () {
-    
-    boolean a1 = sound.phaseIsActive( phase , sound.part1);
-    boolean a2 = sound.phaseIsActive( phase , sound.part2);
-    test.setText(nfc(frameCount) + ": "+nfc(phase % sound.part1.length) + ", " + bool2string(a1) + ", " + bool2string(a2));
-    test.display();
 
     colorWheel1.display();
     colorWheel2.display();
@@ -157,6 +153,26 @@ class Controller {
   }
 
   void display() {
+    
+    boolean a1 = sound.phaseIsActive( phase , sound.sopranoScore);
+    boolean a2 = sound.phaseIsActive( phase , sound.bassScore);
+    boolean a3 = sound.phaseIsActive( phase , sound.tenorScore);
+    String soprano = "-";
+    String tenor = "-";
+    String bass = "-";   
+    if (a1) {
+      soprano = "S";
+    }
+    if (a3) {
+      tenor = "T";
+    }
+    if (a2) {
+      bass = "B";
+    }
+      
+    
+    test.setText(nfc((phase % sound.scoreLength) + 1) + "/" + nfc(sound.scoreLength) + " " + soprano + " " + tenor+ " " + bass);
+    test.display();
 
 
     if (serialManager.switchA == 1) { 
@@ -181,8 +197,11 @@ class Controller {
       fill(0);
       rectMode(CORNER);
       // rect(0,0, WIDTH, controlMargin);
-      rect(0, HEIGHT - controlMargin + displayMargin -10, displayWidth, 200);
+      rect(120, HEIGHT - controlMargin + displayMargin -10, displayWidth, 200);
+      float rightMargin_ = 200;
+      rect(displayWidth - rightMargin_, 0, rightMargin_, displayHeight);
     }
+   
   }
 
   void setColor1 ( color c)

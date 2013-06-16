@@ -24,7 +24,7 @@ class SEFrame {
   Particle [] particles;
   int numberOfActiveParticles;
   
-  int phase;  // numbrer of frames before staring
+  int phase;  // number of frames before staring
   float spacingFactor;
   
 
@@ -102,6 +102,24 @@ class SEFrame {
     
   }
   
+  void setParticleRadii(float radius, float localScale) {
+    
+    for (int i = 0; i < particles.length; i++) {
+     
+      particles[i].radius = localScale*radius;
+      
+    }  
+  }
+  
+  void setParticleColorVelocities(float velocity) {
+    
+    for (int i = 0; i < particles.length; i++) {
+     
+      particles[i].colorVelocity = velocity;
+      
+    }  
+  }
+  
   void setParticleQualities(float scale) {
     
     for (int i = 0; i < particles.length; i++) {
@@ -140,6 +158,13 @@ class SEFrame {
   }
 
   void changeColor() {
+    
+     // change color changes by a small random amount
+      float epsilon = 0.1;
+      dr = (1 + random(-epsilon,epsilon))*dr;
+      dg = (1 + random(-epsilon,epsilon))*dg;
+      db = (1 + random(-epsilon,epsilon))*db;
+
 
     r = r + speed*dr;
     g = g + speed*dg;
@@ -163,8 +188,8 @@ class SEFrame {
     colorMode(HSB,360, 1, 1);
     float h = hue(frameColor);
     printColor(frameColor, "frameColor");
-    println("!! frameHue = "+h);
-    println("## frameHue = "+hue_());
+    // println("!! frameHue = "+h);
+    // println("## frameHue = "+hue_());
     // colorMode(RGB,255,255,255);
   }
   

@@ -28,7 +28,7 @@ class FrameSet {
   float maxBrightness = 1.0;
   float minBrightness = 0.8;
 
-  color c1, c2;
+  color c1, c2;  // colors of FrameSet
 
   int numberOfParticles = 32;
   int numberOfActiveParticles = 1;
@@ -91,7 +91,8 @@ class FrameSet {
 
       frame[i].numberOfActiveParticles = numberOfActiveParticles;
       frame[i].spacingFactor = spacingFactor;
-
+      
+      frame[i].colorVelocity =// colorVelocity;
       frame[i].phase = 200*i;  // 200*i ==> 10*i for test
       frame[i].levelMin = minBrightness;
       frame[i].levelMax = maxBrightness;
@@ -102,6 +103,26 @@ class FrameSet {
     }
   }
 
+  void setParticleRadii(float radius, float scaleFactor) {
+
+    float localScale = 1.0;
+    
+    for (int i = 0; i < frame.length; i++) {
+
+      frame[i].setParticleRadii(radius, localScale);  /// propagate changes
+      localScale *= scaleFactor;
+    }
+  }
+  
+  void setParticleColorVelocities (float velocity) {
+
+    for (int i = 0; i < frame.length; i++) {
+
+      frame[i].setParticleColorVelocities(velocity);  /// propagate changes
+      
+    }
+  }
+  
   void setParticles () {
 
     for (int i = 0; i < frame.length; i++) {
@@ -217,6 +238,71 @@ class FrameSet {
   }
 
   void setColorTori2() {
+    
+    println("SETTING COLOR TORI");
+
+    colorMode(RGB, 255, 255, 255, 255);
+    float r1, g1, b1, r2, g2, b2;
+
+    printColor(c1, "setColorTori(1)");
+    printColor(c2, "setColorTori(2)");
+
+    // get RGB values from Frameset colors c1, c2
+    r1 = red(c1);  
+    g1 = green(c1); 
+    b1 = blue(c1);
+    
+    r2 = red(c2);  
+    g2 = green(c2); 
+    b2 = blue(c2);
+    
+    // Set relative color change
+    float dr = r2 - r1; 
+    float dg = g2 - g1; 
+    float db = b2 - b1;
+
+    float k = 1.0/frame.length; // First frame will have colors r1, g1, b1, last frame will have r2, g2, b2
+
+    // slow down color change
+    dr = k*dr; 
+    dg = k*dg; 
+    db = k*db;
+      
+    // 
+    for (int i = 0; i < frame.length; i++) {
+      // frames[i].randomSetColor();
+      frame[i].setColor(r1, g1, b1, frameAlpha);
+
+      // alpha value of frame.  Increase it for decreased persistence
+      // object drawn in the frame
+      frame[i].a = frameAlpha;
+
+      // speed factor for changing color of frame
+      frame[i].speed = 0.1;  
+      
+      // change color changes by a small random amount
+      float epsilon = 0.1;
+      dr = (1 + random(-epsilon,epsilon))*dr;
+      dg = (1 + random(-epsilon,epsilon))*dg;
+      db = (1 + random(-epsilon,epsilon))*db;
+      
+      // update r1, g1, b1
+      r1 += dr;
+      g1 += dg;
+      b1 += db;
+
+      // relative rates of change for colors
+      // frame[i].setDColor(dr, (i+1)*dg, (i+1)*(i+1)*db, 0);
+      float k2 = 0.1;
+      frame[i].setDColor(k2*dr, k2*dg, k2*db, 0);
+      println("frame "+nfc(i)+": "+nfc(dr,4)+", "+nfc(dg,4)+", "+nfc(db,4));
+    }
+  }
+
+
+////////////////
+
+  void setColorTori2OLD() {
 
     colorMode(RGB, 255, 255, 255, 255);
     float r1, g1, b1, r2, g2, b2;
@@ -249,13 +335,21 @@ class FrameSet {
 
       float k = 0.01;//  0.001;
 
+      // slow down color change
       dr = k*dr; 
       dg = k*dg; 
       db = k*db;
+      
+      // change color changes by a small random amount
+      float epsilon = 0.1;
+      dr = (1 + random(-epsilon,epsilon))*dr;
+      dg = (1 + random(-epsilon,epsilon))*dg;
+      db = (1 + random(-epsilon,epsilon))*db;
 
       // relative rates of change for colors
       // frame[i].setDColor(dr, (i+1)*dg, (i+1)*(i+1)*db, 0);
       frame[i].setDColor(dr, dg, db, 0);
+      println("frame "+nfc(i)+": "+nfc(dr,4)+", "+nfc(dg,4)+", "+nfc(db,4));
     }
   }
 
