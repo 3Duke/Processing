@@ -62,24 +62,21 @@ void draw () {
   
   display();
   
-  if (frameCount < 80) {
+  if (frameCount < 100) {
 
     fill(200);
     textSize(80);
-    text("Bebop #12C", 250, 250);
+    text("Bebop in C", 250, 250);
   }
-  if (frameCount < 10) {
+  if ((frameCount > 20) && (frameCount < 80)) {
     fill(0,0,255);
     textSize(50);
-    text("J. Carlson", 300, 350);
-    text("Offcenter Studio", 400, 410);
-    text("2013", 400, 470); 
+    text("Jim Carlson", 300, 400); 
   }
-  if ((frameCount > 80) && (frameCount < 100)) {
-    fill(0,0,255);
-    textSize(30);
-    fill(255,100,0);
-    text("Structure vs randomness ... ", 520, 600);
+  if ((frameCount > 40) && (frameCount < 80)) {
+    fill(0,0,255);   
+    text("Offcenter Studios", 400, 500);
+    text("2013", 400, 560); 
   }
   textSize(18);
   

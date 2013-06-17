@@ -3,25 +3,54 @@ import ddf.minim.*;
 import ddf.minim.ugens.*;
 import ddf.minim.effects.*;
 
-
- class NoteSequence {
+int direction() {
     
-    // float pulse4(float delay, float noteSpacing, float pitch, float pulseDuration,  int numberOfPulses, float minFreq, float maxFreq) { 
+    // Determine direction of Brownian path through the interval array:
+      // -1 for down, 0 for no direciotn, +1 for up.
+      float r2 = random(0, 1);
+      int direction_ = 0;
+      
+      if (r2 < 0.5) {
+        direction_ = 1;
+      } else {
+        direction_ = -1;
+      }
+      
+      return direction_;
+  }
+  
+ class NoteSequence {
+      
     float delay;
+    
     float noteSpacing;    
-    float startingPitch;   
     float noteDuration;
-    int numberOfNotes;   
-    float minPitch;        
-    float maxPitch;       
-    int [ ] score;
-    float volume;
+    int numberOfNotes; 
     int meter;
     int notesPerBeat;
     float restProbability;
     float doubleNoteProbability;
+    
+    float startingPitch;
+    float currentPitch;
+    float lastPitch;
+    float minPitch;        
+    float maxPitch; 
+    
+    float [][] intervalArray;
+    int intervalArrayIndex;
+    int intervalIndex;
+    int currentDirection;
+    float currentInterval;
+    
+    int [ ] score;
     int beatsOfPhraseOverlap;
+    
+    float volume;
+    
     Sound sound;
+    
+    ////////////////////////////////////
     
     NoteSequence(Sound sound_) {
       
@@ -32,49 +61,88 @@ import ddf.minim.effects.*;
     }
     
     
-    float playFromScore(float [] intervals, int direction, int beatsPerPhrase_, float startingPitch_, int phase) {
+    void playFromScore(int beatsPerPhrase_, int phase) {
+      
     if (sound.phaseIsActive( phase , score)) {
-        return  play(intervals, 0, beatsPerPhrase_, startingPitch_);  
-      } else {
-        return startingPitch_;
-      }
+        play(beatsPerPhrase_);  
+      } 
     }
+     
+  void play(int beatsPerPhrase_) { 
     
-    
-    float play(float [] intervals, int direction, int beatsPerPhrase_, float startingPitch_) { 
+      // println("\n\nPLAY:\n");
 
       numberOfNotes = notesPerBeat*beatsPerPhrase_;
-      startingPitch = startingPitch_;
+      // startingPitch = startingPitch_;
       
-      float p = startingPitch;
+      lastPitch = startingPitch;
+      // println("Starting pitch: "+nfc(lastPitch,1));
+      currentDirection = direction();
+      intervalArrayIndex = 0;
+      intervalIndex = 0;
+      currentInterval = sound.hs;
+      
+      int numberOfRepeatedNotes = 0;
+      
       for (int i = 0; i < numberOfNotes; i++) {
         
-        int  index = int(random(0, intervals.length));
-        float interval = intervals[index];
-          
         float r = random(0,1);
-        if (direction == 0)  {
-          if (r < 0.5) {
-             p = p*interval;
-          } else {
-            p = p/interval;
+        
+        /////////////// Choose interval and direction ///////////////
+        
+        if (r < 0.2) { // choose new interval array
+            intervalArrayIndex = int(random(0, intervalArray.length));
+        }
+        
+        r  = random(0,1);
+        if (r < 0.5) { // Choose new interval
+          intervalIndex = int(random(0, intervalArray[intervalArrayIndex].length));
+          currentInterval = intervalArray[intervalArrayIndex][intervalIndex];
+        }     
+        
+        if (r < 0.3) { // Change direction
+          currentDirection = direction(); 
+        }
+        
+        
+        // print("indices = "+nfc(intervalArrayIndex)+", "+nfc(intervalIndex)+" -- ");
+        
+        if (currentDirection == 1) {
+          currentPitch = lastPitch*currentInterval;
+        }
+        
+        if (currentDirection == -1) {
+          currentPitch = lastPitch/currentInterval;
+        }
+             
+        if (currentPitch < minPitch) {
+          currentPitch = 1.5*currentPitch;
+        }
+        if (currentPitch > maxPitch) {
+          currentPitch = currentPitch/1.5;
+        }
+        
+        // println(nfc(lastPitch,2)+", "+nfc(currentPitch,2));
+        
+        // Limit the number of times a note can be repeated:
+        if (lastPitch == currentPitch) {
+          numberOfRepeatedNotes++;
+          if (numberOfRepeatedNotes > 1) {
+            r = random(0,1);
+            if (r < 0.5) {
+              currentPitch = currentPitch*sound.hs;
+              currentDirection = 1;
+            }
+            else {
+              currentPitch = currentPitch/sound.hs;
+              currentDirection = -1;
+            }
           }
+          numberOfRepeatedNotes = 0;
         }
+  
         
-        if (direction == 1) {
-          p = p*interval;
-        }
-        
-        if (direction == -1) {
-          p = p/interval;
-        }
-        
-        if (p < minPitch) {
-          p = 1.5*p;
-        }
-        if (p > maxPitch) {
-          p = p/1.5;
-        }
+        /////////////// End: choose interval and direction ///////////////
         
         // Introduce a rest
         float localVolume = volume*sound.volume;
@@ -84,7 +152,7 @@ import ddf.minim.effects.*;
         }
         
         if (i % meter == 0) { // Introduce meter
-          localVolume = 1.5*localVolume;
+          localVolume = 1.75*localVolume;
         }
         
        // Shape phrase
@@ -94,22 +162,27 @@ import ddf.minim.effects.*;
        */
         
        
+       
        float r2 = random(0,1);
        if (r2 < doubleNoteProbability) {
          float r3 = random(0,1);
          if (r3 > 0.3) {
-           sound.out.playNote( delay + i*noteSpacing, noteDuration/2.0, new ToneInstrument( p, localVolume, sound.out ));
+           sound.out.playNote( delay + i*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
+           // println("play 1");
          }
-         sound.out.playNote( delay + (i +0.5)*noteSpacing, noteDuration/2.0, new ToneInstrument( p, localVolume, sound.out ));
+         sound.out.playNote( delay + (i +0.5)*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
+         // println("play 2");
        } else {
-         sound.out.playNote( delay + i*noteSpacing, noteDuration, new ToneInstrument( p, localVolume, sound.out ));
+         sound.out.playNote( delay + i*noteSpacing, noteDuration, new ToneInstrument( currentPitch, localVolume, sound.out ));
+         // println("play 3");
        }
-       
+       lastPitch = currentPitch;
         
       }
-     return p;
+     startingPitch = lastPitch;
     }
   
+  /////////////////////////
     
     void playNotes(float [] notes, int index, int numberOfNotes, int direction, float transpositionFactor) {
       
@@ -163,6 +236,7 @@ class Sound {
   // Notes and intervals:
   float C0 = 256;
   float C = 256;
+  float un = 1;
   float hs = 1.05946309435930;
   float ws = hs*hs;
   float m3 = hs*ws;
@@ -207,10 +281,17 @@ class Sound {
   float C3 = 2*C2;
 
   
-  float intervals[ ] = { hs, hs, ws, ws, ws, m3, M3, p4, p5, m6, M6 };
-  float intervals2[ ] = { m3, M3, m3, M3, m3, M3, m3, M3, m3, M3, M3 };
+  float intervals23456[ ] = { hs, ws, m3, M3, p4, p5, m6, M6 };
+  float intervals2[ ] = { hs, ws };
+  float intervals3[ ] = { m3, M3 };
   
+  float [][] ia2 = { intervals2 };
+  float [][] ia3 = { intervals3 };
+  float [][] ia23 = { intervals2, intervals3 };
+  float [][] ia23b = { intervals2, intervals2, intervals2, intervals3 };
+  float [][] ia23456 = { intervals23456 };
   
+  int rest [ ]       = { 0, 0 };
   int silent []      = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
   int all []         =  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
   
@@ -222,16 +303,30 @@ class Sound {
   */
   
   //{ 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1 };
-  int sopranoScore[] =  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1 };
-  int altoScore[]    =  { 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 };
-  int tenorScore[]   =  { 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1 };
-  int bassScore[]    =  { 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1 };
+  
+  int soprano1 []    =  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; 
+  int soprano2 []    =  { 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1 };
+  int soprano3 []    =  { 1, 1 };
+  int alto1 []       =  { 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1 }; 
+  int alto2 []       =  { 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 };
+  int alto3 []       =  { 1, 1 };
+  int tenor1 []      =  { 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0 }; 
+  int tenor2 [ ]     =  { 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1 };
+  int tenor3 [ ]      =  { 1, 1 };
+  int bass1 []       =  { 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 }; 
+  int bass2 []       =  { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1 };
+  int bass3 [ ]      =  { 1, 1 };
+  
+  int sopranoScore[] = concat(concat( soprano1, soprano2), soprano3);
+  int altoScore[]    = concat(concat( alto1, alto2), alto3);
+  int tenorScore[]   = concat(concat( tenor1, tenor2), tenor3);
+  int bassScore[]    = concat(concat( bass1, bass2), bass3);
   
   float sopranoFreq, altoFreq, tenorFreq, bassFreq;
   
   float tempoFactor = 1;
   
-  int scoreLength = 26;
+  int scoreLength = bassScore.length;
   
   
   // TEMPO PARAMETERS:
@@ -321,14 +416,17 @@ class Sound {
       soprano.notesPerBeat = 4;
       soprano.noteSpacing = beatSpacing/soprano.notesPerBeat; // triplets
       soprano.volume = 0.26;
-      soprano.noteDuration = 0.005;
+      soprano.noteDuration = 0.15*soprano.noteSpacing;
       soprano.minPitch = 405;
       soprano.maxPitch = 810;
-      soprano.meter = 4;
+      soprano.meter = 5;
       soprano.restProbability = 0.16;
       soprano.doubleNoteProbability = 0.1;
       soprano.beatsOfPhraseOverlap = 5;
       soprano.score = sopranoScore;
+      
+      soprano.startingPitch = 540;
+      soprano.intervalArray = ia23;
     
   }
   
@@ -338,24 +436,27 @@ class Sound {
       alto.notesPerBeat = 2;
       alto.noteSpacing = beatSpacing/alto.notesPerBeat; // triplets
       alto.volume = 0.36;
-      alto.noteDuration = 0.005;
+      alto.noteDuration = 0.5*alto.noteSpacing; // 0.005;
       alto.minPitch = 270;
-      alto.maxPitch = 540;
-      alto.meter = 4;
+      alto.maxPitch = 1080;
+      alto.meter = 3;
       alto.restProbability = 0.16;
       alto.doubleNoteProbability = 0.1;
       alto.beatsOfPhraseOverlap = 10;
       alto.score = altoScore;
+      
+      alto.startingPitch = 270;
+      alto.intervalArray = ia23;
     
   }
   
-  void setTenor(float beatSpacing) {
+  void setTenor (float beatSpacing) {
     
     tenor = new NoteSequence(sound);
       tenor.notesPerBeat = 2;
       tenor.noteSpacing = beatSpacing/tenor.notesPerBeat; // triplets
       tenor.volume = 0.66;
-      tenor.noteDuration = 0.1;
+      tenor.noteDuration = 0.25*tenor.noteSpacing; // 0.1;
       tenor.minPitch = 90;
       tenor.maxPitch = 360;
       tenor.meter = 4;
@@ -363,6 +464,9 @@ class Sound {
       tenor.doubleNoteProbability = 0.06;
       tenor.beatsOfPhraseOverlap = 8;
       tenor.score = tenorScore;
+      
+      tenor.startingPitch = 180;
+      tenor.intervalArray = ia23b;
   }
   
   void setBass(float beatSpacing) {
@@ -370,8 +474,8 @@ class Sound {
       bass = new NoteSequence(sound);
       bass.notesPerBeat = 1;
       bass.noteSpacing = beatSpacing/bass.notesPerBeat; // triplets
-      bass.volume = 2;
-      bass.noteDuration = 0.005;
+      bass.volume = 1;
+      bass.noteDuration = 0.2*bass.noteSpacing; // 0.005;
       bass.minPitch = 30;
       bass.maxPitch = 120;
       bass.meter = 5;
@@ -379,6 +483,9 @@ class Sound {
       bass.doubleNoteProbability = 0.06;
       bass.beatsOfPhraseOverlap = 10;
       bass.score = bassScore;
+      
+      bass.startingPitch = 90;
+      bass.intervalArray = ia23456;
       
   }
   
@@ -393,42 +500,31 @@ class Sound {
       setBass(beatSpacing);  
   }
   
-  int direction() {
-    
-    // Determine direction of Brownian path through the interval array:
-      // -1 for down, 0 for no direciotn, +1 for up.
-      float r2 = random(0,3);
-      int direction_ = 0;
-      
-      if (r2 < 1) {
-        direction_ = -1;
-      } else if (r2 < 2) {
-        direction_ = 0;
-      } else {
-        direction_ = 1;
-      }
-      
-      return direction_;
-  }
+  
    
   void play() {
-    
+    /*
+    float [][] intervals1 = { seconds };
+  float [][] intervals2 = { thirds };
+  float [][] intervals3 = { seconds, thirds };
+  float [][] intervals4 = { seconds, thirds, hs2M6 };
+  */
     
     framesPerPhrase = int(60*frameRate*beatsPerPhrase/bpm);     
   
     if (frameCount % int(framesPerPhrase) == 0)  {
           
       int bpp =  int(random(8,beatsPerPhrase) + soprano.beatsOfPhraseOverlap); 
-      sopranoFreq = soprano.playFromScore(intervals, 0, bpp, sopranoFreq, phase);
+      soprano.playFromScore(bpp, phase);
       
       bpp =  int(random(8,beatsPerPhrase) + alto.beatsOfPhraseOverlap); 
-      altoFreq = alto.playFromScore(intervals, direction(), bpp, altoFreq, phase);
+      alto.playFromScore(bpp, phase);
       
       bpp =  int(random(8,beatsPerPhrase) + tenor.beatsOfPhraseOverlap); 
-      tenorFreq = tenor.playFromScore(intervals, direction(), bpp, tenorFreq, phase);
+      tenor.playFromScore(bpp, phase);
         
       bpp =  int(random(8,beatsPerPhrase) + bass.beatsOfPhraseOverlap); 
-      bassFreq = bass.playFromScore(intervals, 0, bpp, bassFreq, phase);
+      bass.playFromScore(bpp, phase);
          
     } 
   }
