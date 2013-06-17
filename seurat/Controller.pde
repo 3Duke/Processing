@@ -14,7 +14,7 @@ class Controller {
   // switches
   boolean lightsAreOut;
   
-  Widget test, test2;
+  Widget test, test2, test3;
 
   DoubleSlider radiusSlider;
   Slider speedSlider;
@@ -32,10 +32,12 @@ class Controller {
     */
     int yOffset = 50;
     int xOffset = 160;
-    test = new Widget(5, 700, 150, 40, "  phase");
+    test = new Widget(5, 680, 150, 30, "");
     test.bg = color(0);
-    test2 = new Widget(5, 650, 150, 40, "  frame count");
+    test2 = new Widget(5, 700, 150, 20, "");
     test2.bg = color(0);
+    test3 = new Widget(5, 720, 150, 20, "");
+    test3.bg = color(0);
     
     colorBox1 = new Box(20 + xOffset, height - 50 - yOffset, 30, 30, "");
     colorBox2 = new Box(20+ xOffset, height - 10 - yOffset, 30, 30, "");
@@ -156,27 +158,38 @@ class Controller {
 
   void display() {
     
+   
     boolean a1 = sound.phaseIsActive( phase , sound.sopranoScore);
-    boolean a2 = sound.phaseIsActive( phase , sound.bassScore);
+    boolean a2 = sound.phaseIsActive( phase , sound.altoScore);
     boolean a3 = sound.phaseIsActive( phase , sound.tenorScore);
+    boolean a4 = sound.phaseIsActive( phase , sound.bassScore);
+    
     String soprano = "-";
+    String alto = "-";
     String tenor = "-";
     String bass = "-";   
+    
     if (a1) {
       soprano = "S";
+    }
+    if (a2) {
+      alto = "A";
     }
     if (a3) {
       tenor = "T";
     }
-    if (a2) {
+    if (a4) {
       bass = "B";
     }
       
     
-    test.setText(nfc((phase % sound.scoreLength) + 1) + "/" + nfc(sound.scoreLength) + " " + soprano + " " + tenor+ " " + bass);
+    test.setText(nfc((phase % sound.scoreLength)+1) + "/" + nfc(sound.scoreLength) + " " + soprano + " " + alto + " " + tenor+ " " + bass);
     test.display();
-    test2.setText(nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
+    test2.setText(nfc(phase2)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
     test2.display();
+    test3.setText(nfc(millis()/1000,1));
+    test3.display();
+ 
 
 
     if (serialManager.switchA == 1) { 
@@ -204,6 +217,8 @@ class Controller {
       rect(120, HEIGHT - controlMargin + displayMargin -10, displayWidth, 200);
       float rightMargin_ = 200;
       rect(displayWidth - rightMargin_, 0, rightMargin_, displayHeight);
+      rect(0, 0, 200, displayHeight-120);
+      rect(0,0,displayWidth,40);
     }
    
   }

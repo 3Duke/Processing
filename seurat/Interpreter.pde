@@ -1,7 +1,7 @@
 
 String [ ] opNames = { 
   "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius", "particlespacing", "loop", 
-    "numberofframes", "label" };
+    "numberofframes", "label", "volume", "bpm", "word" };
 // alpha: 0
 // color: 1
 // radius: 2 // radius 1.0 10.0
@@ -13,6 +13,8 @@ String [ ] opNames = {
 // loop: 8 // e.g., loop 0 to go all the way back, loop 3 to go back to instruction 3
 // numberofframes: 9
 // label: 10 // define label
+// volume: 11 // set volume 
+// word 12
 
 String [ ] shapes = { 
   "circle", "triangle", "square", "quad", "*", "s", "L", "W"
@@ -213,6 +215,18 @@ class Interpreter {
    case 10: // label: define label in program
       label[int(instr.args[2])] = instructionPointer; 
       break;
+      
+   case 11: // set volume
+      sound.volume = float(instr.args[2]);
+      break;
+      
+   case 12: // set tempo
+      sound.bpm = int(instr.args[2]);
+      break;
+      
+   case 13: // word -- set word for text display
+     responder.displayString = instr.args[2];
+     frameSet.setParticleType(index("W", shapes));
    
     } // end switch
   }  // end execute

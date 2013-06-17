@@ -40,4 +40,4 @@ import ddf.minim.effects.*;
 
     bg = color(r, g, b, a);
   }
- }
+ }  

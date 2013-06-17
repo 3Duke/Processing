@@ -5,3 +5,11 @@
 5 alpha 1.0
 6 colorvelocity 0.9
 7 currentradius 100
+999 particlespacing 0.9
+1000 word Bebop!
+1030 particlespacing 0.3
+1031 shape quad
+3069 particlespacing 0.9
+3070 word Bebop..!!
+3999 particlespacing 0.3
+4000 shape triangle

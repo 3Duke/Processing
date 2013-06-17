@@ -6,29 +6,22 @@ Responder responder;
 Serial port;
 SerialManager serialManager;
 Sound sound;
-int noteFrameSize = 220;  // 200
-int phase = 0;
+// int noteFrameSize = 220;  // 200
+
+
+int phase = 0;    // phase increases by 1 after each phrase
+int phase2 = 0;   // phase2 increases by 1 each time the score is complete
+
+
 /// period = 2000 works
-int period = 2000;
-int onPeriod = period;  // int(0.9*period);
+// int period = 2000;
+// int onPeriod = period;  // int(0.9*period);
 
 
 
 // int fc;
 
 void setup () {
-  
-  /*
-  Instruction i0 = new Instruction("1 color 255 0 0 0 0 255");
-  Instruction i1 = new Instruction("2 radius 100 200");
-  Instruction i2 = new Instruction("3 shape quad");
-  Instruction i3 = new Instruction("4 framerate 15");
-  Instruction i4 = new Instruction("5 alpha 1.0");
-  Instruction i5 = new Instruction("6 colorvelocity 0.9");
-  Instruction i6 = new Instruction("7 currentradius 100");  
-  
-  Instruction [ ] program = { i0, i1, i2, i3, i4, i5, i6 };
-  */
   
   interpreter = new Interpreter("program1" );
   interpreter.initialize();
@@ -51,22 +44,46 @@ void setup () {
   responder = new Responder(frameSet, controller);
 
   // SOUND
-  sound = new Sound();
+  sound = new Sound(25, 144);  // 15, 124
+  sound.setupVoices();
  
 }
 
 void draw () {
 
   interpreter.run(frameCount);
-  // println(nfc(1+frameCount/MODULUS,0) +", "+frameCount+": "+fc+", "+ phase);
-  phase = int(frameCount/noteFrameSize);
-  int periodCount = int(frameCount/period) + 1;
-  // println(periodCount+", "+phase+": "+frameCount);
+ 
+  phase = int(frameCount/sound.framesPerPhrase);
+  phase2 = int(frameCount/(sound.framesPerPhrase*sound.scoreLength)) + 1;
+
   serialManager.handleInput();
+  
   sound.play();
-  // sound.test();
+  
   display();
-}  // end draw
+  
+  if (frameCount < 80) {
+
+    fill(200);
+    textSize(80);
+    text("Bebop #12C", 250, 250);
+  }
+  if (frameCount < 10) {
+    fill(0,0,255);
+    textSize(50);
+    text("J. Carlson", 300, 350);
+    text("Offcenter Studio", 400, 410);
+    text("2013", 400, 470); 
+  }
+  if ((frameCount > 80) && (frameCount < 100)) {
+    fill(0,0,255);
+    textSize(30);
+    fill(255,100,0);
+    text("Structure vs randomness ... ", 520, 600);
+  }
+  textSize(18);
+  
+}  
 
 
 void stop()
