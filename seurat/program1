@@ -5,7 +5,7 @@
 5 alpha 1.0
 6 colorvelocity 0.9
 7 currentradius 100
-volume 0.5
+8 volume 0.5
 999 particlespacing 0.9
 1000 word Bebop!
 1001 volume 0.6
@@ -18,15 +18,19 @@ volume 0.5
 3300 volume 0.9
 3600 volume 1.0
 3900 volume 1.1
-4100 volume 0
+4300 volume 0
 4301 text The..End 350 350 60
-4302 particlespacing 0.3
-4303 shape *
-4604 haltdisplay
+4302 haltdisplay
+4303 radius 10 50
+4304 particlespacing 0.3
+4305 shape triangle
 4605 volume 0.1
 4700 volume 0.15
 4800 volume 0.2
+4801 startdisplay
 4900 volume 0.25
 5000 volume 0.3
 5100 volume 0.35
 5200 volume 0.4
+5300 radius 50 100
+5600 radius 100 200

@@ -320,10 +320,19 @@ class Sound {
   int bass2 []       =  { 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1 };
   int bass3 [ ]      =  { 1, 1 };
   
+  
   int sopranoScore[] = concat(concat( soprano1, soprano2), soprano3);
   int altoScore[]    = concat(concat( alto1, alto2), alto3);
   int tenorScore[]   = concat(concat( tenor1, tenor2), tenor3);
   int bassScore[]    = concat(concat( bass1, bass2), bass3);
+  
+  /* 
+  // TEST
+  int sopranoScore[] = silent;
+  int altoScore[]    = silent;
+  int tenorScore[]   = all;
+  int bassScore[]    = all;
+  */
   
   float sopranoFreq, altoFreq, tenorFreq, bassFreq;
   
@@ -424,7 +433,7 @@ class Sound {
       soprano.maxPitch = 1012.5;
       soprano.meter = 5;
       soprano.restProbability = 0.16;
-      soprano.doubleNoteProbability = 0.1;
+      soprano.doubleNoteProbability = 0.0;  // 0.1;
       soprano.beatsOfPhraseOverlap = 5;
       soprano.score = sopranoScore;
       
@@ -444,7 +453,7 @@ class Sound {
       alto.maxPitch = 675;
       alto.meter = 3;
       alto.restProbability = 0.16;
-      alto.doubleNoteProbability = 0.1;
+      alto.doubleNoteProbability = 0.0;  // 0.1;
       alto.beatsOfPhraseOverlap = 10;
       alto.score = altoScore;
       
@@ -464,7 +473,7 @@ class Sound {
       tenor.maxPitch = 360;
       tenor.meter = 4;
       tenor.restProbability = 0.13;
-      tenor.doubleNoteProbability = 0.06;
+      tenor.doubleNoteProbability = 0.0; //0.06;
       tenor.beatsOfPhraseOverlap = 8;
       tenor.score = tenorScore;
       
@@ -483,7 +492,7 @@ class Sound {
       bass.maxPitch = 120;
       bass.meter = 5;
       bass.restProbability = 0.06;
-      bass.doubleNoteProbability = 0.06;
+      bass.doubleNoteProbability = 0.0; // 0.06;
       bass.beatsOfPhraseOverlap = 10;
       bass.score = bassScore;
       

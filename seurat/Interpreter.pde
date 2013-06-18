@@ -1,7 +1,7 @@
 
 String [ ] opNames = { 
   "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius", "particlespacing", "loop", 
-    "numberofframes", "label", "volume", "bpm", "word", "text", "haltdisplay" };
+    "numberofframes", "label", "volume", "bpm", "word", "text", "haltdisplay", "startdisplay" };
 // alpha: 0
 // color: 1
 // radius: 2 // radius 1.0 10.0
@@ -18,6 +18,7 @@ String [ ] opNames = {
 // word 13
 // text 14
 // haltdisplay 15
+// startdisplay 16
 
 String [ ] shapes = { 
   "circle", "triangle", "square", "quad", "*", "s", "L", "W"
@@ -248,6 +249,10 @@ class Interpreter {
      
   case 15: // haltdisplay
      mainDisplayOn = false;
+     break;
+     
+  case 16: // haltdisplay
+     mainDisplayOn = true;
      break;
      
    
