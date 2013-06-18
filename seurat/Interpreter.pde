@@ -1,7 +1,7 @@
 
 String [ ] opNames = { 
   "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius", "particlespacing", "loop", 
-    "numberofframes", "label", "volume", "bpm", "word" };
+    "numberofframes", "label", "volume", "bpm", "word", "text", "haltdisplay" };
 // alpha: 0
 // color: 1
 // radius: 2 // radius 1.0 10.0
@@ -14,7 +14,10 @@ String [ ] opNames = {
 // numberofframes: 9
 // label: 10 // define label
 // volume: 11 // set volume 
-// word 12
+// bpm: 12
+// word 13
+// text 14
+// haltdisplay 15
 
 String [ ] shapes = { 
   "circle", "triangle", "square", "quad", "*", "s", "L", "W"
@@ -72,6 +75,7 @@ class Interpreter {
       }
       println("\n");
       
+  
      int numberOfCommentLines = 0;
      for (int i = 0; i < lines.length; i++) {
         if (lines[i].charAt(0) == '#') {
@@ -83,6 +87,7 @@ class Interpreter {
      
      int j = 0;
      for (int i = 0; i < lines.length; i++) {
+        println("line["+nfc(i)+"] = "+lines[i]);
         if (lines[i].charAt(0) != '#') {
           prog[j] = new Instruction(lines[i]); 
           j++;
@@ -97,6 +102,7 @@ class Interpreter {
     currentInstruction = program[instructionPointer];
     baseFrame = 0;
     running = true;
+   
   }
   
   
@@ -226,7 +232,24 @@ class Interpreter {
       
    case 13: // word -- set word for text display
      responder.displayString = instr.args[2];
-     frameSet.setParticleType(index("W", shapes));
+     println("responder.displayString = "+responder.displayString);
+     int k = index("W", shapes);
+     println("index of W = "+nfc(k));
+     frameSet.setParticleType(k);
+     break;
+     
+   case 14: // text
+     message_ = instr.args[2];
+     message_x = float(instr.args[3]);
+     message_y = float(instr.args[4]);
+     message_text_size = float(instr.args[5]);
+     println("message_ = "+message);
+     break;
+     
+  case 15: // haltdisplay
+     mainDisplayOn = false;
+     break;
+     
    
     } // end switch
   }  // end execute

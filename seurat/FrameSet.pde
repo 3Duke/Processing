@@ -170,18 +170,20 @@ class FrameSet {
 
 
   void setParticleType(int particleType_) {
-
+    
     particleType = particleType_;
 
     for (int i = 0; i < frame.length; i++) {
 
       SEFrame f = frame[i];
-
+      
       for (int j = 0; j < f.particles.length; j++ ) {
 
         f.particles[j].ptype = particleType;
+        
       }
     }
+   
   }
 
   void display () {

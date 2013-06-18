@@ -35,7 +35,10 @@ int direction() {
     float currentPitch;
     float lastPitch;
     float minPitch;        
-    float maxPitch; 
+    float maxPitch;
+    float newIntervalArrayProbability = 0.2;
+    float newIntervalProbability = 0.5;
+    float newPitchDirectionProbability = 0.3;
     
     float [][] intervalArray;
     int intervalArrayIndex;
@@ -90,17 +93,17 @@ int direction() {
         
         /////////////// Choose interval and direction ///////////////
         
-        if (r < 0.2) { // choose new interval array
+        if (r < newIntervalArrayProbability) { // choose new interval array
             intervalArrayIndex = int(random(0, intervalArray.length));
         }
         
         r  = random(0,1);
-        if (r < 0.5) { // Choose new interval
+        if (r < newIntervalProbability) { // Choose new interval 0.5)
           intervalIndex = int(random(0, intervalArray[intervalArrayIndex].length));
           currentInterval = intervalArray[intervalArrayIndex][intervalIndex];
         }     
         
-        if (r < 0.3) { // Change direction
+        if (r < newPitchDirectionProbability) { // Change direction 0.3
           currentDirection = direction(); 
         }
         
@@ -418,7 +421,7 @@ class Sound {
       soprano.volume = 0.26;
       soprano.noteDuration = 0.15*soprano.noteSpacing;
       soprano.minPitch = 405;
-      soprano.maxPitch = 810;
+      soprano.maxPitch = 1012.5;
       soprano.meter = 5;
       soprano.restProbability = 0.16;
       soprano.doubleNoteProbability = 0.1;
@@ -438,7 +441,7 @@ class Sound {
       alto.volume = 0.36;
       alto.noteDuration = 0.5*alto.noteSpacing; // 0.005;
       alto.minPitch = 270;
-      alto.maxPitch = 1080;
+      alto.maxPitch = 675;
       alto.meter = 3;
       alto.restProbability = 0.16;
       alto.doubleNoteProbability = 0.1;

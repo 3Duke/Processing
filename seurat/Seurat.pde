@@ -12,12 +12,17 @@ Sound sound;
 int phase = 0;    // phase increases by 1 after each phrase
 int phase2 = 0;   // phase2 increases by 1 each time the score is complete
 
+boolean mainDisplayOn = true;
+
 
 /// period = 2000 works
 // int period = 2000;
 // int onPeriod = period;  // int(0.9*period);
 
-
+String message_ = "";
+float message_text_size = 0;
+float message_x = 0;
+float message_y = 0;
 
 // int fc;
 
@@ -49,6 +54,44 @@ void setup () {
  
 }
 
+void startupScreen() {
+  
+ if (frameCount < 60) {
+   mainDisplayOn = false;
+ } else {
+   mainDisplayOn = true;
+ }
+  
+  if ((frameCount > 30) && (frameCount < 170)) {
+
+    fill(200);
+    textSize(80);
+    text("Bebop in C", 250, 250);
+  }
+  if ((frameCount > 50) && (frameCount < 110)) {
+    fill(0,0,255);
+    textSize(50);
+    text("Jim Carlson", 300, 400); 
+  }
+  if ((frameCount > 50) && (frameCount < 110)) {
+    
+    fill(20,20,40);
+    ellipse(530,485,120,120);
+    fill(0,0,255);
+    ellipse(560,485,40,40);
+    rectMode(CENTER);
+    // rect(530,485,5,120);
+    rectMode(CORNER);
+    
+    fill(0,0,255);
+    text("Offcenter Studios", 600, 500);
+    text("2013", 1000, 560); 
+    
+     
+  }
+  textSize(18);
+}
+
 void draw () {
 
   interpreter.run(frameCount);
@@ -60,25 +103,16 @@ void draw () {
   
   sound.play();
   
-  display();
+  if (mainDisplayOn) {
+    display();
+  }
   
-  if (frameCount < 100) {
-
-    fill(200);
-    textSize(80);
-    text("Bebop in C", 250, 250);
+  textSize(message_text_size);
+  text(message_, message_x, message_y);
+  
+  if (frameCount < 500) {
+    startupScreen();
   }
-  if ((frameCount > 20) && (frameCount < 80)) {
-    fill(0,0,255);
-    textSize(50);
-    text("Jim Carlson", 300, 400); 
-  }
-  if ((frameCount > 40) && (frameCount < 80)) {
-    fill(0,0,255);   
-    text("Offcenter Studios", 400, 500);
-    text("2013", 400, 560); 
-  }
-  textSize(18);
   
 }  
 
