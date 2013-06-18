@@ -28,6 +28,8 @@ float message_y = 0;
 
 void setup () {
   
+  // randomSeed(7);
+  
   interpreter = new Interpreter("program1" );
   interpreter.initialize();
 
@@ -51,6 +53,9 @@ void setup () {
   // SOUND
   sound = new Sound(25, 144);  // 15, 124
   sound.setupVoices();
+  
+  Score bar = new Score("1 0 1 0");
+  bar.display();
  
 }
 
@@ -61,10 +66,18 @@ void startupScreen() {
  } else {
    mainDisplayOn = true;
  }
+ 
+  if (frameCount < 2) {
+    
+    fill(255,125,0);
+    textSize(20);
+    text("Op. 3, no. 1", 255, 70);
+    
+  }
   
   if ((frameCount > 30) && (frameCount < 170)) {
 
-    fill(200);
+    fill(255,125,0);
     textSize(80);
     text("Bebop in C", 250, 250);
   }

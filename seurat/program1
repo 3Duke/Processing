@@ -19,12 +19,12 @@
 3600 volume 1.0
 3900 volume 1.1
 4300 volume 0
-4301 text The..End 350 350 60
-4302 haltdisplay
-4303 radius 10 50
-4304 particlespacing 0.3
-4305 shape triangle
-4605 volume 0.1
+4351 text The..End 350 350 60
+4352 haltdisplay
+4353 radius 10 50
+4354 particlespacing 0.3
+4355 shape triangle
+4655 volume 0.1
 4700 volume 0.15
 4800 volume 0.2
 4801 startdisplay

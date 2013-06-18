@@ -19,6 +19,51 @@ int direction() {
       return direction_;
   }
   
+ class ScorePart {
+   
+   boolean plays;
+   
+   ScorePart ( String e ) {
+     if (e.equals("1")) {
+       plays = true;
+     } else {
+       plays = false;
+     }
+   } 
+   
+ } // end class ScorePart
+ 
+ class Score {
+   
+   ScorePart [ ] score;
+   
+   Score ( String text ) {
+    
+    String [ ] symbols = split(text, " ");
+    int n = symbols.length;
+    score = new ScorePart[n];
+    
+    for (int i = 0; i < symbols.length; i++) {
+     score[i] = new ScorePart(symbols[i]); // expects "1" or "0"
+    } 
+     
+   } // end initializer Score
+   
+   void display() {
+     println("displaying score:");
+     for (int i = 0; i < score.length; i++) {
+       if (score[i].plays == true) {
+         print("1 ");
+       } else {
+         print ("0 " );
+       }
+       println("");
+     }
+   } //end display
+   
+ } // end class Score
+ 
+  
  class NoteSequence {
       
     float delay;
@@ -30,6 +75,7 @@ int direction() {
     int notesPerBeat;
     float restProbability;
     float doubleNoteProbability;
+    float pickupProbability = 0.02;
     
     float startingPitch;
     float currentPitch;
@@ -74,7 +120,9 @@ int direction() {
   void play(int beatsPerPhrase_) { 
     
       // println("\n\nPLAY:\n");
-
+      sound.out.pauseNotes();
+      
+      
       numberOfNotes = notesPerBeat*beatsPerPhrase_;
       // startingPitch = startingPitch_;
       
@@ -157,33 +205,27 @@ int direction() {
         if (i % meter == 0) { // Introduce meter
           localVolume = 1.75*localVolume;
         }
-        
-       // Shape phrase
-       /*
-       float b = (1 + sin(3.1416*i/numberOfNotes))/2;
-       localVolume = b*b*localVolume;
-       */
-        
        
        
-       float r2 = random(0,1);
-       if (r2 < doubleNoteProbability) {
-         float r3 = random(0,1);
-         if (r3 > 0.3) {
+       r = random(0,1);
+       if (r < doubleNoteProbability) {
            sound.out.playNote( delay + i*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
-           // println("play 1");
+           sound.out.playNote( delay + (i +0.5)*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
+        }
+        else if (r < doubleNoteProbability + pickupProbability) 
+        {
+          sound.out.playNote( delay + (i +0.5)*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
+        }
+        else
+        { // play single note
+           sound.out.playNote( delay + i*noteSpacing, noteDuration, new ToneInstrument( currentPitch, localVolume, sound.out ));
          }
-         sound.out.playNote( delay + (i +0.5)*noteSpacing, noteDuration/2.0, new ToneInstrument( currentPitch, localVolume, sound.out ));
-         // println("play 2");
-       } else {
-         sound.out.playNote( delay + i*noteSpacing, noteDuration, new ToneInstrument( currentPitch, localVolume, sound.out ));
-         // println("play 3");
-       }
-       lastPitch = currentPitch;
-        
-      }
+         lastPitch = currentPitch;
+      } // end loop
      startingPitch = lastPitch;
-    }
+     
+     sound.out.resumeNotes();
+    } // end play
   
   /////////////////////////
     
@@ -325,6 +367,7 @@ class Sound {
   int altoScore[]    = concat(concat( alto1, alto2), alto3);
   int tenorScore[]   = concat(concat( tenor1, tenor2), tenor3);
   int bassScore[]    = concat(concat( bass1, bass2), bass3);
+
   
   /* 
   // TEST
@@ -433,7 +476,7 @@ class Sound {
       soprano.maxPitch = 1012.5;
       soprano.meter = 5;
       soprano.restProbability = 0.16;
-      soprano.doubleNoteProbability = 0.0;  // 0.1;
+      soprano.doubleNoteProbability = 0.05;  // 0.1;
       soprano.beatsOfPhraseOverlap = 5;
       soprano.score = sopranoScore;
       
@@ -453,7 +496,7 @@ class Sound {
       alto.maxPitch = 675;
       alto.meter = 3;
       alto.restProbability = 0.16;
-      alto.doubleNoteProbability = 0.0;  // 0.1;
+      alto.doubleNoteProbability = 0.05;  // 0.1;
       alto.beatsOfPhraseOverlap = 10;
       alto.score = altoScore;
       
@@ -473,7 +516,7 @@ class Sound {
       tenor.maxPitch = 360;
       tenor.meter = 4;
       tenor.restProbability = 0.13;
-      tenor.doubleNoteProbability = 0.0; //0.06;
+      tenor.doubleNoteProbability = 0.025; //0.06;
       tenor.beatsOfPhraseOverlap = 8;
       tenor.score = tenorScore;
       
@@ -491,8 +534,8 @@ class Sound {
       bass.minPitch = 30;
       bass.maxPitch = 120;
       bass.meter = 5;
-      bass.restProbability = 0.06;
-      bass.doubleNoteProbability = 0.0; // 0.06;
+      bass.restProbability = 0.15; // 0.06
+      bass.doubleNoteProbability = 0.025; // 0.06;
       bass.beatsOfPhraseOverlap = 10;
       bass.score = bassScore;
       
