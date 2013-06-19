@@ -1,102 +1,101 @@
 
+Parameters parameters;
+
 Interpreter interpreter;
 FrameSet frameSet;
 Controller controller;
 Responder responder;
 Serial port;
 SerialManager serialManager;
-
-Score opus;
+  
+  
 Pitch pitch;
-Sound sound;
-Ensemble ensemble;
-
-
-int beatsPerPhrase = 25;
-float bpm = 140;
-int phase = 0;    // phase increases by 1 after each phrase
-int phase2 = 0;   // phase2 increases by 1 each time the score is complete
+Music music;
 
 boolean mainDisplayOn = true;
+boolean debug = true;
 
-String message_ = "";
-float message_text_size = 0;
-float message_x = 0;
-float message_y = 0;
+
+
+Message message1 = new Message("", 0, 0, 18);
+RunningMessage message = new RunningMessage("", "");
 
 void setup () {
+
+  parameters = new Parameters();
   
-  pitch = new Pitch();
+   pitch = new Pitch();
+    
+    if (pitch == null) {
+      println("pitch is NULL");
+    } else {
+      println("pitch is OK");
+    }
   
+  music = new Music("op3n1", 25, 144);
+  music.display();
+
+  if (music == null) {
+    println("ERROR: music is NULL");
+  } 
+  else {
+    println("music is OK");
+  }
+
+
   // randomSeed(hour()*minute()*second() + millis()); 
-  
+
   interpreter = new Interpreter("program1" );
   interpreter.initialize();
 
-  HEIGHT = displayHeight;
+  parameters.HEIGHT = displayHeight;
   setAppearance();
 
   // SERIAL OOMMUNICATION
-  port = new Serial(this, USB_PORT, 9600); 
+  port = new Serial(this, parameters.USB_PORT, 9600); 
   serialManager = new SerialManager(port, 6);
 
   // FRAMESET
-  frameSet = new FrameSet(WW, NumberOfFrames);
+  frameSet = new FrameSet(parameters.WW, parameters.numberOfFrames);
   frameSet.configure();
 
   // CONTROLLER
-  controller = new Controller(numberOfControlBanks); 
+  controller = new Controller(parameters.numberOfControlBanks); 
   frameSet.setColorTori();
 
   responder = new Responder(frameSet, controller);
- 
- // LOAD SCORE
-  opus = new Score("op3n1");
-  opus.display();
-  println("Number of sections = "+nfc(opus.numberOfSections()));
-  println("Number of parts = "+nfc(opus.numberOfParts()));
-  println("-------------------------------\n\n");
-  opus.displayGenerators();
-  println("-------------------------------\n\n");
-  println("BAR");
 
-  // SOUND & PLAYER
-  sound = new Sound(25, 144);  // 15, 124
-  ensemble = new Ensemble(opus, sound, 25, 144);
   
 }
 
 
 void draw () {
+  
+    music.phase = int(frameCount/music.framesPerPhrase);
+    // music.phase2 = int(frameCount/(music.framesPerPhrase*sound.scoreLength)) + 1;
 
   interpreter.run(frameCount);
- 
-  int framesPerPhrase = int(60*frameRate*beatsPerPhrase/bpm); 
-  println("framesPerPhrase = "+nfc(framesPerPhrase,1));
-  phase = int(frameCount/framesPerPhrase);
-  phase2 = int(frameCount/(sound.framesPerPhrase*sound.scoreLength)) + 1;
+
 
   serialManager.handleInput();
-  
-  ensemble.play();
-  
+
+  music.ensemble.play();
+
   if (mainDisplayOn) {
     display();
   }
-  
-  textSize(message_text_size);
-  text(message_, message_x, message_y);
-  
+
+  message1.display();
+
   if (frameCount < 500) {
     startupScreen();
   }
-  
 }  
 
 
 void stop()
 {
-  sound.stop();
+  music.sound.stop();
   super.stop();
 }
 
@@ -141,11 +140,11 @@ void keyReleased() {
 
 void display() {
 
-  if (displayOn) {
-    count++;   
+  if (parameters.displayOn) {
+    // count++;   
     controller.display();
     frameSet.display();
-    displayMessage();
+    message.display();
   } 
   else 
   {
@@ -155,22 +154,22 @@ void display() {
 
 void setAppearance() {
 
-  int WIDTH = int((1/inverseGoldenRatio)*HEIGHT);
+  int WIDTH = int((1/parameters.inverseGoldenRatio)*HEIGHT);
 
-  if (screenControlsOn) {
+  if (parameters.screenControlsOn) {
 
-    HEIGHT = displayHeight - displayMargin;  // Set HEIGHT to some value manually if you wish
+    parameters.HEIGHT = displayHeight - parameters.displayMargin;  // Set HEIGHT to some value manually if you wish
   }
 
   // Appearance:
 
-  if (screenControlsOn) { 
-    WW = WIDTH - controlMargin;
+  if (parameters.screenControlsOn) { 
+    parameters.WW = WIDTH - parameters.controlMargin;
   } 
   else { 
-    WW = WIDTH;
+    parameters.WW = WIDTH;
   }
-  font = loadFont("AndaleMono-48.vlw");
+  PFont font = loadFont("AndaleMono-48.vlw");
   textFont(font);
   // size(WW, HEIGHT);
   size(displayWidth, displayHeight);

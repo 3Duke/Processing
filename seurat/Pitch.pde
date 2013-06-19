@@ -1,5 +1,5 @@
 class Pitch {
-  
+
   // Notes and intervals:
   float C0 = 256;
   float C = 256;
@@ -79,31 +79,37 @@ class Pitch {
   float [][] ia2345B = { 
     intervals2345B
   };
-  
+
   ///////////////
-  
-  float [][][] intervalArrayList = { ia2, ia3, ia23, ia23b, ia23456, ia2345B };
+
+  float [][][] intervalArrayList = { 
+    ia2, ia3, ia23, ia23b, ia23456, ia2345B
+  };
   IntDict intervalDict;
-  
+
   Pitch () {
-    
+
     intervalDict = new IntDict();
     intervalDict.set("ia2", 0);
     intervalDict.set("ia3", 1);
     intervalDict.set("ia23", 2);
     intervalDict.set("ia23b", 3);
     intervalDict.set("ia23456", 4);
-    intervalDict.set("ia223456B", 5);   
-    
+    intervalDict.set("ia223456B", 5); 
+
+    if (intervalArrayList == null) {
+      println("intervalArrayList is NULL");
+    } 
+    else {
+      println("intervalArrayList is OK");
+      println("its length is "+nfc(intervalArrayList.length));
+    }
   }
-  
+
   float [][] intervals(String k) {
-    
-    println("KEY = "+k);
-    
+    println("Entering Pitch method intervals");
     int index = intervalDict.get(k);
+    println("interval index = "+nfc(index));
     return intervalArrayList[index];
-    
-  }  
-  
+  }
 } // end class Pitch

@@ -67,7 +67,7 @@ class FrameSet {
 
       // println(i+": "+nfc(x,2)+", "+nfc(y,2)+", "+nfc(W,2)+", "+nfc(pW,2));
       nextSquare(i);
-      scale = inverseGoldenRatio*scale;  // increase spancing factor in smaller frames
+      scale = parameters.inverseGoldenRatio*scale;  // increase spancing factor in smaller frames
 
       float sf = spacingFactor + i/10.0;
       sf = min(sf, 1.4);
@@ -195,8 +195,8 @@ class FrameSet {
     {  
       frame[i].display(m, M);
       frame[i].change(  );
-      M = inverseGoldenRatio*M;
-      m = inverseGoldenRatio*m;
+      M = parameters.inverseGoldenRatio*M;
+      m = parameters.inverseGoldenRatio*m;
     }
   }
 
@@ -232,8 +232,6 @@ class FrameSet {
     // controller.colorBox1.setRGBAColor(r1, g1, b1, 255);
     controller.colorBox2.setRGBAColor(r2, g2, b2, 255);
 
-    println("\n\nSetting colors of frames ...");
-
     for (int i = 0; i < frame.length; i++) {
       // frames[i].randomSetColor();
       frame[i].setColor(0, 100, 200, 200);
@@ -251,15 +249,10 @@ class FrameSet {
   }
 
   void setColorTori2() {
-    
-    println("SETTING COLOR TORI");
-
+  
     colorMode(RGB, 255, 255, 255, 255);
     float r1, g1, b1, r2, g2, b2;
-
-    printColor(c1, "setColorTori(1)");
-    printColor(c2, "setColorTori(2)");
-
+    
     // get RGB values from Frameset colors c1, c2
     r1 = red(c1);  
     g1 = green(c1); 
@@ -308,7 +301,7 @@ class FrameSet {
       // frame[i].setDColor(dr, (i+1)*dg, (i+1)*(i+1)*db, 0);
       float k2 = 0.1;
       frame[i].setDColor(k2*dr, k2*dg, k2*db, 0);
-      println("frame "+nfc(i)+": "+nfc(dr,4)+", "+nfc(dg,4)+", "+nfc(db,4));
+      
     }
   }
 
@@ -319,9 +312,6 @@ class FrameSet {
 
     colorMode(RGB, 255, 255, 255, 255);
     float r1, g1, b1, r2, g2, b2;
-
-    printColor(c1, "setColorTori(1)");
-    printColor(c2, "setColorTori(2)");
 
     r1 = red(c1);  
     g1 = green(c1); 
@@ -362,7 +352,7 @@ class FrameSet {
       // relative rates of change for colors
       // frame[i].setDColor(dr, (i+1)*dg, (i+1)*(i+1)*db, 0);
       frame[i].setDColor(dr, dg, db, 0);
-      println("frame "+nfc(i)+": "+nfc(dr,4)+", "+nfc(dg,4)+", "+nfc(db,4));
+    
     }
   }
 
@@ -382,26 +372,26 @@ class FrameSet {
     {
       x = x + W;
       pW = W;
-      W = inverseGoldenRatio*W;
+      W = parameters.inverseGoldenRatio*W;
     } 
     else if ( i % 4 == 2) 
     {
-      x = x +  inverseGoldenRatio*(pW - W);
+      x = x +  parameters.inverseGoldenRatio*(pW - W);
       y = y + W;
       pW = W;
-      W = inverseGoldenRatio*W;
+      W = parameters.inverseGoldenRatio*W;
     }
     else if ( i % 4 == 3) 
     {
-      x = x - inverseGoldenRatio*W;
+      x = x - parameters.inverseGoldenRatio*W;
       y = y + W;
-      y = y - inverseGoldenRatio*W;
-      W = inverseGoldenRatio*W;
+      y = y - parameters.inverseGoldenRatio*W;
+      W = parameters.inverseGoldenRatio*W;
     }
     else if ( i % 4 == 0) 
     {
-      y = y - inverseGoldenRatio*W;
-      W = inverseGoldenRatio*W;
+      y = y - parameters.inverseGoldenRatio*W;
+      W = parameters.inverseGoldenRatio*W;
     }
   }
 
@@ -413,26 +403,26 @@ class FrameSet {
     if (i == frame.length - 1) {
       if (i % 4 == 0 ) 
       {   
-        frame[i].w =  frame[i].w/inverseGoldenRatio;
+        frame[i].w =  frame[i].w/parameters.inverseGoldenRatio;
       } 
       else if (i % 4 == 1) 
       {
-        frame[i].h =  frame[i].h/inverseGoldenRatio;
+        frame[i].h =  frame[i].h/parameters.inverseGoldenRatio;
       } 
       else if (i % 4 == 2) 
       {
         float xx = frame[i].x;
-        float ww = frame[i].w/inverseGoldenRatio;
-        float dx = ww/inverseGoldenRatio - ww;
-        frame[i].x = xx - dx*inverseGoldenRatio;
+        float ww = frame[i].w/parameters.inverseGoldenRatio;
+        float dx = ww/parameters.inverseGoldenRatio - ww;
+        frame[i].x = xx - dx*parameters.inverseGoldenRatio;
         frame[i].w = ww;
       } 
       else if (i % 4 == 3) 
       {
         float yy = frame[i].y;
-        float ww = frame[i].w/inverseGoldenRatio;
-        float dy = ww/inverseGoldenRatio - ww;
-        frame[i].y = yy - dy*inverseGoldenRatio;
+        float ww = frame[i].w/parameters.inverseGoldenRatio;
+        float dy = ww/parameters.inverseGoldenRatio - ww;
+        frame[i].y = yy - dy*parameters.inverseGoldenRatio;
         frame[i].h = ww;
       }
     }

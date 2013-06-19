@@ -1,4 +1,22 @@
 
+
+int index(String probe, String [ ] names) {
+
+  int index = -1;
+
+  for (int i = 0; i < names.length; i++) {
+
+    if (probe.equals(names[i])) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+}
+
+class Instruction {
+  
+  
 String [ ] opNames = { 
   "alpha", "color", "radius", "shape", "framerate", "colorvelocity", "currentradius", "particlespacing", "loop", 
     "numberofframes", "label", "volume", "bpm", "word", "text", "haltdisplay", "startdisplay" };
@@ -20,25 +38,6 @@ String [ ] opNames = {
 // haltdisplay 15
 // startdisplay 16
 
-String [ ] shapes = { 
-  "circle", "triangle", "square", "quad", "*", "s", "L", "W"
-};
-
-int index(String probe, String [ ] names) {
-
-  int index = -1;
-
-  for (int i = 0; i < names.length; i++) {
-
-    if (probe.equals(names[i])) {
-      index = i;
-      break;
-    }
-  }
-  return index;
-}
-
-class Instruction {
 
   int opcode;
   String name;
@@ -65,6 +64,11 @@ class Interpreter {
   int baseFrame;
   Instruction currentInstruction;
   boolean running;
+  
+  String [ ] shapes = { 
+  "circle", "triangle", "square", "quad", "*", "s", "L", "W"
+};
+
  
   
    Interpreter(String fileName) {
@@ -88,10 +92,11 @@ class Interpreter {
      
      int j = 0;
      for (int i = 0; i < lines.length; i++) {
-        println("line["+nfc(i)+"] = "+lines[i]);
+        
         if (lines[i].charAt(0) != '#') {
           prog[j] = new Instruction(lines[i]); 
           j++;
+          
         }
      }
      
@@ -216,7 +221,7 @@ class Interpreter {
       break;
       
    case 9: // numberofframes: set number of frames
-      NumberOfFrames = int(instr.args[2]);
+      parameters.numberOfFrames = int(instr.args[2]);
       break;
       
    case 10: // label: define label in program
@@ -224,11 +229,11 @@ class Interpreter {
       break;
       
    case 11: // set volume
-      sound.volume = float(instr.args[2]);
+      music.sound.volume = float(instr.args[2]);
       break;
       
    case 12: // set tempo
-      sound.bpm = int(instr.args[2]);
+      music.bpm = int(instr.args[2]);
       break;
       
    case 13: // word -- set word for text display
@@ -240,11 +245,8 @@ class Interpreter {
      break;
      
    case 14: // text
-     message_ = instr.args[2];
-     message_x = float(instr.args[3]);
-     message_y = float(instr.args[4]);
-     message_text_size = float(instr.args[5]);
-     println("message_ = "+message);
+     message1 = new Message(instr.args[2], float(instr.args[3]), float(instr.args[4]), float(instr.args[5]));
+     println("message1 = "+message1.msg);
      break;
      
   case 15: // haltdisplay

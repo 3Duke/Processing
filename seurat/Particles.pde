@@ -1,4 +1,7 @@
 
+class Particle {
+  
+  
 int CIRCLE = 0;
 int TRI = 1;
 int SQU = 2;
@@ -8,7 +11,6 @@ int SQ2 = 5;
 int LETTER = 6;
 int WORD = 7;
 
-class Particle {
 
   // frame:
   float fx, fy;         // a corner of the frame in which particle lives

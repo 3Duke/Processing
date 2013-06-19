@@ -158,13 +158,16 @@ class Controller {
 
   void display() {
     
-   int numberOfSections = opus.numberOfSections();
-    int localPhase = phase % numberOfSections;
+    Score score = music.opus;
+    Part[] part = score.score;
     
-    boolean a1 = opus.score[0].plays(localPhase);
-    boolean a2 = opus.score[1].plays(localPhase);
-    boolean a3 = opus.score[2].plays(localPhase);
-    boolean a4 = opus.score[3].plays(localPhase);
+    int numberOfSections = score.numberOfSections();
+    int localPhase = music.phase % numberOfSections;
+    
+    boolean a1 = part[0].plays(localPhase);
+    boolean a2 = part[1].plays(localPhase);
+    boolean a3 = part[2].plays(localPhase);
+    boolean a4 = part[3].plays(localPhase);
     
     String soprano = "-";
     String alto = "-";
@@ -187,7 +190,7 @@ class Controller {
     
     test.setText(nfc((localPhase)+1) + "/" + nfc(numberOfSections) + " " + soprano + " " + alto + " " + tenor+ " " + bass);
     test.display();
-    test2.setText(nfc(phase2)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
+    test2.setText(nfc(music.phase2)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
     test2.display();
     test3.setText(nfc(millis()/1000,1));
     test3.display();
@@ -212,11 +215,11 @@ class Controller {
 
   void hide () {
 
-    if (screenControlsOn) {
+    if (parameters.screenControlsOn) {
       fill(0);
       rectMode(CORNER);
       // rect(0,0, WIDTH, controlMargin);
-      rect(120, HEIGHT - controlMargin + displayMargin -10, displayWidth, 200);
+      rect(120, HEIGHT - parameters.controlMargin + parameters.displayMargin -10, displayWidth, 200);
       float rightMargin_ = 200;
       rect(displayWidth - rightMargin_, 0, rightMargin_, displayHeight);
       rect(0, 0, 200, displayHeight-120);

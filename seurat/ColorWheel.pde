@@ -1,8 +1,8 @@
 
-float deg = 2*PI/360;
 
 class ColorWheel extends Widget {
 
+  float deg = 2*PI/360;
 
   ColorWheel(float x_, float y_, float d_, String caption_) {
 

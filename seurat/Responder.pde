@@ -319,11 +319,11 @@ class Responder {
 
     if ((!acceptText) && (!acceptFileName)) {
 
-      displayOn = true;
+      parameters.displayOn = true;
     } 
     else {
 
-      displayOn = false;
+      parameters.displayOn = false;
     }
   }
 } /// End Responder

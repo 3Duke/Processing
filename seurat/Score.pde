@@ -71,12 +71,11 @@ class Part {
       score[i] = new Section(symbols[i]); // expects "1" or "0"
     }
   } // end initializer Score
-  
-  
+
+
   boolean plays (int phase) {
-    
+
     return score[phase].plays;
-    
   }
 
   void display() {
@@ -138,18 +137,16 @@ class Score {
 
     for (int i = 1; i < chunk.length; i++) {
 
-
       String partName = metadata("part", chunk[i]);
       String cueData = metadata("cues", chunk[i]);
 
       if ((partName.length() > 0) && (cueData.length() > 0)) {
-        
+
         Part p = new Part(partName, cueData);
         Generator g = new Generator(chunk[i]);
 
         score = (Part[ ]) append(score, p);
         generator = (Generator [ ]) append(generator, g);
-        
       }
     } // end for (i)
   } // end constructor
@@ -161,8 +158,11 @@ class Score {
     for (int i = 0; i < score.length; i++) {
       score[i].display();
     }
+    println("Number of sections = "+nfc(numberOfSections()));
+    println("Number of parts = "+nfc(numberOfParts()));
+    println("-------------------------------\n\n");
   }
-  
+
   void displayGenerators() {
     println(name);
     println("=============================");
@@ -173,21 +173,17 @@ class Score {
       println("====================");
     }
   }
-  
+
   int numberOfSections () {
-    
-   Part p = score[0]; 
-   return p.score.length;
-   
+
+    Part p = score[0]; 
+    return p.score.length;
   }
-  
+
   int numberOfParts () {
-    
+
     return score.length;
-    
   }
-  
-  
 } // end class Score
 
 

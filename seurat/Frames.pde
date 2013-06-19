@@ -190,16 +190,13 @@ class SEFrame {
   void setColor(float r_, float g_, float b_, float a_) 
   {
     r = r_; g = g_; b = b_; g = g_; a = a_;
-    print("SC: "+r+", "+g+", "+b+" -- "); count = 0;
+    // count = 0;
     colorMode(RGB,255,255,255,255);
     frameColor = color(r,g,b,a);
     
     colorMode(HSB,360, 1, 1);
     float h = hue(frameColor);
-    printColor(frameColor, "frameColor");
-    // println("!! frameHue = "+h);
-    // println("## frameHue = "+hue_());
-    // colorMode(RGB,255,255,255);
+   
   }
   
   void randomSetColor() {
@@ -248,7 +245,6 @@ class SEFrame {
       rect(x, y, x + w, y + h);
       
       frameColor = color(rrr,ggg,bbb,a);
-      // printColor(frameColor, "DIS");
    
       
    if (frameCount > phase) 
