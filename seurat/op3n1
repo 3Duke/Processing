@@ -1,0 +1,83 @@
+<title: Op 3 no. 1>
+--
+<part: soprano>
+
+<cues: 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 1 1 0 1 1 0 1 1 1 1>
+
+<volume: 0.26>
+
+<maxPitch: 1012.5>
+<minPitch: 405>
+<firstPitch: 540>
+<intervalArrayKey: ia23>
+
+<meter: 5>
+<notesPerBeat: 4>
+<relativeNoteDuration: 0.15>
+<restProbability: 0.16>
+<doubleNoteProbability: 0.05>
+<beatsOfPhraseOverlap: 5>
+
+--
+<part: alto>
+<cues: 
+0 0 0 0 0 0 1 0 1 1 0 1 1 
+0 0 0 1 1 0 0 0 0 1 1 0 0 
+1 1 >
+
+<volume: 0.36>
+
+<maxPitch: 675>
+<minPitch: 279>
+<firstPitch: 270>
+<intervalArrayKey: ia23>
+
+<meter: 3>
+<notesPerBeat: 2>
+<relativeNoteDuration: 0.15>
+<restProbability: 0.16>
+<doubleNoteProbability: 0.05>
+<beatsOfPhraseOverlap: 10>
+--
+<part: tenor>
+<cues: 
+0 0 1 1 1 0 0 0 0 1 1 0 0 
+0 1 1 1 0 1 1 1 1 0 1 1 1 
+1 1>
+
+<volume: 0.66>
+
+<maxPitch: 360>
+<minPitch: 90>
+<firstPitch: 180>
+<intervalArrayKey: ia23>
+
+<meter: 4>
+<notesPerBeat: 2>
+<relativeNoteDuration: 0.25>
+<restProbability: 0.16>
+<doubleNoteProbability: 0.25>
+<beatsOfPhraseOverlap: 8>
+--
+<part: bass>
+<cues:  
+0 1 0 1 1 1 0 1 1 0 1 1 1 
+1 0 1 0 1 0 1 1 0 1 0 1 1 
+1 1 
+>
+
+<volume: 0.26>
+
+<maxPitch: 120>
+<minPitch: 30>
+<firstPitch: 90>
+<intervalArrayKey: ia2345B>
+
+<meter: 5>
+<notesPerBeat: 1>
+<relativeNoteDuration: 0.02>
+<restProbability: 0.15>
+<doubleNoteProbability: 0.025>
+<beatsOfPhraseOverlap: 10>
+--
+  

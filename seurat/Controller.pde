@@ -158,11 +158,13 @@ class Controller {
 
   void display() {
     
-   
-    boolean a1 = sound.phaseIsActive( phase , sound.sopranoScore);
-    boolean a2 = sound.phaseIsActive( phase , sound.altoScore);
-    boolean a3 = sound.phaseIsActive( phase , sound.tenorScore);
-    boolean a4 = sound.phaseIsActive( phase , sound.bassScore);
+   int numberOfSections = opus.numberOfSections();
+    int localPhase = phase % numberOfSections;
+    
+    boolean a1 = opus.score[0].plays(localPhase);
+    boolean a2 = opus.score[1].plays(localPhase);
+    boolean a3 = opus.score[2].plays(localPhase);
+    boolean a4 = opus.score[3].plays(localPhase);
     
     String soprano = "-";
     String alto = "-";
@@ -183,7 +185,7 @@ class Controller {
     }
       
     
-    test.setText(nfc((phase % sound.scoreLength)+1) + "/" + nfc(sound.scoreLength) + " " + soprano + " " + alto + " " + tenor+ " " + bass);
+    test.setText(nfc((localPhase)+1) + "/" + nfc(numberOfSections) + " " + soprano + " " + alto + " " + tenor+ " " + bass);
     test.display();
     test2.setText(nfc(phase2)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
     test2.display();
