@@ -16,6 +16,8 @@ class SwitchBank {
   }
 
   void all_off() {
+    
+    println("ALL OFF!!");
 
     for (int i = 0; i < switch_.length; i++) 
     {

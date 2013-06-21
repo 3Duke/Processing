@@ -7,48 +7,28 @@ Controller controller;
 Responder responder;
 Serial port;
 SerialManager serialManager;
-  
-  
+
+
 Pitch pitch;
+MusicParameters musicParameters;
 Music music;
 
 boolean mainDisplayOn = true;
 boolean debug = true;
 
-
-
 Message message1 = new Message("", 0, 0, 18);
 RunningMessage message = new RunningMessage("", "");
 
 void setup () {
-
-  parameters = new Parameters();
   
-   pitch = new Pitch();
-    
-    if (pitch == null) {
-      println("pitch is NULL");
-    } else {
-      println("pitch is OK");
-    }
-  
-  music = new Music("op3n1", 25, 144);
-  music.display();
+  println("DISPLAY: "+nfc(displayWidth)+", "+nfc(displayHeight));
 
-  if (music == null) {
-    println("ERROR: music is NULL");
-  } 
-  else {
-    println("music is OK");
-  }
+  println("@ DEBUG 0");
+  parameters = new Parameters(true, true);
 
+  randomSeed(hour()*minute()*second() + millis()); 
 
-  // randomSeed(hour()*minute()*second() + millis()); 
-
-  interpreter = new Interpreter("program1" );
-  interpreter.initialize();
-
-  parameters.HEIGHT = displayHeight;
+ 
   setAppearance();
 
   // SERIAL OOMMUNICATION
@@ -56,23 +36,48 @@ void setup () {
   serialManager = new SerialManager(port, 6);
 
   // FRAMESET
-  frameSet = new FrameSet(parameters.WW, parameters.numberOfFrames);
+  frameSet = new FrameSet(parameters.frameHeight, parameters.numberOfFrames);
   frameSet.configure();
 
   // CONTROLLER
-  controller = new Controller(parameters.numberOfControlBanks); 
+  int xc = int(parameters.horizontalFrameMargin);
+  int yc = int(parameters.verticalFrameMargin + parameters.frameHeight);
+  
+  controller = new Controller(parameters.numberOfControlBanks, xc, yc);
   frameSet.setColorTori();
 
   responder = new Responder(frameSet, controller);
 
+  musicParameters = new MusicParameters();
+
+  interpreter = new Interpreter("program1" );
+  interpreter.initialize();
+
+  println("@ 1");
+  pitch = new Pitch();
+  musicParameters.initialize();
+  music = new Music(musicParameters);
+  music.display();
+  
   
 }
 
 
 void draw () {
   
-    music.phase = int(frameCount/music.framesPerPhrase);
-    // music.phase2 = int(frameCount/(music.framesPerPhrase*sound.scoreLength)) + 1;
+  
+  float xxx = parameters.horizontalFrameMargin, yyy = parameters.verticalFrameMargin;
+  /*
+  fill(255,0,0);
+  rect(0,0,xxx,yyy);
+  */
+
+
+  if (frameCount > 15) {
+    music.framesPerPhrase = int(60*frameRate*music.beatsPerPhrase/music.bpm);
+  }
+  music.phase = int(frameCount/music.framesPerPhrase);
+  music.phase2 = int(frameCount/(music.framesPerPhrase*music.opus.numberOfSections()));
 
   interpreter.run(frameCount);
 
@@ -83,6 +88,13 @@ void draw () {
 
   if (mainDisplayOn) {
     display();
+      
+    /*   
+    fill(255,0,0);
+    rect(0,0,xxx,yyy);
+    */
+   
+    
   }
 
   message1.display();
@@ -154,21 +166,11 @@ void display() {
 
 void setAppearance() {
 
-  int WIDTH = int((1/parameters.inverseGoldenRatio)*HEIGHT);
-
-  if (parameters.screenControlsOn) {
-
-    parameters.HEIGHT = displayHeight - parameters.displayMargin;  // Set HEIGHT to some value manually if you wish
-  }
+ 
 
   // Appearance:
 
-  if (parameters.screenControlsOn) { 
-    parameters.WW = WIDTH - parameters.controlMargin;
-  } 
-  else { 
-    parameters.WW = WIDTH;
-  }
+  
   PFont font = loadFont("AndaleMono-48.vlw");
   textFont(font);
   // size(WW, HEIGHT);

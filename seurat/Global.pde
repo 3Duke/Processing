@@ -1,4 +1,21 @@
 
+
+class MusicParameters {
+
+  // Need to initialize Music
+  float startingFramerate; //
+  int beatsPerPhrase;      //
+  int framesPerPhrase;     //
+  float bpm;               //
+  String scoreFile;
+
+  void initialize () {
+
+    framesPerPhrase = int(60*startingFramerate*beatsPerPhrase/bpm);
+  }
+}
+
+
 class Parameters {
 
   int numberOfFrames = 11;
@@ -6,26 +23,52 @@ class Parameters {
 
   int controlMargin = 140;
   int displayMargin = 60;
-  boolean screenControlsOn = true;
-  boolean displayOn = true;
+  
+  float displayScaleFactor;
+  
+  float frameHeight, frameWidth;
+  float horizontalFrameMargin, verticalFrameMargin;
+ 
+  boolean screenControlsOn;
+  boolean displayOn;
 
-  float inverseGoldenRatio = 0.618;
-
-  int WW, HEIGHT;
+  float goldenRatio = 1.618033988749895;
+  float inverseGoldenRatio = 1/goldenRatio;
 
   String USB_PORT = "dev/Bluetooth-PDA-Sync";    // "/dev/slave"; // "/dev/tty.usbmodem1411"
+
+
+  Parameters(boolean screenControlsOn_, boolean displayOn_) {
+
+    displayScaleFactor = displayHeight/700;
+    
+    screenControlsOn = screenControlsOn_;
+    displayOn = displayOn_;
+    
+    float displayScaleFactor;
+      
+    verticalFrameMargin = 60 ;
+    frameHeight = displayHeight - 2*verticalFrameMargin - 0.8*verticalFrameMargin;
+    frameWidth = goldenRatio*frameHeight;
+    horizontalFrameMargin = (displayWidth - frameWidth)/2.0;
+    
+
+    println("IN PARAMETERS: DISPLAY = "+nfc(displayWidth)+", "+nfc(displayHeight));
+    println("-------------: frame = "+nfc(frameWidth,1)+", "+nfc(frameHeight,1));
+    println("-------------: margins = "+nfc(horizontalFrameMargin,1)+", "+nfc(verticalFrameMargin,1));
+ 
+  }
 }
 
 class RunningMessage {
 
   String message = "";
   String previousMessage = "";
- 
+
   RunningMessage( String message_, String previousMessage_) {
-    
+
     message = message_;
     previousMessage = previousMessage_;
-    
   } 
 
   void display() {
@@ -42,7 +85,6 @@ class RunningMessage {
     // message = str(frameCount) + ", " + str(round(frameRate));
     text(message, 10, height - 8);
   }
-  
 }
 
 class Message {
@@ -61,7 +103,7 @@ class Message {
 
   void display() {
 
-    textSize(textSize);
-    text(msg, x, y);
+    relativeTextSize(textSize);
+   text(msg, parameters.displayScaleFactor*x, parameters.displayScaleFactor*y);
   }
 }

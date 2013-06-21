@@ -2,6 +2,7 @@ class Controller {
 
   color c1, c2;
   color c1Saved, c2Saved;
+  int x, y, w = 800, h = 80;
 
   SwitchBank bankSelector;
   SelectorBox shapeSelector;
@@ -24,62 +25,66 @@ class Controller {
 
   DoubleSlider fooSlider;
 
-  Controller (int numberOfControlBanks) {
+  Controller (int numberOfControlBanks, int x_, int y_) {
 
+    x = x_;
+    y = y_;
+    
     /*
     colorBox1 = new Box(20, height - 50, 30, 30, "");
     colorBox2 = new Box(20, height - 10, 30, 30, "");
     */
     int yOffset = 50;
     int xOffset = 160;
-    test = new Widget(5, 680, 150, 30, "");
+    test = new Widget(5, displayHeight - 85, 150, 30, "");
     test.bg = color(0);
-    test2 = new Widget(5, 700, 150, 20, "");
+    test2 = new Widget(5, displayHeight - 65, 150, 20, "");
     test2.bg = color(0);
-    test3 = new Widget(5, 720, 150, 20, "");
+    test3 = new Widget(5, displayHeight - 45, 150, 20, "");
     test3.bg = color(0);
     
-    colorBox1 = new Box(20 + xOffset, height - 50 - yOffset, 30, 30, "");
-    colorBox2 = new Box(20+ xOffset, height - 10 - yOffset, 30, 30, "");
+    colorBox1 = new Box(x, y + 30, 30, 30, "");
+    colorBox2 = new Box(x, y + 70, 30, 30, "");
 
     bankSelector = new SwitchBank(numberOfControlBanks);
 
-    fileControlBox = new Box(960 + xOffset, height - 50 - yOffset, 30, 30, "F");
-    textControlBox = new Box(960 + xOffset, height - 10 - yOffset, 30, 30, "T");
+    fileControlBox = new Box(x + 950, y+30, 30, 30, "F");
+    textControlBox = new Box(x + 950, y + 70, 30, 30, "T");
     fileControlBox.setRGBAColor(0, 0, 200, 255);
     textControlBox.setRGBAColor(0, 0, 200, 255);
 
-    lightsOutBox = new Box(980 + xOffset, height - 50 - yOffset, 30, 30, "B");
+    lightsOutBox = new Box(x + 900, y+30, 30, 30, "B");
     lightsAreOut = false;
 
     String particleLabels[] = { 
       "C", "T", "S", "Q", "*", "s", "L", "W"
     };
 
-    shapeSelector = new SelectorBox(230 + xOffset, height - 20 - yOffset, 230, 40, particleLabels.length, particleLabels); 
+   // shapeSelector = new SelectorBox(230 + xOffset, height - 20 - yOffset, 230, 40, particleLabels.length, particleLabels);
+   shapeSelector = new SelectorBox(int(x) + 210, int(y) + 40, 230, 40, particleLabels.length, particleLabels); 
 
-    colorWheel1 = new ColorWheel(70 + xOffset, height-20 - yOffset, 60, "Color 1");  
+    colorWheel1 = new ColorWheel(x + 50, y + 60, 60, "Color 1");  
     colorWheel1.bg = color(0);
-    colorWheel2 = new ColorWheel(145 + xOffset, height-20 - yOffset, 60, "Color 2");  
+    colorWheel2 = new ColorWheel(x + 120, y + 60, 60, "Color 2");  
     colorWheel2.bg = color(0);
 
-    speedSlider = new Slider(480 + xOffset, height - 20 - yOffset, 200, 40, 200, "fps", "Framerate");
-    radiusSlider = new DoubleSlider(720 + xOffset, height - 20 - yOffset, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
+    speedSlider = new Slider(x + 480, y + 40, 200, 40, 200, "fps", "Framerate");
+    radiusSlider = new DoubleSlider(x + 220, y + 40, 200, 40, frameSet.MAXRADIUS, "r", "Radius");
     radiusSlider.setValue(frameSet.maxRadius);
     radiusSlider.setValue2(frameSet.minRadius);
 
-    alphaSlider = new Slider(20 + xOffset, height - 25 - yOffset, 200, 40, frameSet.maxAlpha, "a", "Alpha");
-    brightnessSlider = new DoubleSlider(240 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "b", "Brightness");
-    colorVelocitySlider = new Slider(460 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "v", "Color Velocity");
+    alphaSlider = new Slider(x, y+40, 200, 40, frameSet.maxAlpha, "a", "Alpha");
+    brightnessSlider = new DoubleSlider(x + 220, y + 40, 200, 40, 1.0, "b", "Brightness");
+    colorVelocitySlider = new Slider(x + 440, y + 40, 200, 40, 1.0, "v", "Color Velocity");
     colorVelocitySlider.digits = 2;
 
-    numberOfParticlesSlider = new Slider(20 + xOffset, height - 25 - yOffset, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
+    numberOfParticlesSlider = new Slider(x, y + 40, 200, 40, frameSet.numberOfParticles, "N", "Number of Particles");
     numberOfParticlesSlider.setValue(frameSet.numberOfActiveParticles);
     numberOfParticlesSlider.digits = 0;
-    particleSpacingSlider = new Slider(240 + xOffset, height - 25 - yOffset, 200, 40, 1.0, "sf", "Particle Spacing Factor");
+    particleSpacingSlider = new Slider(x + 220, y + 40, 200, 40, 1.0, "sf", "Particle Spacing Factor");
     particleSpacingSlider.setValue(frameSet.spacingFactor);
 
-    fooSlider = new DoubleSlider(660 + xOffset, height - 25 - yOffset, 200, 40, 8, "foo", "Foo Factor");
+    fooSlider = new DoubleSlider(x + 440, y + 40, 200, 40, 8, "foo", "Foo Factor");
     fooSlider.setValue(4);
     fooSlider.setValue2(2);
 
@@ -190,7 +195,7 @@ class Controller {
     
     test.setText(nfc((localPhase)+1) + "/" + nfc(numberOfSections) + " " + soprano + " " + alto + " " + tenor+ " " + bass);
     test.display();
-    test2.setText(nfc(music.phase2)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
+    test2.setText(nfc(music.phase2+1)+": "+nfc(frameCount)+", "+nfc(interpreter.instructionPointer));
     test2.display();
     test3.setText(nfc(millis()/1000,1));
     test3.display();
@@ -214,17 +219,9 @@ class Controller {
   }
 
   void hide () {
-
-    if (parameters.screenControlsOn) {
-      fill(0);
-      rectMode(CORNER);
-      // rect(0,0, WIDTH, controlMargin);
-      rect(120, HEIGHT - parameters.controlMargin + parameters.displayMargin -10, displayWidth, 200);
-      float rightMargin_ = 200;
-      rect(displayWidth - rightMargin_, 0, rightMargin_, displayHeight);
-      rect(0, 0, 200, displayHeight-120);
-      rect(0,0,displayWidth,40);
-    }
+     
+    fill(0);
+    rect(x,y,x + w,y + h);
    
   }
 

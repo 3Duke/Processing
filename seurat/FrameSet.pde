@@ -3,11 +3,11 @@ class FrameSet {
   SEFrame [] frame;
 
   // temporary variables //
-  float x = 180; 
-  float y = 20;
+   float x = parameters.horizontalFrameMargin; 
+   float y = parameters.verticalFrameMargin;
 
   // wdith of square
-  float W = 621; // 1350; // 621; 
+  float W = parameters.frameHeight; // parameters.HEIGHT - 140; // parameters.frameMargin;  // displayWidth - 60; // 1350; // 621; 
   float pW = W; // previous W
   ////////////////////////////
 
@@ -41,6 +41,7 @@ class FrameSet {
   FrameSet(float WIDTH, int numberOfFrames_) {
 
     frame = new SEFrame[numberOfFrames_];
+    
   }  
 
   void configure () {
@@ -56,8 +57,8 @@ class FrameSet {
   void makeFrames() {
 
     // first frame
-
-    frame[0] = new SEFrame(x, y, W, W, numberOfParticles, scale, spacingFactor);
+    println("@@ Making first frame with corner at "+nfc(x,1)+", "+nfc(y,1));
+    frame[0] = new SEFrame(x,y, W, W, numberOfParticles, scale, spacingFactor);
     frame[0].colorVelocity = colorVelocity;
     frame[0].setParticles(1.0);
 

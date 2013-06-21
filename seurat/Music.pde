@@ -10,10 +10,16 @@ class Music {
   int phase = 0;    // phase increases by 1 after each phrase
   int phase2 = 0;   // phase2 increases by 1 each time the score is complete
 
-  Music( String scoreFile, int beatsPerPhrase, int bpm  ) { // bpp 25, bpm = 144 
+ // Music( String scoreFile, int beatsPerPhrase, int bpm  ) { // bpp 25, bpm = 144 
+  Music( MusicParameters parameters  ) { // bpp 25, bpm = 144 
  
+    
+    beatsPerPhrase = parameters.beatsPerPhrase;
+    bpm = parameters.bpm;
+    framesPerPhrase = parameters.framesPerPhrase;
+    
     // LOAD SCORE
-    opus = new Score(scoreFile);  // op3n1   
+    opus = new Score(parameters.scoreFile);  // op3n1   
     opus.display();
     // opus.displayGenerators();
      
@@ -22,7 +28,9 @@ class Music {
     ensemble = new Ensemble(opus, sound, beatsPerPhrase, bpm);
 
     // Set up phase
-    framesPerPhrase = int(60*frameRate*beatsPerPhrase/bpm); 
+    framesPerPhrase = int(60*15*beatsPerPhrase/bpm);
+    println("@@@ AT STARTUP IN MUSIC: framesPerPhrase = "+framesPerPhrase); 
+    
     
     
   }

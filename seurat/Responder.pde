@@ -229,6 +229,8 @@ class Responder {
   void manageKeyPress() {
 
     int k = key - 49;
+    
+    println("pressed key "+nfc(k));
 
     if ((key > 32) && (key < 127)) {
       lastKey = key;

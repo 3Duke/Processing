@@ -8,7 +8,7 @@ class Slider extends Widget {
   int digits = 1;
 
 
-  Slider(float x_, float y_, float w_, float h_, float mv_, String L_, String caption_) {
+  Slider(int x_, int y_, int w_, int h_, float mv_, String L_, String caption_) {
 
     super(x_, y_, w_, h_, caption_);
 
@@ -97,7 +97,7 @@ class DoubleSlider extends Slider {
 
   float value2, minValue, savedValue2;
 
-  DoubleSlider (float x_, float y_, float w_, float h_, float mv_, String L_, String caption_) {
+  DoubleSlider (int x_, int y_, int w_, int h_, float mv_, String L_, String caption_) {
 
     super(x_, y_, w_, h_, mv_, L_, caption_);
   }

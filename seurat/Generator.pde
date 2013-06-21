@@ -19,7 +19,7 @@ class Generator {
   float maxPitch;
   float newIntervalArrayProbability = 0.2;
   float newIntervalProbability = 0.5;
-  float newPitchDirectionProbability = 0.2;
+  float newPitchDirectionProbability;
 
   String intervalArrayKey;
   float [][] intervalArray;
@@ -47,6 +47,7 @@ class Generator {
     minPitch = float(metadata("minPitch", text));
     firstPitch = float(metadata("firstPitch", text));
     intervalArrayKey = metadata("intervalArrayKey", text);
+    newPitchDirectionProbability = float(metadata("newPitchDirectionProbability", text));
 
     meter = int(metadata("meter", text));
     notesPerBeat = int(metadata("notesPerBeat", text));
@@ -54,6 +55,7 @@ class Generator {
     restProbability = float(metadata("restProbability", text));
     doubleNoteProbability = float(metadata("doubleNoteProbability", text));
     beatsOfPhraseOverlap = int(metadata("beatsOfPhraseOverlap", text));
+    
 
     intervalArray = pitch.intervals(intervalArrayKey);
   }
@@ -92,7 +94,7 @@ class Generator {
 
     for (int i = 0; i < numberOfNotes; i++) {
 
-      if (debug) {
+        if (debug) {
         print(nfc(currentPitch, 1)+" ");
       }
 

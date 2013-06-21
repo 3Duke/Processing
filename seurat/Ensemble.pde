@@ -32,29 +32,32 @@ class Ensemble {
       g.sound = sound;
       g.noteSpacing = beatSpacing/g.notesPerBeat;
       g.noteDuration = g.relativeNoteDuration*g.noteSpacing;
-  
     }
   } // end constructor
 
   void play() {  
 
-    int framesPerPhrase = int(60*frameRate*beatsPerPhrase/bpm); 
+    music.framesPerPhrase= int(60*frameRate*beatsPerPhrase/bpm);
+  
 
-    if (frameCount % framesPerPhrase == 0) {
+    if (frameCount % music.framesPerPhrase == 0) {
+      if (debug) {
+        // int localPhase = music.phase % music.opus.numberOfSections();
+        // println("music.phase = "+nfc(music.phase)+", localPhase = "+nfc(localPhase));
+      }
+      music.phase = int(frameCount/(1.0*music.framesPerPhrase));
       play1();
     }
   }
 
   void play1() {
 
-    beatsPerPhrase = 25; // XXXXX
+    // beatsPerPhrase = 25; // XXXXX
 
     int numberOfSections = music.opus.numberOfSections();
     int localPhase = music.phase % numberOfSections;
 
-    if (debug) {
-      println("music.phase = "+nfc(music.phase)+", localPhase = "+nfc(localPhase));
-    }
+
 
     for (int i = 0; i < opus.score.length; i++) { // loop over parts, eg SATB
 
@@ -66,9 +69,10 @@ class Ensemble {
 
       if (part.plays(localPhase)) {
         if (debug) {
-          println("\nFrame "+frameCount+", phase "+music.phase+"\nNotes for "+part.name.toUpperCase()+":\n------------");
+          println("\nFrame "+frameCount+", localPhase "+localPhase+"\nNotes for "+part.name.toUpperCase()+":\n------------");
         }
-        int bpp =  int(random(8, beatsPerPhrase) + generator.beatsOfPhraseOverlap);
+        // int bpp =  int(random(8, beatsPerPhrase) + generator.beatsOfPhraseOverlap);
+        int bpp =  beatsPerPhrase + int(random(0, generator.beatsOfPhraseOverlap));
         generator.play(bpp);
       } 
       else {
